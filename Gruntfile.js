@@ -1,4 +1,4 @@
-// Generated on 2015-11-30 using generator-angular 0.14.0
+// Generated on 2015-12-03 using generator-angular 0.14.0
 'use strict';
 
 // # Globbing
@@ -211,14 +211,14 @@ module.exports = function (grunt) {
         fileTypes:{
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-            detect: {
-              js: /'(.*\.js)'/gi
-            },
-            replace: {
-              js: '\'{{filePath}}\','
+              detect: {
+                js: /'(.*\.js)'/gi
+              },
+              replace: {
+                js: '\'{{filePath}}\','
+              }
             }
           }
-        }
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -452,7 +452,6 @@ module.exports = function (grunt) {
         singleRun: true
       }
     }
-    
   });
 
 

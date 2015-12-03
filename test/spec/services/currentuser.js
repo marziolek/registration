@@ -3,7 +3,7 @@
 describe('Service: currentUser', function () {
 
   // load the service's module
-  beforeEach(module('registrationApp'));
+  beforeEach(module('rejestracjaTestApp'));
 
   // instantiate service
   var currentUser;

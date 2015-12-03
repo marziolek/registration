@@ -23,4 +23,4 @@ angular.module('registrationApp')
       $cookies.putObject('currentRegistrationUser', user);
     }
   }
-});
+  });

@@ -13,12 +13,12 @@ angular.module('registrationApp')
   return {
     show: function(templateName) {
 
-      var templateUrl = '/views/templates/book.visit.tpl.html';
+      var templateUrl = 'views/templates/book.visit.tpl.html';
 
       if (templateName) {
-        templateUrl = '/views/templates/' + templateName;
+        templateUrl = 'views/templates/' + templateName;
       }
-
+	  
       var open = function(size) {
         var modalInstance = $uibModal.open({
           animation: true,
@@ -37,4 +37,4 @@ angular.module('registrationApp')
       open();
     }
   } 
-});
+  });

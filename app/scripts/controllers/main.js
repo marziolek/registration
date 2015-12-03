@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $log,) {
+  .controller('MainCtrl', function ($scope, $rootScope, $log, popup, currentUser) {
 
   currentUser.set();
   $rootScope.user = currentUser.get();
