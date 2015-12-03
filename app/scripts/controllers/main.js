@@ -8,11 +8,8 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $log, popup, currentUser) {
+  .controller('MainCtrl', function ($scope, $rootScope, $log, popup, auth) {
 
-  currentUser.set();
-  $rootScope.user = currentUser.get();
-  
  /* $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
                   'tooltip-append-to-body': true});

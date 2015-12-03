@@ -8,7 +8,7 @@
  * Service in the registrationApp.
  */
 angular.module('registrationApp')
-  .service('popup', function ($uibModal, currentUser) {
+  .service('popup', function ($uibModal) {
 
   return {
     show: function(templateName) {
