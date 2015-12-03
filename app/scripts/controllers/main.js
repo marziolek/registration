@@ -8,49 +8,31 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $log, $window, $compile, popup) {
+  .controller('MainCtrl', function ($scope, $rootScope, $log, $compile, popup, currentUser) {
 
+  currentUser.set();
+  $rootScope.user = currentUser.get();
+  
   $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
                   'tooltip-append-to-body': true});
     $compile(element)($scope);
   };
 
-    
   $scope.takeEvent = function(element, jsEvent, view) {
-    
-    /*
-    * check if !taken - should be verified on cloud code
-    */
-
     var cssClass = element.className[0];
     if (cssClass) {
       if (cssClass === 'free') {
         // do if free
-        $log.debug('free');
+        /*
+        * open dialog to login/register
+        * or
+        * open dialog to fill additional description and submit choice
+        */ 
         popup.show();
-        
-      } else if (cssClass === 'taken') {
-        // do if taken
-        
-        $log.debug('taken');
       }
     }
-
-    console.log(element);
-/*
-    console.log(jsEvent);
-    console.log(view);
-*/
-
-    /*
-    * open dialog to login/register
-    * or
-    * open dialog to fill additional description and submit choice
-    */ 
-
   };
-
 
   var windowH = $(window).height(),
       date = new Date(),
@@ -58,39 +40,37 @@ angular.module('registrationApp')
       m = date.getMonth(),
       y = date.getFullYear(),
       events = [
-        {title: 'taken', start: new Date(y, m, 1), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 14), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 14, 30), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 15), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 15, 30), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 16), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 16, 30), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 17), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 17, 30), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 18), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 18, 30), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 19), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 1, 19, 30), className: 'taken'},
+        {start: new Date(y, m, d), className: 'taken'},
+        {start: new Date(y, m, d, 14), className: 'taken'},
+        {start: new Date(y, m, d, 14, 30), className: 'taken'},
+        {start: new Date(y, m, d, 15), className: 'taken'},
+        {start: new Date(y, m, d, 15, 30), className: 'taken'},
+        {start: new Date(y, m, d, 16), className: 'taken'},
+        {start: new Date(y, m, d, 16, 30), className: 'taken'},
+        {start: new Date(y, m, d, 17), className: 'taken'},
+        {start: new Date(y, m, d, 17, 30), className: 'taken'},
+        {start: new Date(y, m, d, 18), className: 'taken'},
+        {start: new Date(y, m, d, 18, 30), className: 'taken'},
+        {start: new Date(y, m, d, 19), className: 'taken'},
+        {start: new Date(y, m, d, 19, 30), className: 'taken'},
 
-
-        {title: 'free', start: new Date(y, m, 2), className: 'free'},
-        {title: 'free', start: new Date(y, m, 2, 14), className: 'free'},
-        {title: 'taken', start: new Date(y, m, 2, 14, 30), className: 'taken'},
-        {title: 'free', start: new Date(y, m, 2, 15), className: 'free'},
-        {title: 'taken', start: new Date(y, m, 2, 15, 30), className: 'taken'},
-        {title: 'free', start: new Date(y, m, 2, 16), className: 'free'},
-        {title: 'free', start: new Date(y, m, 2, 16, 30), className: 'free'},
-        {title: 'taken', start: new Date(y, m, 2, 17), className: 'taken'},
-        {title: 'free', start: new Date(y, m, 2, 17, 30), className: 'free'},
-        {title: 'taken', start: new Date(y, m, 2, 18), className: 'taken'},
-        {title: 'taken', start: new Date(y, m, 2, 18, 30), className: 'taken'},
-        {title: 'free', start: new Date(y, m, 2, 19), className: 'free'},
-        {title: 'taken', start: new Date(y, m, 2, 19, 30), className: 'taken'},
+        {start: new Date(y, m, d + 1), className: 'free'},
+        {start: new Date(y, m, d + 1, 14), className: 'free'},
+        {start: new Date(y, m, d + 1, 14, 30), className: 'taken'},
+        {start: new Date(y, m, d + 1, 15), className: 'free'},
+        {start: new Date(y, m, d + 1, 15, 30), className: 'taken'},
+        {start: new Date(y, m, d + 1, 16), className: 'free'},
+        {start: new Date(y, m, d + 1, 16, 30), className: 'free'},
+        {start: new Date(y, m, d + 1, 17), className: 'taken'},
+        {start: new Date(y, m, d + 1, 17, 30), className: 'free'},
+        {start: new Date(y, m, d + 1, 18), className: 'taken'},
+        {start: new Date(y, m, d + 1, 18, 30), className: 'taken'},
+        {start: new Date(y, m, d + 1, 19), className: 'free'},
+        {start: new Date(y, m, d + 1, 19, 30), className: 'taken'},
       ];
 
   $scope.events = [events];
 
-  /* should be always at the bottom  - LOCALE for months? */
   $scope.config = {
     calendar:{
       defaultView: 'agendaWeek',
@@ -103,8 +83,6 @@ angular.module('registrationApp')
       header: {
         right: 'today prev,next'
       },
-      dayNames: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
-      dayNamesShort: ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Nd'],
       viewRender: function(view, element) {
         $log.debug("View Changed: ", view.visStart, view.visEnd, view.start, view.end);
       },

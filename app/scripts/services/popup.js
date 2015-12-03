@@ -8,38 +8,31 @@
  * Service in the registrationApp.
  */
 angular.module('registrationApp')
-  .service('popup', function ($log, $uibModal) {
-
-  var test = 'asdasdasd';
+  .service('popup', function ($uibModal, currentUser) {
 
   return {
-    show: function(templateUrl, animations) {
+    show: function(templateName) {
 
-      if (!templateUrl) {
-        var templateUrl = '/views/templates/default-modal-tpl.html';
-      }
-      
-      if (!animations) {
-        var animations = true;
+      var templateUrl = '/views/templates/book.visit.tpl.html';
+
+      if (templateName) {
+        templateUrl = '/views/templates/' + templateName;
       }
 
       var open = function(size) {
         var modalInstance = $uibModal.open({
-          animation: animations,
+          animation: true,
           templateUrl: templateUrl,
-          size: size
-          /*resolve: {
-        items: function() {
-          return items;
-        }
-      }*/
+          size: size ? size : 'lg'
         });
 
+        /*
         modalInstance.result.then( function(selectedItem) {
           $log.debug(selectedItem);
         }, function() {
           $log.info('Modal dismissed');
         });
+        */
       };
       open();
     }
