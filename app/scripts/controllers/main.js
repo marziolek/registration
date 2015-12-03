@@ -8,16 +8,16 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $log, $compile, popup, currentUser) {
+  .controller('MainCtrl', function ($scope, $rootScope, $log,) {
 
   currentUser.set();
   $rootScope.user = currentUser.get();
   
-  $scope.eventRender = function(event, element, view ) {
+ /* $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
                   'tooltip-append-to-body': true});
     $compile(element)($scope);
-  };
+  };*/
 
   $scope.takeEvent = function(element, jsEvent, view) {
     var cssClass = element.className[0];
@@ -53,7 +53,6 @@ angular.module('registrationApp')
         {start: new Date(y, m, d, 18, 30), className: 'taken'},
         {start: new Date(y, m, d, 19), className: 'taken'},
         {start: new Date(y, m, d, 19, 30), className: 'taken'},
-
         {start: new Date(y, m, d + 1), className: 'free'},
         {start: new Date(y, m, d + 1, 14), className: 'free'},
         {start: new Date(y, m, d + 1, 14, 30), className: 'taken'},
@@ -83,9 +82,9 @@ angular.module('registrationApp')
       header: {
         right: 'today prev,next'
       },
-      viewRender: function(view, element) {
+      /*viewRender: function(view, element) {
         $log.debug("View Changed: ", view.visStart, view.visEnd, view.start, view.end);
-      },
+      },*/
       eventClick: $scope.takeEvent,
       eventRender: $scope.eventRender
     }
