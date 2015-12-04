@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $log, popup, auth) {
+  .controller('MainCtrl', function ($scope, $rootScope, $log, popup) {
 
  /* $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
@@ -16,7 +16,7 @@ angular.module('registrationApp')
     $compile(element)($scope);
   };*/
 
-  $scope.takeEvent = function(element, jsEvent, view) {
+  $scope.takeEvent = function(element) {
     var cssClass = element.className[0];
     if (cssClass) {
       if (cssClass === 'free') {

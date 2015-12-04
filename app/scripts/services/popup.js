@@ -18,7 +18,7 @@ angular.module('registrationApp')
       if (templateName) {
         templateUrl = 'views/templates/' + templateName;
       }
-	  
+
       var open = function(size) {
         var modalInstance = $uibModal.open({
           animation: true,
@@ -36,5 +36,6 @@ angular.module('registrationApp')
       };
       open();
     }
-  } 
-  });
+  };
+
+});

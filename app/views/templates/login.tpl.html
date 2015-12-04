@@ -1,14 +1,17 @@
-<div class="login-form">
+<div class="login-form" ng-controller="LoginCtrl">
   <p><strong>Zaloguj się</strong></p>
-  <fieldset>
-    <div class="input-group">
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" class="form-control">
-    </div>
-    <div class="input-group">
-      <label for="password">Hasło</label>
-      <input type="password" name="password" id="password" class="form-control">
-    </div>
-  </fieldset>
-  <button type="button" class="btn">Zaloguj</button>
+  <form name="loginform" novalidate ng-submit="loginform.$valid && vm.logIn(loginData)"> 
+    <fieldset>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" class="form-control" ng-model="loginData.email">
+      </div>
+      <div class="input-group">
+        <label for="password">Hasło</label>
+        <input type="password" name="password" id="password" class="form-control" ng-model="loginData.password">
+      </div>
+    </fieldset>
+    <button type="submit" class="btn">Zaloguj</button>
+  </form>
+  <strong ng-if="vm.errorMessage">{{vm.errorMessage}}</strong>
 </div>

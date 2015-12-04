@@ -8,6 +8,9 @@
  *
  * Main module of the application.
  */
+
+Parse.initialize('e6AmDrs60orYS7vIW2oLHUp3GALstVH840srHFY8', 'HXFcOsfFQHN2m6ya9U1KRgRcv1xzpJumvh15Vllb');
+
 angular
   .module('registrationApp', [
   'ngAnimate',
@@ -15,25 +18,34 @@ angular
   'ngCookies',
   'ngMessages',
   'ngResource',
-  'ngRoute',
+  'ui.router',
   'ngSanitize',
   'ngTouch',
   'ui.calendar',
   'ui.bootstrap'
 ])
-  .config(function ($routeProvider, $locationProvider) {
-  $routeProvider
-    .when('/', {
-    templateUrl: 'views/main.html',
+  .config(function ($stateProvider, $urlRouterProvider) {
+
+  $urlRouterProvider.otherwise("/");
+
+  $stateProvider
+    .state('home', {
+    url: "/",
+    templateUrl: "views/main.html",
     controller: 'MainCtrl',
     controllerAs: 'main'
   })
-    .otherwise({
-    redirectTo: '/'
+    .state('login', {
+    url: "/login",
+    templateUrl: 'views/login.html',
+    controller: 'LoginCtrl',
+    controllerAs: 'login'
+  })
+    .state('register', {
+    url: "/register",
+    templateUrl: 'views/register.html',
+    controller: 'RegisterCtrl',
+    controllerAs: 'register'
   });
 
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
 });

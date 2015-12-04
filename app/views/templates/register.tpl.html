@@ -1,35 +1,38 @@
-<div class="registration-form">
+<div class="registration-form" ng-controller="RegisterCtrl">
   <p><strong>Zarejestruj się</strong></p>
-  <fieldset class="input-group">
-    <div class="input-group">
-      <label for="registerName">Imię</label>
-      <input type="text" name="registerName" id="registerName" class="form-control">
-    </div>
-    <div class="input-group">
-      <label for="registerLastname">Nazwisko</label>
-      <input type="text" name="registerLastname" id="registerLastname" class="form-control">
-    </div>
-    <div class="input-group">
-      <label for="registerEmail">Twój email</label>
-      <input type="email" name="registerEmail" id="registerEmail" class="form-control">
-    </div>
-    <div class="input-group">
-      <label for="registerPassword">Hasło</label>
-      <input type="password" name="registerPassword" id="registerPassword" class="form-control">
-    </div>
-    <div class="input-group">
-      <label for="registerPasswordConfirmation">Potwierdź hasło</label>
-      <input type="password" name="registerPasswordConfirmation" id="registerPasswordConfirmation" class="form-control">
-    </div>
-    <div class="input-group">
-      <label for="registerPhone">Telefon *</label>
-      <input type="phone" name="registerPhone" id="registerPhone" class="form-control">
-      <p>* potrzebny do szybkiego kontakt oraz wysyłania powiadomień SMS</p>
-    </div>
-    <div class="input-group">
-      <label for="registerTextMessages">Czy chcesz otrzymywać powiadomienia SMS</label>
-      <input type="checkbox" name="registerTextMessages" id="registerTextMessages" checked="checked">
-    </div>
-  </fieldset>
-  <button type="button" class="btn">Załóż konto</button>
+  <form name="registerform" novalidate ng-submit="registerform.$valid && vm.signUp(registerData)"> 
+    <fieldset class="input-group">
+      <div class="input-group">
+        <label for="registerName">Imię</label>
+        <input type="text" name="registerName" id="registerName" class="form-control" ng-model="registerData.name">
+      </div>
+      <div class="input-group">
+        <label for="registerLastname">Nazwisko</label>
+        <input type="text" name="registerLastname" id="registerLastname" class="form-control" ng-model="registerData.lastname">
+      </div>
+      <div class="input-group">
+        <label for="registerEmail">Twój email</label>
+        <input type="email" name="registerEmail" id="registerEmail" class="form-control" ng-model="registerData.email">
+      </div>
+      <div class="input-group">
+        <label for="registerPassword">Hasło</label>
+        <input type="password" name="registerPassword" id="registerPassword" class="form-control" ng-model="registerData.password">
+      </div>
+      <div class="input-group">
+        <label for="registerPasswordConfirmation">Potwierdź hasło</label>
+        <input type="password" name="registerPasswordConfirmation" id="registerPasswordConfirmation" class="form-control" ng-model="registerData.passwordConfirmation">
+      </div>
+      <div class="input-group">
+        <label for="registerPhone">Telefon *</label>
+        <input type="phone" name="registerPhone" id="registerPhone" class="form-control" ng-model="registerData.phone">
+        <p>* potrzebny do szybkiego kontakt oraz wysyłania powiadomień SMS</p>
+      </div>
+      <div class="input-group">
+        <label for="registerTextMessages">Czy chcesz otrzymywać powiadomienia SMS</label>
+        <input type="checkbox" name="registerTextMessages" id="registerTextMessages" checked="checked" ng-model="registerData.textMessages">
+      </div>
+    </fieldset>
+    <button type="submit" class="btn">Załóż konto</button>
+  </form>
+  <strong>{{vm.formError}}</strong>
 </div>

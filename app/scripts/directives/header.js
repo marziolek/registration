@@ -7,21 +7,13 @@
  * # headerMain
  */
 angular.module('registrationApp')
-  .directive('headerMain', function (auth, $log) {
-
+  .directive('headerMain', function (headerViewModel) {
+  
   return {
     templateUrl: 'views/templates/header.main.tpl.html',
     restrict: 'E',
-    link: function postLink(scope, element, attrs) {
-      auth.isLoggedIn(); // init rootscope var
-
-      scope.login = function() {
-        auth.login();
-      };
-      
-      scope.logout = function() {
-        auth.logout();
-      };
+    link: function postLink(scope) {
+      scope.vm = headerViewModel;
     }
   };
 });
