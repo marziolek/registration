@@ -1,38 +1,90 @@
 <div class="registration-form" ng-controller="RegisterCtrl">
   <p><strong>Zarejestruj się</strong></p>
   <form name="registerform" novalidate ng-submit="registerform.$valid && vm.signUp(registerData)"> 
-    <fieldset class="input-group">
-      <div class="input-group">
+    <fieldset>
+      <div class="form-group" 
+           ng-class="{'has-error' : !registerform.registerName.$valid && registerform.$submitted}">
         <label for="registerName">Imię</label>
-        <input type="text" name="registerName" id="registerName" class="form-control" ng-model="registerData.name">
+        <input type="text" 
+               name="registerName" 
+               id="registerName" 
+               class="form-control" 
+               ng-model="registerData.name" 
+               required>
+        <p class="error" 
+           ng-show="registerform.registerName.$error.required && registerform.$submitted">Musisz wypełnić to pole</p>
       </div>
-      <div class="input-group">
+      <div class="form-group" 
+           ng-class="{'has-error' : !registerform.registerLastname.$valid && registerform.$submitted}">
         <label for="registerLastname">Nazwisko</label>
-        <input type="text" name="registerLastname" id="registerLastname" class="form-control" ng-model="registerData.lastname">
+        <input type="text" 
+               name="registerLastname" 
+               id="registerLastname" 
+               class="form-control" 
+               ng-model="registerData.lastname" 
+               required>
+        <p class="error" 
+           ng-show="registerform.registerLastname.$error.required && registerform.$submitted">Musisz wypełnić to pole</p>
       </div>
-      <div class="input-group">
+      <div class="form-group" 
+           ng-class="{'has-error' : !registerform.registerEmail.$valid && registerform.$submitted}">
         <label for="registerEmail">Twój email</label>
-        <input type="email" name="registerEmail" id="registerEmail" class="form-control" ng-model="registerData.email">
+        <input type="email" 
+               name="registerEmail" 
+               id="registerEmail" 
+               class="form-control" 
+               ng-model="registerData.email" 
+               required>
+        <p class="error" 
+           ng-show="registerform.registerEmail.$error.required && registerform.$submitted">Musisz wypełnić to pole</p>
+        <p class="error" 
+           ng-show="registerform.email.$error.email && registerform.$submitted">To nie jest poprawny adres email.</p>
       </div>
-      <div class="input-group">
+      <div class="form-group" 
+           ng-class="{'has-error' : !registerform.registerPassword.$valid && registerform.$submitted}">
         <label for="registerPassword">Hasło</label>
-        <input type="password" name="registerPassword" id="registerPassword" class="form-control" ng-model="registerData.password">
+        <input type="password" 
+               name="registerPassword" 
+               id="registerPassword" 
+               class="form-control" 
+               ng-model="registerData.password" 
+               required>
+        <p class="error" 
+           ng-show="registerform.registerPassword.$error.required && registerform.$submitted">Musisz wypełnić to pole</p>
       </div>
-      <div class="input-group">
+      <div class="form-group" 
+           ng-class="{'has-error' : !registerform.registerPasswordConfirmation.$valid && registerform.$submitted}">
         <label for="registerPasswordConfirmation">Potwierdź hasło</label>
-        <input type="password" name="registerPasswordConfirmation" id="registerPasswordConfirmation" class="form-control" ng-model="registerData.passwordConfirmation">
+        <input type="password" 
+               name="registerPasswordConfirmation" 
+               id="registerPasswordConfirmation" 
+               class="form-control" 
+               ng-model="registerData.passwordConfirmation" 
+               required>
+        <p class="error" 
+           ng-show="registerform.registerPasswordConfirmation.$error.required && registerform.$submitted">Musisz wypełnić to pole</p>
       </div>
-      <div class="input-group">
-        <label for="registerPhone">Telefon *</label>
-        <input type="phone" name="registerPhone" id="registerPhone" class="form-control" ng-model="registerData.phone">
-        <p>* potrzebny do szybkiego kontakt oraz wysyłania powiadomień SMS</p>
+      <div class="form-group" 
+           ng-class="{'has-error' : !registerform.registerPhone.$valid && registerform.$submitted}">
+        <label for="registerPhone">Telefon</label>
+        <input type="phone" 
+               name="registerPhone" 
+               id="registerPhone" 
+               class="form-control" 
+               ng-model="registerData.phone">
+        <p>Potrzebny do szybkiego kontakt oraz wysyłania powiadomień SMS</p>
+        
       </div>
-      <div class="input-group">
+      <div>
         <label for="registerTextMessages">Czy chcesz otrzymywać powiadomienia SMS</label>
-        <input type="checkbox" name="registerTextMessages" id="registerTextMessages" checked="checked" ng-model="registerData.textMessages">
+        <input type="checkbox" 
+               name="registerTextMessages" 
+               id="registerTextMessages" 
+               checked="checked" 
+               ng-model="registerData.textMessages">
       </div>
     </fieldset>
     <button type="submit" class="btn">Załóż konto</button>
   </form>
-  <strong>{{vm.formError}}</strong>
+  <p><strong>{{vm.formError}}</strong></p>
 </div>

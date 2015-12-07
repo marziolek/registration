@@ -11,19 +11,30 @@ angular.module('registrationApp')
   .service('popup', function ($uibModal) {
 
   return {
-    show: function(templateName) {
+    show: function(templateName, popupController, element) {
 
       var templateUrl = 'views/templates/book.visit.tpl.html';
+      var templateCtrl = 'MainCtrl';
 
       if (templateName) {
         templateUrl = 'views/templates/' + templateName;
       }
 
+      if (popupController) {
+        templateCtrl = popupController;
+      }
+      
       var open = function(size) {
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: templateUrl,
-          size: size ? size : 'lg'
+          controller: popupController,
+          size: size ? size : 'lg',
+          resolve: {
+            element: function() {
+              return element;
+            }
+          }
         });
 
         /*

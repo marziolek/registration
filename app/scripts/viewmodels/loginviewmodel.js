@@ -38,11 +38,11 @@ angular.module('registrationApp')
   };
 
   LoginAPI.prototype.currentUser = function() {
-    user.userData();
+    return user.userData();
   };
   
   LoginAPI.prototype.isLoggedIn = function() {
-    user.isLoggedIn();
+    return user.isLoggedIn();
   };
 
   LoginAPI.prototype.goToCalendar = function() {

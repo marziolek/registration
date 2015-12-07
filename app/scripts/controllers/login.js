@@ -11,5 +11,5 @@ angular.module('registrationApp')
   .controller('LoginCtrl', function ($scope, loginViewModel) {
 
   $scope.vm = loginViewModel;
-
+  
 });

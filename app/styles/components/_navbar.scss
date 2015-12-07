@@ -1,9 +1,7 @@
 
-// Variables
+// Components - Navbar
 //------------------------------------------------------------------------------
 
-$space: 20px;
-
-// colors
-$c-violet: #AC92EC;
-$c-violet-dark: #967ADC;
+.navbar {
+  background-color: $c-violet-dark;
+}

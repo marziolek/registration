@@ -46,6 +46,12 @@ angular
     templateUrl: 'views/register.html',
     controller: 'RegisterCtrl',
     controllerAs: 'register'
+  })
+    .state('profile', {
+    url: "/profile",
+    templateUrl: 'views/profile.html',
+    controller: 'ProfileCtrl',
+    controllerAs: 'profile'
   });
 
 });

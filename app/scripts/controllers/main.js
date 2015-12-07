@@ -18,15 +18,10 @@ angular.module('registrationApp')
 
   $scope.takeEvent = function(element) {
     var cssClass = element.className[0];
+
     if (cssClass) {
       if (cssClass === 'free') {
-        // do if free
-        /*
-        * open dialog to login/register
-        * or
-        * open dialog to fill additional description and submit choice
-        */ 
-        popup.show();
+        popup.show('book.visit.tpl.html', 'BookVisitCtrl', element);
       }
     }
   };

@@ -2,13 +2,31 @@
   <p><strong>Zaloguj się</strong></p>
   <form name="loginform" novalidate ng-submit="loginform.$valid && vm.logIn(loginData)"> 
     <fieldset>
-      <div class="input-group">
+      <div class="form-group" 
+           ng-class="{'has-error' : !loginform.email.$valid && loginform.$submitted}">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" class="form-control" ng-model="loginData.email">
+        <input type="email" 
+               name="email" 
+               id="email" 
+               class="form-control" 
+               ng-model="loginData.email"
+               required>
+        <p class="error" 
+           ng-show="loginform.email.$error.required && loginform.$submitted">Musisz wypełnić to pole</p>
+        <p class="error" 
+           ng-show="loginform.email.$error.email && loginform.$submitted">To nie jest poprawny adres email.</p>
       </div>
-      <div class="input-group">
+      <div class="form-group" 
+           ng-class="{'has-error' : !loginform.password.$valid && loginform.$submitted}">
         <label for="password">Hasło</label>
-        <input type="password" name="password" id="password" class="form-control" ng-model="loginData.password">
+        <input type="password" 
+               name="password" 
+               id="password" 
+               class="form-control" 
+               ng-model="loginData.password"
+               required>
+        <p class="error" 
+           ng-show="loginform.password.$error.required && loginform.$submitted">Musisz wypełnić to pole</p>
       </div>
     </fieldset>
     <button type="submit" class="btn">Zaloguj</button>

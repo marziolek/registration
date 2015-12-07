@@ -1,4 +1,27 @@
 <div class="row">
-  <login-directive class="col-sm-5"></login-directive>
-  <register-directive class="col-sm-7"></register-directive>
+  <div ng-if="!vm.isLoggedIn()">
+    <a ui-sref="login" class="btn">Zaloguj się</a>
+    <p>lub</p>
+    <a ui-sref="register" class="btn">Załóż konto</a>
+  </div>
+  <div ng-if="vm.isLoggedIn()">
+    <h1>Umów wizytę</h1>
+    <p>
+      <span>Twój termin: </span><span>{{dayName}}, </span><span>{{date}}</span>
+    </p>
+    <form name="bookvisitform" novalidate ng-submit="bookvisitform.$valid && vm.bookVisit(bookvisit)"> 
+      <fieldset>
+        <div class="form-group">
+          <label for="comment">Dodatkowe informacje dla lekarza:</label>
+          <textarea type="text" 
+                    name="comment" 
+                    id="comment" 
+                    class="form-control" 
+                    ng-model="bookvisit.comment"></textarea>
+        </div>
+      </fieldset>
+      <button type="submit" class="btn btn-success">Umów wizytę</button>
+    </form>
+    <strong ng-if="vm.errorMessage">{{vm.errorMessage}}</strong>
+  </div>
 </div>

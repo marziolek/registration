@@ -5,3 +5,9 @@
 .fc-time-grid-event.fc-short .fc-time:after {
   content: none;
 }
+
+.fc-event {
+  background-color: $c-violet-dark;
+  border: none;
+  border-radius: 0;
+}

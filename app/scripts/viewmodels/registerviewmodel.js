@@ -11,10 +11,12 @@ angular.module('registrationApp')
   .factory('registerViewModel', function ($location, user) {
 
   var RegisterAPI = function() {};
+  
+  RegisterAPI.prototype.isSubmitted = false;
 
   RegisterAPI.prototype.signUp = function(form) {
     var self = this;
-
+    
     if (form) {
       user.signUp(form).then(function(user) {
         self.goToLoginPage();
