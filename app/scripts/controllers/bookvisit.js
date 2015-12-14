@@ -11,10 +11,19 @@ angular.module('registrationApp')
   .controller('BookVisitCtrl', function ($scope, element, bookVisitViewModel) {
 
   $scope.vm = bookVisitViewModel;
-  
+
   var data = element;
-  
+
   $scope.dayName = data.start.format('dddd');
   $scope.date = data.start.format('D MMMM YYYY');
-  
+
+
+  // init dropdowns - formstone
+  $('.demo_basic').dropdown();
+
+  $('.demo_basic').on("change", function() {
+    var value = $(this).val();
+    console.log(value);
+  });
+
 });

@@ -15,16 +15,27 @@ angular.module('registrationApp')
   HeaderAPI.prototype.isLoggedIn = function() {
     return user.isLoggedIn();
   };
-  
+
   HeaderAPI.prototype.logOut = function() {
     user.logOut().then( function() {
-      $state.go('home');
+      // $window.location.href = '/'; //to refresh page
+      $state.go('home', {}, { 'reload': true });
     });
   };
-  
+
   HeaderAPI.prototype.name = function() {
     return user.userFirstName();
   }
+
+  HeaderAPI.prototype.isAdmin = false;
+
+  HeaderAPI.prototype.checkIfAdmin = function() {
+    var self = this;
+
+    user.isAdmin().then(function(result) {
+      self.isAdmin = result;
+    });
+  };
 
   return new HeaderAPI();
 

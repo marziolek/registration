@@ -1,0 +1,15 @@
+<div ng-if="vm.isAdmin">
+  <div ui-calendar="config.calendar" ng-model="events" calendar="adminCalendar"></div>
+  <form name="weeksForm" novalidate class="col-md-4"> 
+    <fieldset>
+      <div class="form-group">
+        <label for="comment">Ilość dostępnych tygodni</label>
+        <input type="number" 
+               name="weeks" 
+               id="weeks" 
+               class="form-control">
+      </div>
+    </fieldset>
+    <button type="submit" class="btn btn-success">Zapisz</button>
+  </form>
+</div>

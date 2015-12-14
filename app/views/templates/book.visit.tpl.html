@@ -11,6 +11,15 @@
     </p>
     <form name="bookvisitform" novalidate ng-submit="bookvisitform.$valid && vm.bookVisit(bookvisit)"> 
       <fieldset>
+
+        <select>
+          <option value="1">Usługa 1</option>
+          <option value="2">Usługa 2</option>
+          <option value="3">Usługa 3</option>
+        </select>
+        
+      </fieldset>
+      <fieldset>
         <div class="form-group">
           <label for="comment">Dodatkowe informacje dla lekarza:</label>
           <textarea type="text" 

@@ -11,6 +11,7 @@
           Witaj, 
           <a ui-sref="profile">{{vm.name()}}</a>
         </span>
+        <a ui-sref="admin" ng-if="vm.isLoggedIn() && vm.isAdmin" class="btn">Panel administratora</a>
         <button type="button" ng-click="vm.logOut()" ng-if="vm.isLoggedIn()" class="btn">Wyloguj</button>
         <a ui-sref="register" ng-if="!vm.isLoggedIn()" class="btn">Załóż konto</a>
       </div>

@@ -55,30 +55,35 @@ angular
     params: {
       acl: true
     }
+  })
+    .state('admin', {
+    url: "/admin",
+    templateUrl: 'views/admin.html',
+    controller: 'AdminCtrl',
+    controllerAs: 'admin',
+    params: {
+      acl: true,
+      admin: true
+    }
   });
 })
   .run( function($rootScope, user, $state) {
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (!user.isLoggedIn()) {
-      var acl = toParams.acl;
-
-      if (acl) {
+      if (toParams.acl) {
         event.preventDefault();
         $state.go('login');
-      } 
-      /*if (next.templateUrl !== 'views/login.html' && next.templateUrl !== 'views/register.html' && next.templateUrl !== 'views/main.html' && next.templateUrl !== 'views/reset_password.html') {
-        $location.path('/user/login');
-      }*/
-    } else {/*
-      user.isAdmin().then(function(result) {
-        if (!result && next.templateUrl == "views/admin.html") {
-          $location.path("/");
-        }
-      });
-      if (next.templateUrl === 'views/login.html' || next.templateUrl === 'views/register.html') {
-        $location.path('/user/profile');
-      }*/
+      }
+    } else {
+      if (toParams.admin) {
+        user.isAdmin().then(function(result) {
+          if (!result) {
+            event.preventDefault();
+            $state.go('profile');
+          }
+        });
+      }
     }
   });
 });

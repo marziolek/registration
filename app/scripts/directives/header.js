@@ -15,6 +15,7 @@ angular.module('registrationApp')
     link: function postLink(scope) {
       scope.vm = headerViewModel;
       scope.vm.isLoggedIn();
+      scope.vm.checkIfAdmin();
     }
   };
 });

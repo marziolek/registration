@@ -54,51 +54,44 @@ angular.module('registrationApp')
       return currUser.get('textMessages');
     },
     isAdmin: function() {
-      $rootScope.setLoading();
       var q = $q.defer();
+
       Parse.Cloud.run('isAdmin').then(function(result){
-        $rootScope.unsetLoading();
         q.resolve(result);
       });
 
       return q.promise;
     },
     isVerified: function(email) {
-      //$rootScope.setLoading();
       var q = $q.defer();
+
       Parse.Cloud.run('isVerified', {'email':email}).then(function(result){
-        //$rootScope.unsetLoading();
         q.resolve(result);
       }, function(error) {
-        //$rootScope.unsetLoading();
         q.reject(error);
       });
 
       return q.promise;
     },
     sendResetEmail: function(email) {     
-      $rootScope.setLoading();
       var q = $q.defer();
+      
       Parse.User.requestPasswordReset(email).then(function(result) {
-        $rootScope.unsetLoading();
         q.resolve(result);
       }, function(error) {
-        $rootScope.unsetLoading();
         q.reject(error.message);
       });
 
       return q.promise;
     },
     logIn: function(email, pass) {
-      //$rootScope.setLoading();
-      var q = $q.defer();
-      var self = this;
+      var q = $q.defer(),
+          self = this;
+
       Parse.User.logIn(email, pass).then(function(result) {
-        //$rootScope.unsetLoading();
         self.userData();
         q.resolve(result);
       }, function(error) {
-        //$rootScope.unsetLoading();
         q.reject(error.message);
       });
 
@@ -106,11 +99,10 @@ angular.module('registrationApp')
     },
     signUp: function(form) {
       if (form.email !== '' && form.email !== null && form.name !== '' && form.name !== null && form.lastname !== '' && form.lastname !== null && form.password !== '' && form.password !== null ) {
-        //$rootScope.setLoading();
 
-        var q = $q.defer();
-
-        var user = new Parse.User();
+        var q = $q.defer(),
+            user = new Parse.User();
+        
         user.set('email', form.email);
         user.set('username', form.email);
         user.set('firstName', form.name);
@@ -121,11 +113,9 @@ angular.module('registrationApp')
 
         user.signUp(null, {
           success: function(user) {
-            //$rootScope.unsetLoading();
             q.resolve(user);
           },
           error: function(user, error) {
-            //$rootScope.unsetLoading();
             q.reject(error);
           }
         });
@@ -134,11 +124,9 @@ angular.module('registrationApp')
       }
     },
     resendVerificationEmail: function(username) {
-      $rootScope.setLoading();
       var q = $q.defer();
 
       Parse.Cloud.run('resendVerificationEmail', {'username':username}).then(function(result){
-        $rootScope.unsetLoading();
         q.resolve(result);
       });
 
