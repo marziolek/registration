@@ -1,1 +1,39 @@
-<p>This is the profile view.</p>
+<div ng-if="vm.isLoggedIn">
+  <p>
+    <span>{{vm.firstName}} </span><span>{{vm.lastName}}</span>
+  </p>
+  <p>
+    <span class="label label-info">E-mail</span>
+    <span>{{vm.email}}</span>
+  </p>
+  <p>
+    <span class="label label-info">Telephone</span>
+    <span>{{vm.phone}}</span>
+  </p>
+  <form name="textMessageUpdateform" novalidate> 
+    <fieldset>
+      <div ng-if="vm.textMessages()">
+        <span>Czy chcesz otrzymywać powiadomienia SMS checked</span>
+        <label for="textMessageUpdate" class="toggle">
+          <input type="checkbox" 
+                 name="textMessageUpdate" 
+                 id="textMessageUpdate" 
+                 ng-click="vm.updateTextMessages(false)"
+                 checked>
+          <span class="handle"></span>
+        </label>
+      </div>
+      <div ng-if="!vm.textMessages()">
+        <span>Czy chcesz otrzymywać powiadomienia SMS</span>
+        <label for="textMessageUpdate" class="toggle">
+          <input type="checkbox" 
+                 name="textMessageUpdate" 
+                 id="textMessageUpdate" 
+                 ng-click="vm.updateTextMessages(true)">
+          <span class="handle"></span>
+        </label>
+      </div>
+    </fieldset>
+  </form>
+  <button ng-click="vm.smsStatus()">sms status</button>
+</div>

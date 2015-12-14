@@ -8,23 +8,20 @@
  * Service in the registrationApp.
  */
 angular.module('registrationApp')
-  .service('user', function ($q, $location, $rootScope) {
+  .service('user', function ($q, $rootScope) {
 
-  var currUser = Parse.User.current();
-  var isLogged;
+  var currUser = Parse.User.current(), isLogged;
 
   return {
     userData: function () {
-      if(!angular.isDefined(currUser)) {
-        currUser = Parse.User.current();
-      }
-      return currUser;
-    },
-    setUser: function(user) {
-      currUser = user;
+      Parse.User.current().fetch().then( function(user) {
+        currUser = user;
+
+        return currUser;        
+      });
     },
     isLoggedIn: function() {
-      if (Parse.User.current()) {
+      if (currUser) {
         isLogged = true;
       } else {
         isLogged = false;
@@ -33,21 +30,28 @@ angular.module('registrationApp')
     },
     logOut: function() {
       var q = $q.defer();
-      
+
       Parse.User.logOut().then( function(result) {
+        currUser = null;
         q.resolve(result);
-        $location.path('/');
       });
-      
+
       return q.promise;
     },
     userFirstName: function() {
-      if (currUser) {
-        return currUser.get('firstName');        
-      }
+      return currUser.get('firstName');        
     },
     userLastName: function() {
       return currUser.get('lastName');
+    },
+    userPhone: function() {
+      return currUser.get('phone');
+    },
+    userEmail: function() {
+      return currUser.get('email');
+    },
+    userIsTextMessages: function() {
+      return currUser.get('textMessages');
     },
     isAdmin: function() {
       $rootScope.setLoading();
@@ -91,7 +95,7 @@ angular.module('registrationApp')
       var self = this;
       Parse.User.logIn(email, pass).then(function(result) {
         //$rootScope.unsetLoading();
-        self.setUser(result);
+        self.userData();
         q.resolve(result);
       }, function(error) {
         //$rootScope.unsetLoading();
@@ -105,7 +109,7 @@ angular.module('registrationApp')
         //$rootScope.setLoading();
 
         var q = $q.defer();
-        
+
         var user = new Parse.User();
         user.set('email', form.email);
         user.set('username', form.email);
@@ -151,15 +155,21 @@ angular.module('registrationApp')
 
       return q.promise;
     },
+    setTextMessages: function(set) {
+      var self = this;
+
+      currUser.set('textMessages',set);
+      self.saveUserData();
+    },
     // save user data after setting properites
     saveUserData : function () {
+      var self = this;
+
       currUser.save(null, {
         success: function(user) {
-          // TODO
-          // - show notification in UI  (also error message)                
+          self.userData();
         },
-        error: function(error) {
-          // Show the error message somewhere
+        error: function(user, error) {
           alert("Error: " + error.code + " " + error.message);
         }
       });

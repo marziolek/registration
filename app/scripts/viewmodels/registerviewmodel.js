@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('registerViewModel', function ($location, user) {
+  .factory('registerViewModel', function ($state, user) {
 
   var RegisterAPI = function() {};
   
@@ -40,7 +40,7 @@ angular.module('registrationApp')
   };
 
   RegisterAPI.prototype.goToLoginPage = function() {
-    $location.path('login');
+    $state.go('login');
   };
 
   return new RegisterAPI();

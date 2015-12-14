@@ -7,7 +7,7 @@
 
       <div class="navbar-right">
         <a ui-sref="login" ng-if="!vm.isLoggedIn()" class="btn">Zaloguj</a>
-        <span ng-if="vm.isLoggedIn()">
+        <span ng-if="vm.isLoggedIn()" class="navbar-user">
           Witaj, 
           <a ui-sref="profile">{{vm.name()}}</a>
         </span>

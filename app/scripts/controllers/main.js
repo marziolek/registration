@@ -69,7 +69,7 @@ angular.module('registrationApp')
       lang: 'pl',
       minTime: '14:00:00',
       maxTime: '20:00:00',
-      height: windowH,
+      height: windowH - 50,
       editable: false,
       header: {
         right: 'today prev,next'

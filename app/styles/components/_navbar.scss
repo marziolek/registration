@@ -2,6 +2,24 @@
 // Components - Navbar
 //------------------------------------------------------------------------------
 
+header-main {
+  position: fixed;
+  display: block;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
 .navbar {
   background-color: $c-violet-dark;
+  
+  &-right {
+    height: $space * 2.5;
+    line-height: $space * 2.5;
+  }
+  
+  &-user {
+    margin-right: $space / 2;
+  }
 }

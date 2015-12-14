@@ -1,0 +1,14 @@
+
+// Overwrites - Bootstrap overwrite
+//------------------------------------------------------------------------------
+
+.navbar {
+  margin-bottom: 0;
+  border: none;
+}
+
+@media (min-width: $sm) {
+  .navbar {
+    border-radius: 0;
+  }
+}

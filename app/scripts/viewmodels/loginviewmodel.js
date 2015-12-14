@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('loginViewModel', function ($location, user) {
+  .factory('loginViewModel', function ($state, user) {
 
   var LoginAPI = function() {};
 
@@ -17,36 +17,28 @@ angular.module('registrationApp')
     user.isVerified(form.email).then(function(result) {
       if (result) {
         user.logIn(form.email, form.password).then(function(result) {
-          //$rootScope.unsetLoading();
           self.errorMessage = false;
+          user.userData()
           self.goToCalendar();
         }, function(error) {
           var errorFirstLetterUppercase = error.substr(0, 1).toUpperCase() + error.substr(1);
           self.errorMessage = errorFirstLetterUppercase;
         });
       } else {
-        //$rootScope.unsetLoading();
         self.errorMessage = false;
         self.toggleVerified = true;
       }
     }, function(error) {
-      //$rootScope.unsetLoading();
       console.log(error);
       self.errorMessage = 'No such user';
       self.toggleVerified = false;
     });
   };
-
-  LoginAPI.prototype.currentUser = function() {
-    return user.userData();
-  };
   
-  LoginAPI.prototype.isLoggedIn = function() {
-    return user.isLoggedIn();
-  };
+  LoginAPI.prototype.isLoggedIn = user.isLoggedIn();
 
   LoginAPI.prototype.goToCalendar = function() {
-    $location.path('/');
+    $state.go('home');
   };
 
   return new LoginAPI();

@@ -17,14 +17,11 @@ body {
 
 body {
   padding: 0;
+  padding-top: $space * 2.5;
   margin: 0;
 }
 
-.taken {
-  opacity: .3;
+p {
+  line-height: 2;
+  vertical-align: middle;
 }
-
-.free {
-  cursor: pointer;
-}
-

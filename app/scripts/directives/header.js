@@ -14,6 +14,7 @@ angular.module('registrationApp')
     restrict: 'E',
     link: function postLink(scope) {
       scope.vm = headerViewModel;
+      scope.vm.isLoggedIn();
     }
   };
 });

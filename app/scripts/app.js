@@ -51,7 +51,34 @@ angular
     url: "/profile",
     templateUrl: 'views/profile.html',
     controller: 'ProfileCtrl',
-    controllerAs: 'profile'
+    controllerAs: 'profile',
+    params: {
+      acl: true
+    }
   });
+})
+  .run( function($rootScope, user, $state) {
 
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    if (!user.isLoggedIn()) {
+      var acl = toParams.acl;
+
+      if (acl) {
+        event.preventDefault();
+        $state.go('login');
+      } 
+      /*if (next.templateUrl !== 'views/login.html' && next.templateUrl !== 'views/register.html' && next.templateUrl !== 'views/main.html' && next.templateUrl !== 'views/reset_password.html') {
+        $location.path('/user/login');
+      }*/
+    } else {/*
+      user.isAdmin().then(function(result) {
+        if (!result && next.templateUrl == "views/admin.html") {
+          $location.path("/");
+        }
+      });
+      if (next.templateUrl === 'views/login.html' || next.templateUrl === 'views/register.html') {
+        $location.path('/user/profile');
+      }*/
+    }
+  });
 });
