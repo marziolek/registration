@@ -8,12 +8,13 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('AdminCtrl', function ($scope, adminViewModel, uiCalendarConfig, calendar, $log) {
+  .controller('AdminCtrl', function ($scope, adminViewModel, calendar) {
 
   $scope.vm = adminViewModel;
   $scope.vm.checkIfAdmin();
+  $scope.vm.getWeeksAvailable();
 
-  $scope.dailySchedule = [];
+  $scope.dailySchedule = [], $scope.isCalendarVisible = false;
   calendar.getSchedule().then( function(result) {
     angular.forEach(result, function(val, key) {
       $scope.dailySchedule.push(val);
@@ -59,6 +60,7 @@ angular.module('registrationApp')
   $scope.events = [events];
 
   var initCalendar = function() {
+    $scope.isCalendarVisible = true;
     $scope.config = {
       calendar:{
         defaultView: 'agendaWeek',
@@ -80,4 +82,8 @@ angular.module('registrationApp')
     };  
   }
 
-  });
+  $scope.updateWeeks = function(weeks) {
+    $scope.vm.updateWeeksAvailable(weeks);
+  };
+
+});

@@ -1,15 +1,18 @@
 <div ng-if="vm.isAdmin">
-  <div ui-calendar="config.calendar" ng-model="events" calendar="adminCalendar"></div>
-  <form name="weeksForm" novalidate class="col-md-4"> 
+  <div ui-calendar="config.calendar" ng-model="events" calendar="adminCalendar" ng-if="isCalendarVisible"></div>
+  <form name="weeksForm" novalidate class="col-md-4" ng-submit="updateWeeks(weeks)"> 
     <fieldset>
       <div class="form-group">
         <label for="comment">Ilość dostępnych tygodni</label>
         <input type="number" 
                name="weeks" 
                id="weeks" 
-               class="form-control">
+               class="form-control"
+               value="{{vm.weeksAvailable}}"
+               ng-model="weeks"
+               ng-change="enableSubmit = true">
       </div>
     </fieldset>
-    <button type="submit" class="btn btn-success">Zapisz</button>
+    <button type="submit" class="btn btn-success" ng-disabled="!enableSubmit">Zapisz</button>
   </form>
 </div>

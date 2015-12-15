@@ -8,9 +8,9 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $log, popup) {
+  .controller('MainCtrl', function ($scope, $rootScope, popup, calendar) {
 
- /* $scope.eventRender = function(event, element, view ) {
+  /* $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
                   'tooltip-append-to-body': true});
     $compile(element)($scope);
@@ -25,6 +25,15 @@ angular.module('registrationApp')
       }
     }
   };
+
+  $scope.dailySchedule = [], $scope.isCalendarVisible = false;
+  calendar.getSchedule().then( function(result) {
+    angular.forEach(result, function(val, key) {
+      $scope.dailySchedule.push(val);
+    });
+
+    initCalendar();
+  });
 
   var windowH = $(window).height(),
       date = new Date(),
@@ -62,24 +71,27 @@ angular.module('registrationApp')
 
   $scope.events = [events];
 
-  $scope.config = {
-    calendar:{
-      defaultView: 'agendaWeek',
-      defaultTimedEventDuration: '00:30:00',
-      lang: 'pl',
-      minTime: '14:00:00',
-      maxTime: '20:00:00',
-      height: windowH - 50,
-      editable: false,
-      header: {
-        right: 'today prev,next'
-      },
-      /*viewRender: function(view, element) {
+  var initCalendar = function() {
+    $scope.isCalendarVisible = true;
+    $scope.config = {
+      calendar:{
+        defaultView: 'agendaWeek',
+        defaultTimedEventDuration: '00:30:00',
+        lang: 'pl',
+        height: 'auto',
+        minTime: $scope.dailySchedule[0],
+        maxTime: $scope.dailySchedule[1],
+        editable: false,
+        header: {
+          right: 'today prev,next'
+        },
+        /*viewRender: function(view, element) {
         $log.debug("View Changed: ", view.visStart, view.visEnd, view.start, view.end);
       },*/
-      eventClick: $scope.takeEvent,
-      eventRender: $scope.eventRender
-    }
-  };
+        eventClick: $scope.takeEvent,
+        eventRender: $scope.eventRender
+      }
+    };  
+  }
 
-});
+  });
