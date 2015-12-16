@@ -1,5 +1,8 @@
-<div ng-if="vm.isAdmin" class="clearfix">
-  <div ui-calendar="config.calendar" ng-model="events" calendar="adminCalendar" ng-if="isCalendarVisible"></div>
+<div ng-if="vm.isAdmin" class="admin-panel clearfix">
+  <div ui-calendar="config.calendar" 
+       ng-model="events" 
+       calendar="adminCalendar" 
+       ng-if="isCalendarVisible"></div>
   <div class="row row-space">
     <form name="weeksForm" novalidate class="col-md-4" ng-submit="updateWeeks(weeks)"> 
       <fieldset>

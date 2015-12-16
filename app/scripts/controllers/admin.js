@@ -14,11 +14,17 @@ angular.module('registrationApp')
   $scope.vm.checkIfAdmin();
   $scope.vm.getWeeksAvailable();
 
-  $scope.dailySchedule = [], $scope.isCalendarVisible = false;
+  $scope.dailySchedule, $scope.minMaxHours = [], $scope.isCalendarVisible = false;
 
   calendar.getSchedule().then( function(result) {
-    angular.forEach(result, function(val, key) {
-      $scope.dailySchedule.push(val);
+    $scope.dailySchedule = result;
+    
+    $scope.events = [$scope.vm.eventsFromSchedule($scope.dailySchedule)];
+
+    calendar.getMinMaxWorkHours($scope.dailySchedule).then( function(result) {
+      angular.forEach(result, function(val, key) {
+        $scope.minMaxHours.push(val);
+      });
     });
 
     settings.visitDuration().then( function(result) {
@@ -31,7 +37,7 @@ angular.module('registrationApp')
 
   var formatDuration = function(duration) {
     var l = duration.toString().length, formatted;
-    
+
     switch(l) {
       case 1:
         formatted = '00:0' + duration + ':00';
@@ -46,7 +52,7 @@ angular.module('registrationApp')
         formatted = '00:30:00';
         break;
     };
-    
+
     return formatted;
   };
 
@@ -55,41 +61,6 @@ angular.module('registrationApp')
   };
 
   //calendar 
-  var date = new Date(),
-      d = date.getDate(),
-      m = date.getMonth(),
-      y = date.getFullYear(),
-      events = [
-        {start: new Date(y, m, d), className: 'taken'},
-        {start: new Date(y, m, d, 14), className: 'taken'},
-        {start: new Date(y, m, d, 14, 30), className: 'taken'},
-        {start: new Date(y, m, d, 15), className: 'taken'},
-        {start: new Date(y, m, d, 15, 30), className: 'taken'},
-        {start: new Date(y, m, d, 16), className: 'taken'},
-        {start: new Date(y, m, d, 16, 30), className: 'taken'},
-        {start: new Date(y, m, d, 17), className: 'taken'},
-        {start: new Date(y, m, d, 17, 30), className: 'taken'},
-        {start: new Date(y, m, d, 18), className: 'taken'},
-        {start: new Date(y, m, d, 18, 30), className: 'taken'},
-        {start: new Date(y, m, d, 19), className: 'taken'},
-        {start: new Date(y, m, d, 19, 30), className: 'taken'},
-        {start: new Date(y, m, d + 1), className: 'free'},
-        {start: new Date(y, m, d + 1, 14), className: 'free'},
-        {start: new Date(y, m, d + 1, 14, 30), className: 'taken'},
-        {start: new Date(y, m, d + 1, 15), className: 'free'},
-        {start: new Date(y, m, d + 1, 15, 30), className: 'taken'},
-        {start: new Date(y, m, d + 1, 16), className: 'free'},
-        {start: new Date(y, m, d + 1, 16, 30), className: 'free'},
-        {start: new Date(y, m, d + 1, 17), className: 'taken'},
-        {start: new Date(y, m, d + 1, 17, 30), className: 'free'},
-        {start: new Date(y, m, d + 1, 18), className: 'taken'},
-        {start: new Date(y, m, d + 1, 18, 30), className: 'taken'},
-        {start: new Date(y, m, d + 1, 19), className: 'free'},
-        {start: new Date(y, m, d + 1, 19, 30), className: 'taken'},
-      ];
-
-  $scope.events = [events];
-
   var initCalendar = function() {
     $scope.isCalendarVisible = true;
     $scope.config = {
@@ -98,8 +69,8 @@ angular.module('registrationApp')
         defaultTimedEventDuration: $scope.visitDurationFormatted,
         lang: 'pl',
         height: 'auto',
-        minTime: $scope.dailySchedule[0],
-        maxTime: $scope.dailySchedule[1],
+        minTime: $scope.minMaxHours[0],
+        maxTime: $scope.minMaxHours[1],
         editable: false,
         header: {
           right: 'today prev,next'

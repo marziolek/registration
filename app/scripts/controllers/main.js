@@ -26,10 +26,15 @@ angular.module('registrationApp')
     }
   };
 
-  $scope.dailySchedule = [], $scope.isCalendarVisible = false;
+  $scope.dailySchedule, $scope.minMaxHours = [], $scope.isCalendarVisible = false;
+
   calendar.getSchedule().then( function(result) {
-    angular.forEach(result, function(val, key) {
-      $scope.dailySchedule.push(val);
+    $scope.dailySchedule = result;
+
+    calendar.getMinMaxWorkHours($scope.dailySchedule).then( function(result) {
+      angular.forEach(result, function(val, key) {
+        $scope.minMaxHours.push(val);
+      });
     });
 
     settings.visitDuration().then( function(result) {
@@ -109,8 +114,8 @@ angular.module('registrationApp')
         defaultTimedEventDuration: $scope.visitDurationFormatted,
         lang: 'pl',
         height: 'auto',
-        minTime: $scope.dailySchedule[0],
-        maxTime: $scope.dailySchedule[1],
+        minTime: $scope.minMaxHours[0],
+        maxTime: $scope.minMaxHours[1],
         editable: false,
         header: {
           right: 'today prev,next'

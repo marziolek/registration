@@ -13,3 +13,9 @@
 .free {
   cursor: pointer;
 }
+
+.fc-event {
+  &.availability {
+    background-color: blue;
+  }
+}
