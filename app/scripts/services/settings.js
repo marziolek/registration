@@ -49,6 +49,40 @@ angular.module('registrationApp')
       });
 
       return q.promise;
+    },
+
+    visitDuration: function() {
+      var q = $q.defer();
+
+      Parse.Cloud.run('getDefaultVisitDuration').then( function(result) {
+        q.resolve(result);
+      });
+
+      return q.promise;
+    },
+
+    updateVisitDuration: function(value) {
+      var q = $q.defer(), settings = Parse.Object.extend('Settings'), query = new Parse.Query(settings);
+
+      query.equalTo('name', 'visitDuration');
+      query.first({
+        success: function(visitDuration) {
+          visitDuration.save({duration: value}, {
+            success: function(result) {
+              console.log(value);
+              q.resolve(result);
+            },
+            error: function(error) {
+              alert("Error: " + error.code + " " + error.message);    
+            }
+          });
+        },
+        error: function(error) {
+          alert("Error: " + error.code + " " + error.message);    
+        }
+      });
+
+      return q.promise;
     }
   };
 

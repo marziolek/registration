@@ -34,6 +34,12 @@ angular.module('registrationApp')
     settings.updateWeeksAvailable(value).then( function(result) {
       console.log(result);
     });
+  };
+    
+  AdminAPI.prototype.updateVisitDuration = function(value) {
+    settings.updateVisitDuration(value).then( function(result) {
+      console.log(result);
+    });
   }
   
   return new AdminAPI();

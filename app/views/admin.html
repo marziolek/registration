@@ -1,18 +1,73 @@
-<div ng-if="vm.isAdmin">
+<div ng-if="vm.isAdmin" class="clearfix">
   <div ui-calendar="config.calendar" ng-model="events" calendar="adminCalendar" ng-if="isCalendarVisible"></div>
-  <form name="weeksForm" novalidate class="col-md-4" ng-submit="updateWeeks(weeks)"> 
-    <fieldset>
-      <div class="form-group">
-        <label for="comment">Ilość dostępnych tygodni</label>
-        <input type="number" 
-               name="weeks" 
-               id="weeks" 
-               class="form-control"
-               value="{{vm.weeksAvailable}}"
-               ng-model="weeks"
-               ng-change="enableSubmit = true">
+  <div class="row row-space">
+    <form name="weeksForm" novalidate class="col-md-4" ng-submit="updateWeeks(weeks)"> 
+      <fieldset>
+        <div class="form-group">
+          <label for="weeks">Ilość dostępnych tygodni</label>
+          <input type="number" 
+                 name="weeks" 
+                 id="weeks" 
+                 class="form-control"
+                 value="{{vm.weeksAvailable}}"
+                 ng-model="weeks"
+                 ng-change="enableSubmitWeeks = true">
+        </div>
+      </fieldset>
+      <button type="submit" class="btn btn-success" ng-disabled="!enableSubmitWeeks">Zapisz</button>
+    </form>
+  </div>
+  <div class="row row-space">
+    <form name="visitDurationForm" novalidate class="col-md-4" ng-submit="updateVisitDuration(visitDuration)"> 
+      <fieldset>
+        <div class="form-group">
+          <label for="visitDuration">Czas trwania wizyty (w minutach)</label>
+          <input type="number" 
+                 name="visitDuration" 
+                 id="visitDuration" 
+                 class="form-control"
+                 value="{{visitDuration}}"
+                 ng-model="visitDuration"
+                 ng-change="enableSubmitVisit = true">
+        </div>
+      </fieldset>
+      <button type="submit" class="btn btn-success" ng-disabled="!enableSubmitVisit">Zapisz</button>
+    </form>
+  </div>
+  <div class="row row-space">
+    <form name="serviceForm" novalidate class="col-xs-12" ng-submit="">
+      <div class="row">
+        <p class="col-xs-12 col-sm-8"><strong>Nazwa usługi</strong></p>
+        <p class="col-xs-12 col-sm-4"><strong>Cena</strong></p>
       </div>
-    </fieldset>
-    <button type="submit" class="btn btn-success" ng-disabled="!enableSubmit">Zapisz</button>
-  </form>
+      <fieldset class="row">
+        <div class="form-group col-xs-12 col-sm-8">
+          <input type="text" 
+                 name="" 
+                 id="" 
+                 class="form-control"
+                 value=""
+                 ng-model="service.name">
+        </div>
+        <div class="form-group col-xs-6 col-sm-2">
+          <input type="text" 
+                 name="" 
+                 id="" 
+                 class="form-control"
+                 value=""
+                 ng-model="service.priceFrom">
+        </div>
+        <div class="form-group col-xs-6 col-sm-2">
+          <input type="text" 
+                 name="" 
+                 id="" 
+                 class="form-control"
+                 value=""
+                 ng-model="service.priceTo">
+        </div>
+      </fieldset>
+      <button type="button" class="btn btn-primary">Dodaj usługę</button>
+      <button type="submit" class="btn btn-success">Zapisz</button>
+    </form>
+  </div>
 </div>

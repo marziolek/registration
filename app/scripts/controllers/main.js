@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, popup, calendar) {
+  .controller('MainCtrl', function ($scope, $rootScope, popup, calendar, settings) {
 
   /* $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
@@ -32,8 +32,38 @@ angular.module('registrationApp')
       $scope.dailySchedule.push(val);
     });
 
-    initCalendar();
+    settings.visitDuration().then( function(result) {
+      $scope.visitDuration = result.attributes.duration;
+      $scope.visitDurationFormatted = formatDuration($scope.visitDuration);
+
+      initCalendar();
+    });
   });
+
+  var formatDuration = function(duration) {
+    var l = duration.toString().length, formatted;
+
+    switch(l) {
+      case 1:
+        formatted = '00:0' + duration + ':00';
+        break;
+      case 2:
+        formatted = '00:' + duration + ':00';
+        break;
+      case 3:
+        formatted = padTwoDigits(parseInt(duration % 60)) + ':' + padTwoDigits(duration % 60) + ':00';
+        break;
+      default: 
+        formatted = '00:30:00';
+        break;
+    };
+
+    return formatted;
+  };
+
+  var padTwoDigits = function(number) {
+    return (number < 10 ? '0' : '') + number;
+  };
 
   var windowH = $(window).height(),
       date = new Date(),
@@ -76,7 +106,7 @@ angular.module('registrationApp')
     $scope.config = {
       calendar:{
         defaultView: 'agendaWeek',
-        defaultTimedEventDuration: '00:30:00',
+        defaultTimedEventDuration: $scope.visitDurationFormatted,
         lang: 'pl',
         height: 'auto',
         minTime: $scope.dailySchedule[0],

@@ -8,20 +8,51 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('AdminCtrl', function ($scope, adminViewModel, calendar) {
+  .controller('AdminCtrl', function ($scope, adminViewModel, calendar, settings) {
 
   $scope.vm = adminViewModel;
   $scope.vm.checkIfAdmin();
   $scope.vm.getWeeksAvailable();
 
   $scope.dailySchedule = [], $scope.isCalendarVisible = false;
+
   calendar.getSchedule().then( function(result) {
     angular.forEach(result, function(val, key) {
       $scope.dailySchedule.push(val);
     });
 
-    initCalendar();
+    settings.visitDuration().then( function(result) {
+      $scope.visitDuration = result.attributes.duration;
+      $scope.visitDurationFormatted = formatDuration($scope.visitDuration);
+
+      initCalendar();
+    });
   });
+
+  var formatDuration = function(duration) {
+    var l = duration.toString().length, formatted;
+    
+    switch(l) {
+      case 1:
+        formatted = '00:0' + duration + ':00';
+        break;
+      case 2:
+        formatted = '00:' + duration + ':00';
+        break;
+      case 3:
+        formatted = padTwoDigits(parseInt(duration % 60)) + ':' + padTwoDigits(duration % 60) + ':00';
+        break;
+      default: 
+        formatted = '00:30:00';
+        break;
+    };
+    
+    return formatted;
+  };
+
+  var padTwoDigits = function(number) {
+    return (number < 10 ? '0' : '') + number;
+  };
 
   //calendar 
   var date = new Date(),
@@ -64,7 +95,7 @@ angular.module('registrationApp')
     $scope.config = {
       calendar:{
         defaultView: 'agendaWeek',
-        defaultTimedEventDuration: '00:30:00',
+        defaultTimedEventDuration: $scope.visitDurationFormatted,
         lang: 'pl',
         height: 'auto',
         minTime: $scope.dailySchedule[0],
@@ -84,6 +115,10 @@ angular.module('registrationApp')
 
   $scope.updateWeeks = function(weeks) {
     $scope.vm.updateWeeksAvailable(weeks);
+  };
+
+  $scope.updateVisitDuration = function(duration) {
+    $scope.vm.updateVisitDuration(duration);
   };
 
 });
