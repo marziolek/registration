@@ -13,13 +13,31 @@ header-main {
 
 .navbar {
   background-color: $c-violet-dark;
-  
+
   &-right {
     height: $space * 2.5;
     line-height: $space * 2.5;
   }
-  
+
   &-user {
     margin-right: $space / 2;
+    color: $c-gray;
+  }
+
+  a {
+    color: $c-gray-xlight;
+
+    &:hover {
+      color: $c-gray-light;
+    }
+  }
+}
+
+/* from sm */
+@media (min-width: $sm) {
+  .navbar {
+    &-right {
+      margin-right: 0;
+    }
   }
 }

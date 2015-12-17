@@ -6,10 +6,21 @@
 @import 'commons/structure';
 
 // components
-@import 'components/calendar';
 @import 'components/navbar';
+@import 'components/buttons';
+@import 'components/calendar';
+@import 'components/calendar_navigation';
 @import 'components/form';
 
 // overwrites
 @import 'overwrites/calendar_overwrite';
 @import 'overwrites/bootstrap_overwrite';
+
+// plugins
+@import 'plugins/bootflat/global';
+@import 'plugins/bootflat/button';
+@import 'plugins/bootflat/button_group';
+@import 'plugins/bootflat/navbar';
+@import 'plugins/bootflat/typography';
+@import 'plugins/bootflat/toggle';
+@import 'plugins/bootflat/form';

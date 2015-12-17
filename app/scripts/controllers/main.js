@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('MainCtrl', function ($scope, $rootScope, popup, calendar, settings) {
+  .controller('MainCtrl', function ($scope, $rootScope, mainViewModel, popup, calendar, settings) {
 
   /* $scope.eventRender = function(event, element, view ) {
     element.attr({'tooltip': event.description,
@@ -16,6 +16,10 @@ angular.module('registrationApp')
     $compile(element)($scope);
   };*/
 
+  $scope.vm = mainViewModel;
+  $scope.vm.getWeeksAvailable();
+  
+  
   $scope.takeEvent = function(element) {
     var cssClass = element.className[0];
 
@@ -118,7 +122,7 @@ angular.module('registrationApp')
         maxTime: $scope.minMaxHours[1],
         editable: false,
         header: {
-          right: 'today prev,next'
+          right: ''
         },
         /*viewRender: function(view, element) {
         $log.debug("View Changed: ", view.visStart, view.visEnd, view.start, view.end);

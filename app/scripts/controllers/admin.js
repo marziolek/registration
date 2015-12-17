@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('AdminCtrl', function ($scope, adminViewModel, calendar, settings) {
+  .controller('AdminCtrl', function ($scope, adminViewModel, calendar, settings, $log) {
 
   $scope.vm = adminViewModel;
   $scope.vm.checkIfAdmin();
@@ -18,7 +18,7 @@ angular.module('registrationApp')
 
   calendar.getSchedule().then( function(result) {
     $scope.dailySchedule = result;
-    
+
     $scope.events = [$scope.vm.eventsFromSchedule($scope.dailySchedule)];
 
     calendar.getMinMaxWorkHours($scope.dailySchedule).then( function(result) {
@@ -71,13 +71,13 @@ angular.module('registrationApp')
         height: 'auto',
         minTime: $scope.minMaxHours[0],
         maxTime: $scope.minMaxHours[1],
-        editable: false,
+        editable: true,
         header: {
-          right: 'today prev,next'
-        },
-        /*viewRender: function(view, element) {
-        $log.debug("View Changed: ", view.visStart, view.visEnd, view.start, view.end);
-      },*/
+          right: ''
+        },/*
+        viewRender: function(view, element) {
+          $log.debug(element);
+        },*/
         eventClick: $scope.takeEvent,
         eventRender: $scope.eventRender
       }
@@ -92,4 +92,5 @@ angular.module('registrationApp')
     $scope.vm.updateVisitDuration(duration);
   };
 
+  
 });

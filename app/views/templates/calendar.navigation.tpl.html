@@ -1,0 +1,13 @@
+<div class="calendar-nav">
+  <button type="button" ng-click="goTo('today')" class="btn">
+    <span class="btn-text">Dzisiaj</span>
+  </button>
+  <button type="button" ng-click="goTo('prev')" class="btn" ng-disabled="disableBtnPrev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="btn-hidden-text">Prev week</span>
+  </button>
+  <button type="button" ng-click="goTo('next')" class="btn" ng-disabled="disableBtnNext">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="btn-hidden-text">Next week</span>
+  </button>
+</div>

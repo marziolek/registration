@@ -6,14 +6,14 @@
       </div>
 
       <div class="navbar-right">
-        <a ui-sref="login" ng-if="!vm.isLoggedIn()" class="btn">Zaloguj</a>
+        <a ui-sref="login" ng-if="!vm.isLoggedIn()" class="btn btn-primary">Zaloguj</a>
         <span ng-if="vm.isLoggedIn()" class="navbar-user">
           Witaj, 
           <a ui-sref="profile">{{vm.name()}}</a>
         </span>
-        <a ui-sref="admin" ng-if="vm.isLoggedIn() && vm.isAdmin" class="btn">Panel administratora</a>
-        <button type="button" ng-click="vm.logOut()" ng-if="vm.isLoggedIn()" class="btn">Wyloguj</button>
-        <a ui-sref="register" ng-if="!vm.isLoggedIn()" class="btn">Załóż konto</a>
+        <a ui-sref="admin" ng-if="vm.isLoggedIn() && vm.isAdmin" class="btn btn-primary">Panel administratora</a>
+        <button type="button" ng-click="vm.logOut()" ng-if="vm.isLoggedIn()" class="btn btn-primary">Wyloguj</button>
+        <a ui-sref="register" ng-if="!vm.isLoggedIn()" class="btn btn-primary">Załóż konto</a>
       </div>
     </div>
   </div>

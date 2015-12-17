@@ -2,6 +2,12 @@
 // Components - Calendar
 //------------------------------------------------------------------------------
 
+.calendar {
+  &-wrapper {
+    position: relative;
+  }
+}
+
 .fc-content {
   text-align: center;
 }
@@ -16,6 +22,13 @@
 
 .fc-event {
   &.availability {
-    background-color: blue;
+    background-color: $c-blue;
+    opacity: 0.5
+  }
+}
+
+.admin-panel {
+  .fc-unthemed .fc-today {
+    background: none;
   }
 }

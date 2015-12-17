@@ -37,10 +37,10 @@ module.exports = function(config) {
       'bower_components/angular-ui-calendar/src/calendar.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/bootstrap-css/js/bootstrap.min.js',
+      'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/Bootflat/bootflat/js/icheck.min.js',
       'bower_components/Bootflat/bootflat/js/jquery.fs.selecter.min.js',
       'bower_components/Bootflat/bootflat/js/jquery.fs.stepper.min.js',
-      'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
       "test/mock/**/*.js",
