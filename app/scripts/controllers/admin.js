@@ -13,6 +13,7 @@ angular.module('registrationApp')
   $scope.vm = adminViewModel;
   $scope.vm.checkIfAdmin();
   $scope.vm.getWeeksAvailable();
+  $scope.vm.getAllServices();
 
   $scope.dailySchedule, $scope.minMaxHours = [], $scope.isCalendarVisible = false;
 
@@ -92,5 +93,7 @@ angular.module('registrationApp')
     $scope.vm.updateVisitDuration(duration);
   };
 
-  
+  $scope.sortOptions = {
+    handle: '.sort-handle'
+  }
 });

@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig) {
+  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service) {
 
   var AdminAPI = function() {};
 
@@ -61,6 +61,25 @@ angular.module('registrationApp')
 
   AdminAPI.prototype.goToWeek = function(direction) {
     uiCalendarConfig.calendars.adminCalendar.fullCalendar(direction);
+  };
+
+  AdminAPI.prototype.services = [];
+  AdminAPI.prototype.getAllServices = function() {
+    var self = this;
+    
+    service.getAllServices().then( function(result) {
+      self.services = result;
+    })
+  };
+  
+  AdminAPI.prototype.addServiceInput = function(servicesModel) {
+    servicesModel.push({});
+  };
+  
+  AdminAPI.prototype.saveServicesChanges = function(servicesModel) {
+    service.updateAllServices(servicesModel).then( function(result) {
+      console.log(result);
+    })
   };
 
   return new AdminAPI();

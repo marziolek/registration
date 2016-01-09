@@ -1,0 +1,36 @@
+
+// Components - Admin
+//------------------------------------------------------------------------------
+
+.admin {
+  &-service {
+    &-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &--item {
+        position: relative;
+        min-height: 34px;
+        margin-bottom: $space / 2;
+
+        &-row {
+          margin-left: $space / 2;
+        }
+        
+        .form-group {
+          margin-bottom: 0;
+        }
+      }
+
+      .sort-handle {
+        margin-left: 0;
+        height: 32px;
+        width: $space;
+        float: left;
+        line-height: 32px;
+        text-align: center;
+      }
+    }
+  }
+}
