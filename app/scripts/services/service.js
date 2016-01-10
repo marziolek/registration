@@ -33,6 +33,18 @@ angular.module('registrationApp')
       });
 
       return q.promise;
+    },
+    
+    removeService : function(id) {
+      var q = $q.defer();
+
+      Parse.Cloud.run('removeService', {id: id}).then(function(result){
+        q.resolve(result);
+      }, function(error) {
+        q.reject(error);   
+      });
+
+      return q.promise;
     }
   }
 });

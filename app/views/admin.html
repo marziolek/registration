@@ -46,30 +46,48 @@
   </div>
   <div class="row row-space">
     <form name="serviceForm" novalidate class="col-xs-12" ng-submit="">
-      <div class="row">
-        <p class="col-xs-12 col-sm-8"><strong>Nazwa usługi</strong></p>
+      <div class="row admin-service-legend">
+        <p class="col-xs-12 col-sm-6 admin-service-legend-name"><strong>Nazwa usługi</strong></p>
         <p class="col-xs-12 col-sm-4"><strong>Cena</strong></p>
+        <p class="col-xs-12 col-sm-2 admin-service-legend-status"><strong>Status</strong></p>
       </div>
       <ul ui-sortable="sortOptions" ng-model="vm.services" class="admin-service-list">
-        <li ng-repeat="service in vm.services" class="admin-service-list--item" data-id="{{service.id}}">
+        <li ng-repeat="service in vm.services" class="admin-service-list--item" data-temp-id="{{service.tempId}}" data-id="{{service.id}}">
           <div class="sort-handle glyphicon glyphicon-option-vertical"></div>
           <fieldset class="row admin-service-list--item-row">
-            <div class="form-group col-xs-12 col-sm-8">
+            <div class="form-group col-xs-12 col-sm-6">
               <input type="text" 
                      class="form-control"
                      ng-model="service.name">
             </div>
             <div class="form-group col-xs-6 col-sm-2">
-              <input type="text" 
+              <input type="number" 
                      class="form-control"
                      ng-model="service.priceFrom"
                      placeholder="Od">
             </div>
             <div class="form-group col-xs-6 col-sm-2">
-              <input type="text" 
+              <input type="number" 
                      class="form-control"
                      ng-model="service.priceTo"
                      placeholder="Do">
+            </div>
+            <div class="form-group col-xs-6 col-sm-1">
+              <label for="isActiveCheckbox{{$index}}" class="toggle">
+                <input type="checkbox" 
+                       name="isActiveCheckbox{{$index}}"
+                       id="isActiveCheckbox{{$index}}"
+                       ng-click="vm.updateTextMessages(false)"
+                       ng-model="service.isActive"
+                       checked>
+                <span class="handle"></span>
+              </label>
+            </div>
+            <div class="form-group col-xs-6 col-sm-1">
+              <button type="button" 
+                      ng-click="vm.removeService(service.id, service.tempId, vm.services)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
             </div>
           </fieldset>
         </li>
