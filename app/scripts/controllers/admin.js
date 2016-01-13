@@ -94,6 +94,10 @@ angular.module('registrationApp')
   };
 
   $scope.sortOptions = {
-    handle: '.sort-handle'
-  }
+    handle: '.sort-handle',
+    stop: function(e, ui) {
+      $scope.vm.setServicesNewOrder();
+    }
+  };
+  
 });

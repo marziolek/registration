@@ -76,7 +76,7 @@ angular.module('registrationApp')
   AdminAPI.prototype.addServiceInput = function(servicesModel) {
     var self = this;
 
-    servicesModel.push({tempId: self.newServiceInputCount += 1});
+    servicesModel.push({tempId: self.newServiceInputCount += 1, order: servicesModel.length});
   };
 
   AdminAPI.prototype.saveServicesChanges = function(servicesModel) {
@@ -111,6 +111,14 @@ angular.module('registrationApp')
         })
       })
     }
+  };
+
+  AdminAPI.prototype.setServicesNewOrder = function() {
+    var self = this;
+    
+    angular.forEach(self.services, function(obj, index) {
+      obj.order = index;
+    });
   };
 
   return new AdminAPI();

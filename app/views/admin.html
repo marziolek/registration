@@ -49,10 +49,10 @@
       <div class="row admin-service-legend">
         <p class="col-xs-12 col-sm-6 admin-service-legend-name"><strong>Nazwa usługi</strong></p>
         <p class="col-xs-12 col-sm-4"><strong>Cena</strong></p>
-        <p class="col-xs-12 col-sm-2 admin-service-legend-status"><strong>Status</strong></p>
+        <p class="col-xs-12 col-sm-2 admin-service-legend-status"><strong>Aktywność</strong></p>
       </div>
       <ul ui-sortable="sortOptions" ng-model="vm.services" class="admin-service-list">
-        <li ng-repeat="service in vm.services" class="admin-service-list--item" data-temp-id="{{service.tempId}}" data-id="{{service.id}}">
+        <li ng-repeat="service in vm.services" class="admin-service-list--item" data-temp-id="{{service.tempId}}" data-id="{{service.id}}" data-order="{{service.order}}">
           <div class="sort-handle glyphicon glyphicon-option-vertical"></div>
           <fieldset class="row admin-service-list--item-row">
             <div class="form-group col-xs-12 col-sm-6">
@@ -94,6 +94,7 @@
       </ul>
       <button type="button" class="btn btn-primary" ng-click="vm.addServiceInput(vm.services)">Dodaj usługę</button>
       <button type="submit" class="btn btn-primary" ng-click="vm.saveServicesChanges(vm.services)">Zapisz</button>
+      <p>{{vm.sortedList}}</p>
     </form>
   </div>
 </div>
