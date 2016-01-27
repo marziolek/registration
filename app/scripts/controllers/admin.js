@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('AdminCtrl', function ($scope, adminViewModel, calendar, settings, $log) {
+  .controller('AdminCtrl', function ($scope, adminViewModel, calendar, settings, $compile, uiCalendarConfig) {
 
   $scope.vm = adminViewModel;
   $scope.vm.checkIfAdmin();
@@ -19,8 +19,9 @@ angular.module('registrationApp')
 
   calendar.getSchedule().then( function(result) {
     $scope.dailySchedule = result;
+    $scope.vm.events = $scope.vm.eventsFromSchedule($scope.dailySchedule);
 
-    $scope.events = [$scope.vm.eventsFromSchedule($scope.dailySchedule)];
+    $scope.vm.eventSources = [$scope.vm.events];
 
     calendar.getMinMaxWorkHours($scope.dailySchedule).then( function(result) {
       angular.forEach(result, function(val, key) {
@@ -57,8 +58,8 @@ angular.module('registrationApp')
     return formatted;
   };
 
-  var padTwoDigits = function(number) {
-    return (number < 10 ? '0' : '') + number;
+  var padTwoDigits = function(digit) {
+    return $scope.vm.padTwoDigits(digit);
   };
 
   //calendar 
@@ -72,18 +73,25 @@ angular.module('registrationApp')
         height: 'auto',
         minTime: $scope.minMaxHours[0],
         maxTime: $scope.minMaxHours[1],
-        editable: true,
+        editable: false,
         header: {
           right: ''
-        },/*
+        },
+        eventRender: $scope.eventRender,
+        /*
         viewRender: function(view, element) {
           $log.debug(element);
         },*/
-        eventClick: $scope.takeEvent,
-        eventRender: $scope.eventRender
+        eventClick: function(view, element) {
+          $scope.vm.showEditWorkHours(view);
+        }
       }
     };  
-  }
+  };
+
+  $scope.eventRender = function( event, element ) { 
+    element.find('.fc-content').append('<span class="edit-event">Edytuj</span>');
+  };
 
   $scope.updateWeeks = function(weeks) {
     $scope.vm.updateWeeksAvailable(weeks);
@@ -99,5 +107,4 @@ angular.module('registrationApp')
       $scope.vm.setServicesNewOrder();
     }
   };
-  
 });

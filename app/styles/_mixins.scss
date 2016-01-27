@@ -1,0 +1,8 @@
+
+// Mixins
+//------------------------------------------------------------------------------
+
+@mixin transition($attribute, $time, $easing) {
+  -webkit-transition: $attribute $time $easing;
+  transition: $attribute $time $easing;
+}

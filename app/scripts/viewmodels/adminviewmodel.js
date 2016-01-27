@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter) {
+  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day) {
 
   var AdminAPI = function() {};
 
@@ -20,6 +20,9 @@ angular.module('registrationApp')
       self.isAdmin = result;
     });
   };
+
+  AdminAPI.prototype.events = [];
+  AdminAPI.prototype.eventSources = [];
 
   AdminAPI.prototype.weeksAvailable;
   AdminAPI.prototype.getWeeksAvailable = function() {
@@ -115,10 +118,76 @@ angular.module('registrationApp')
 
   AdminAPI.prototype.setServicesNewOrder = function() {
     var self = this;
-    
+
     angular.forEach(self.services, function(obj, index) {
       obj.order = index;
     });
+  };
+
+  AdminAPI.prototype.editWH;
+  AdminAPI.prototype.showEditWorkHours = function(event) {
+    var self = this,
+        date = {
+          dow: '',
+          weekDay: {},
+          start: {},
+          end: {}
+        };
+
+    self.editWH = {};
+
+    date.dow = angular.copy(event.dow[0]);
+    date.weekDay = event.start.format('dddd')
+    date.start = angular.copy(event.start);
+    date.start.set('hour', date.start.hour() - 1);
+    date.start = new Date(date.start);
+    date.end = angular.copy(event.end);
+    date.end.set('hour', date.end.hour() - 1);
+    date.end = new Date(date.end);
+
+    self.editWH = date;
+  };
+
+  AdminAPI.prototype.hstep = 1;
+  AdminAPI.prototype.mstep = 15;
+
+  AdminAPI.prototype.padTwoDigits = function(number) {
+    return (number < 10 ? '0' : '') + number;
+  };
+
+  AdminAPI.prototype.saveEditWH = function(editWH) {
+    /* prepare data */
+    var self = this,
+        from = new Date(editWH.start),
+        to = new Date(editWH.end),
+        model = {
+          dow: '',
+          start: {},
+          end: {}
+        };
+
+    model.dow = editWH.dow;
+    model.start =   
+      self.padTwoDigits(from.getHours())+':'+self.padTwoDigits(from.getMinutes())+':'+self.padTwoDigits(from.getSeconds());  
+
+    model.end =
+      self.padTwoDigits(to.getHours())+':'+self.padTwoDigits(to.getMinutes())+':'+self.padTwoDigits(to.getSeconds()); 
+    /* / prepare data */
+
+    day.updateAllWH(model).then( function(result) {
+      angular.forEach(self.events, function(val, key) {
+        if (val.dow[0] === result.attributes.number) {
+          var newElement = angular.copy(val);
+          newElement._id = self.events[self.events.length - 1]._id + 1;
+          newElement.start = result.attributes.workHours.from;
+          newElement.end = result.attributes.workHours.to;
+          
+          self.events.splice(key, 1);
+          self.events.push(newElement);
+        }
+      });
+
+    })
   };
 
   return new AdminAPI();
