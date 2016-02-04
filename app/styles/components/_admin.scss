@@ -47,7 +47,6 @@
   }
 
   &-panel {
-    // admin calendar
     .fc-content {
       height: 100%; 
       
@@ -71,6 +70,25 @@
     
     .fc-bg {
       display: none;
+    }
+    
+    &-edit-work-hours {
+      padding: $space;
+      background-color: $c-gray-xlight;
+      
+      .header {
+        margin-top: 0;
+      }
+      
+      &-form {
+        > .input-wrapper {
+          display: inline-block;
+          
+          &:first-of-type {
+            margin-right: $space;
+          }
+        }
+      }
     }
   }
 }

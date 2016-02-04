@@ -1,39 +1,57 @@
 <div ng-if="vm.isAdmin" class="admin-panel clearfix">
   <h1>Panel administratora</h1>
   <div class="calendar-wrapper row-space">
-    <calendar-navigation calendar="adminCalendar" 
+    <calendar-navigation calendar="vm.adminCalendar" 
                          max="{{vm.weeksAvailable}}"
                          class="calendar-navigation"></calendar-navigation>
-    <div ui-calendar="config.calendar" 
+    <div ui-calendar="vm.config.calendar" 
          ng-model="vm.eventSources" 
-         calendar="adminCalendar" 
-         ng-if="isCalendarVisible"
+         calendar="vm.adminCalendar" 
+         ng-if="vm.isCalendarVisible"
          class="calendar"></div>
   </div>
 
-
   <div class="admin-panel-edit-work-hours" ng-if="vm.editWH.end">
-    <h3>Edytuj godziny przyjmowania: {{vm.editWHev.start.format('dddd')}}</h3>
-
-    <form>
-      <div>
+    <h3 class="header">Edytuj godziny przyjmowania: {{vm.formatDateToDayName(vm.editWH.start)}}</h3>
+    <form class="admin-panel-edit-work-hours-form">
+      <div class="input-wrapper">
         <span>Start: </span>
         <uib-timepicker 
+                        class="timepicker"
                         ng-model="vm.editWH.start" 
                         hour-step="vm.hstep" 
                         minute-step="vm.mstep" 
                         show-meridian="false"></uib-timepicker>
       </div>
-      <div>
+      <div class="input-wrapper">
         <span>Koniec: </span>
         <uib-timepicker 
+                        class="timepicker"
                         ng-model="vm.editWH.end" 
                         hour-step="vm.hstep" 
                         minute-step="vm.mstep" 
                         show-meridian="false"></uib-timepicker>
       </div>
-
-      <button type="button" ng-click="vm.saveEditWH(vm.editWH)">Zapisz</button>
+      <div class="input-wrapper">
+        <span>Czy przyjmujesz w ten dzień?</span>
+        <label for="isDaySet" class="toggle">
+          <input type="checkbox" 
+                 name="isDaySet" 
+                 id="isDaySet" 
+                 ng-model="vm.editWH.isSet">
+          <span class="handle"></span>
+        </label>
+      </div>
+      <div>
+        <button 
+                type="button" 
+                ng-click="vm.saveEditWH(vm.editWH)" 
+                class="btn btn-primary">Zapisz</button>
+        <button 
+                type="button" 
+                ng-click="vm.closeEditWH()" 
+                class="btn btn-close">Anuluj</button>
+      </div>
     </form>
   </div>
 
@@ -63,7 +81,7 @@
                  name="visitDuration" 
                  id="visitDuration" 
                  class="form-control"
-                 value="{{visitDuration}}"
+                 value="{{vm.visitDuration}}"
                  ng-model="visitDuration"
                  ng-change="enableSubmitVisit = true">
         </div>

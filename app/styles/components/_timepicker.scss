@@ -1,0 +1,19 @@
+
+// Components - Timepicker
+//------------------------------------------------------------------------------
+
+
+.timepicker {
+  .form-group,
+  td {
+    text-align: center;
+  }
+    
+  .form-control {
+    display: inline-block;
+  }
+  
+  td:nth-child(2) {
+    padding: 0 5px;
+  }
+}
