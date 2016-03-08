@@ -20,6 +20,7 @@ angular.module('registrationApp')
 
       return q.promise;
     },
+    
     getMinMaxWorkHours: function(schedule) {
       var q = $q.defer(), self = this, result;
 
@@ -28,7 +29,6 @@ angular.module('registrationApp')
 
       return q.promise;
     },
-
 
     // local functions
     minMaxWorkHours: function(days) {
@@ -61,7 +61,33 @@ angular.module('registrationApp')
       var a = hour.slice(-6, -4), b = hour.slice(-4, -2), c = hour.slice(-2);
 
       return (a + ':' + b + ':' + c);
+    },
+
+    formatDuration: function(duration) {
+      var l = duration.toString().length, formatted, self = this;
+
+      switch(l) {
+        case 1:
+          formatted = '00:0' + duration + ':00';
+          break;
+        case 2:
+          formatted = '00:' + duration + ':00';
+          break;
+        case 3:
+          formatted = self.padTwoDigits(parseInt(duration % 60)) + ':' + self.padTwoDigits(duration % 60) + ':00';
+          break;
+        default: 
+          formatted = '00:30:00';
+          break;
+      };
+
+      return formatted;
+    },
+
+    padTwoDigits: function(number) {
+      return (number < 10 ? '0' : '') + number;
     }
+
   };
 
 });

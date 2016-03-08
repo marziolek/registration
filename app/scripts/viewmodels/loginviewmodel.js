@@ -18,7 +18,7 @@ angular.module('registrationApp')
       if (result) {
         user.logIn(form.email, form.password).then(function(result) {
           self.errorMessage = false;
-          user.userData()
+          user.userData();
           self.goToCalendar();
         }, function(error) {
           var errorFirstLetterUppercase = error.substr(0, 1).toUpperCase() + error.substr(1);

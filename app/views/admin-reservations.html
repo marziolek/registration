@@ -1,0 +1,19 @@
+<div ng-if="vm.isAdmin" class="admin-panel clearfix">
+  <h1>Panel administratora</h1>
+  <h2>Kalendarz wizyt</h2>
+  <a ui-sref="admin" class="btn btn-primary">Panel administratora</a>
+  <table class="table table-bordered table-hover visits-table">
+    <tbody>
+      <tr ng-repeat="visit in vm.visits" data-id="{{visit.id}}" ng-class="{canceled: visit.attributes.isCanceled}">
+        <td><span ng-if="vm.displayMonth(visit.attributes.date)">{{visit.attributes.date | date: 'd MMMM'}}</span></td>
+        <td>{{visit.attributes.date | date: 'HH:mm'}}</td>
+        <td data-user="{{visit.attributes.user.id}}">{{visit.attributes.user.attributes.firstName}} {{visit.attributes.user.attributes.lastName}}</td>
+        <td>{{visit.attributes.user.attributes.email}}</td>
+        <td>{{visit.attributes.user.attributes.phone}}</td>
+        <td class="visits-table-description">
+          <div>{{visit.attributes.additionalInformation}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

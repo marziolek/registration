@@ -18,61 +18,10 @@ angular.module('registrationApp')
 
   $scope.vm = mainViewModel;
   $scope.vm.getWeeksAvailable();
-  
-  
-  $scope.takeEvent = function(element) {
-    var cssClass = element.className[0];
 
-    if (cssClass) {
-      if (cssClass === 'free') {
-        popup.show('book.visit.tpl.html', 'BookVisitCtrl', element);
-      }
-    }
-  };
+  $scope.dailySchedule, $scope.minMaxHours = [];
 
-  $scope.dailySchedule, $scope.minMaxHours = [], $scope.isCalendarVisible = false;
-
-  calendar.getSchedule().then( function(result) {
-    $scope.dailySchedule = result;
-
-    calendar.getMinMaxWorkHours($scope.dailySchedule).then( function(result) {
-      angular.forEach(result, function(val, key) {
-        $scope.minMaxHours.push(val);
-      });
-    });
-
-    settings.visitDuration().then( function(result) {
-      $scope.visitDuration = result.attributes.duration;
-      $scope.visitDurationFormatted = formatDuration($scope.visitDuration);
-
-      initCalendar();
-    });
-  });
-
-  var formatDuration = function(duration) {
-    var l = duration.toString().length, formatted;
-
-    switch(l) {
-      case 1:
-        formatted = '00:0' + duration + ':00';
-        break;
-      case 2:
-        formatted = '00:' + duration + ':00';
-        break;
-      case 3:
-        formatted = padTwoDigits(parseInt(duration % 60)) + ':' + padTwoDigits(duration % 60) + ':00';
-        break;
-      default: 
-        formatted = '00:30:00';
-        break;
-    };
-
-    return formatted;
-  };
-
-  var padTwoDigits = function(number) {
-    return (number < 10 ? '0' : '') + number;
-  };
+  $scope.vm.createCalendar();
 
   var windowH = $(window).height(),
       date = new Date(),
@@ -110,27 +59,4 @@ angular.module('registrationApp')
 
   $scope.events = [events];
 
-  var initCalendar = function() {
-    $scope.isCalendarVisible = true;
-    $scope.config = {
-      calendar:{
-        defaultView: 'agendaWeek',
-        defaultTimedEventDuration: $scope.visitDurationFormatted,
-        lang: 'pl',
-        height: 'auto',
-        minTime: $scope.minMaxHours[0],
-        maxTime: $scope.minMaxHours[1],
-        editable: false,
-        header: {
-          right: ''
-        },
-        /*viewRender: function(view, element) {
-        $log.debug("View Changed: ", view.visStart, view.visEnd, view.start, view.end);
-      },*/
-        eventClick: $scope.takeEvent,
-        eventRender: $scope.eventRender
-      }
-    };  
-  }
-
-  });
+});

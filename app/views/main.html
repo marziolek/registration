@@ -1,9 +1,9 @@
-<div class="calendar-wrapper row-space" ng-if="isCalendarVisible">
-  <calendar-navigation calendar="clientCalendar" 
+<div class="calendar-wrapper row-space" ng-if="vm.isCalendarVisible">
+  <calendar-navigation calendar="vm.clientCalendar" 
                        max="{{vm.weeksAvailable}}" 
                        class="calendar-navigation"></calendar-navigation>
-  <div ui-calendar="config.calendar" 
-       ng-model="events" 
+  <div ui-calendar="vm.config.calendar" 
+       ng-model="vm.eventSources" 
        calendar="clientCalendar" 
        class="calendar"></div>
 </div>

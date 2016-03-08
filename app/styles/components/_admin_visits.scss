@@ -1,0 +1,23 @@
+
+// Components - Admin Visits
+//------------------------------------------------------------------------------
+
+.visits-table {
+  margin-top: $space;
+
+  tr {
+    &.canceled {
+      td {
+        text-decoration: line-through;
+        
+        &:first-of-type {
+          text-decoration: none;  
+        }
+      }
+    }
+  }
+
+  &-description {
+    width: 30%; // temp
+  }
+}

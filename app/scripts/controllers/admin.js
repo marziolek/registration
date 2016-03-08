@@ -31,4 +31,6 @@ angular.module('registrationApp')
       $scope.vm.setServicesNewOrder();
     }
   };
+  
+  $scope.vm.getAllVisits();
 });

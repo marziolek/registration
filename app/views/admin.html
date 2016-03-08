@@ -1,5 +1,6 @@
 <div ng-if="vm.isAdmin" class="admin-panel clearfix">
   <h1>Panel administratora</h1>
+  <a ui-sref="reservations" class="btn btn-primary">Kalendarz wizyt</a>
   <div class="calendar-wrapper row-space">
     <calendar-navigation calendar="vm.adminCalendar" 
                          max="{{vm.weeksAvailable}}"

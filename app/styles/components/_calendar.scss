@@ -47,6 +47,10 @@
       }
     }
   }
+  
+  &.free {
+    border-bottom: 1px solid white;
+  }
 }
 
 .admin-panel {

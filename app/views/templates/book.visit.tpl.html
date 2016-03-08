@@ -7,26 +7,25 @@
   <div ng-if="vm.isLoggedIn()">
     <h1>Umów wizytę</h1>
     <p>
-      <span>Twój termin: </span><span>{{dayName}}, </span><span>{{date}}</span>
+      <span>Twój termin: </span><span>{{time}}, </span><span>{{date}}, </span><span>{{dayName}}</span>
     </p>
-    <form name="bookvisitform" novalidate ng-submit="bookvisitform.$valid && vm.bookVisit(bookvisit)"> 
+    <form name="bookvisitform" novalidate ng-submit="vm.bookVisit(bookVisit)"> 
+      <input type="hidden" name="user" ng-model="bookVisit.user" ng-init="bookVisit.user = vm.currentUser()" >
+      <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = dateRaw" >
       <fieldset>
-
-        <select>
-          <option value="1">Usługa 1</option>
-          <option value="2">Usługa 2</option>
-          <option value="3">Usługa 3</option>
+        <select ng-model="bookVisit.service">
+          <option value="">Wybierz usługę</option>
+          <option ng-repeat="service in vm.services" value="{{service.id}}">{{service.name}}</option>
         </select>
-        
       </fieldset>
       <fieldset>
         <div class="form-group">
           <label for="comment">Dodatkowe informacje dla lekarza:</label>
           <textarea type="text" 
-                    name="comment" 
-                    id="comment" 
+                    name="additionalInformation" 
+                    id="additionalInformation" 
                     class="form-control" 
-                    ng-model="bookvisit.comment"></textarea>
+                    ng-model="bookVisit.additionalInformation"></textarea>
         </div>
       </fieldset>
       <button type="submit" class="btn btn-success">Umów wizytę</button>

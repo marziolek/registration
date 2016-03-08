@@ -1,0 +1,15 @@
+
+// Components - Flash message
+//------------------------------------------------------------------------------
+
+flash-message {
+  position: fixed;
+  top: $space;
+  width: 100%;
+  text-align: center;
+  z-index: 99999;
+  
+  > div {
+    display: inline-block;
+  }
+}

@@ -23,7 +23,8 @@ angular
   'ngTouch',
   'ui.calendar',
   'ui.bootstrap',
-  'ui.sortable'
+  'ui.sortable',
+  'ngFlash'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -60,6 +61,16 @@ angular
     .state('admin', {
     url: "/admin",
     templateUrl: 'views/admin.html',
+    controller: 'AdminCtrl',
+    controllerAs: 'admin',
+    params: {
+      acl: true,
+      admin: true
+    }
+  })
+    .state('reservations', {
+    url: "/admin/reservations",
+    templateUrl: 'views/admin-reservations.html',
     controller: 'AdminCtrl',
     controllerAs: 'admin',
     params: {

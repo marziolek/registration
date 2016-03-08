@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day) {
+  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit) {
 
   var AdminAPI = function() {};
 
@@ -183,10 +183,10 @@ angular.module('registrationApp')
 
     model.dow = editWH.dow;
     model.start =   
-      self.padTwoDigits(from.getHours())+':'+self.padTwoDigits(from.getMinutes())+':'+self.padTwoDigits(from.getSeconds());  
+      calendar.padTwoDigits(from.getHours())+':'+calendar.padTwoDigits(from.getMinutes())+':'+calendar.padTwoDigits(from.getSeconds());  
 
     model.end =
-      self.padTwoDigits(to.getHours())+':'+self.padTwoDigits(to.getMinutes())+':'+self.padTwoDigits(to.getSeconds()); 
+      calendar.padTwoDigits(to.getHours())+':'+calendar.padTwoDigits(to.getMinutes())+':'+calendar.padTwoDigits(to.getSeconds()); 
     model.isSet = editWH.isSet;
     /* / prepare data */
 
@@ -235,7 +235,7 @@ angular.module('registrationApp')
 
       settings.visitDuration().then( function(result) {
         self.visitDuration = result.attributes.duration;
-        self.visitDurationFormatted = self.formatDuration(self.visitDuration);
+        self.visitDurationFormatted = calendar.formatDuration(self.visitDuration);
 
         self.initCalendar();
       });
@@ -270,36 +270,35 @@ angular.module('registrationApp')
     };  
   };
 
-  AdminAPI.prototype.formatDuration = function(duration) {
-    var l = duration.toString().length, formatted, self = this;
-
-    switch(l) {
-      case 1:
-        formatted = '00:0' + duration + ':00';
-        break;
-      case 2:
-        formatted = '00:' + duration + ':00';
-        break;
-      case 3:
-        formatted = self.padTwoDigits(parseInt(duration % 60)) + ':' + self.padTwoDigits(duration % 60) + ':00';
-        break;
-      default: 
-        formatted = '00:30:00';
-        break;
-    };
-
-    return formatted;
-  };
-
-  AdminAPI.prototype.padTwoDigits = function(number) {
-    return (number < 10 ? '0' : '') + number;
-  };
-
   AdminAPI.prototype.eventRender = function( event, element ) { 
     if (!element.hasClass('free-event')) {
       element.find('.fc-content').append('<span class="edit-event">Edytuj</span>');
     } else {
       element.find('.fc-content').append('<span class="edit-event glyphicon glyphicon-plus"></span>');
+    }
+  };
+  
+  AdminAPI.prototype.visits = [];
+  AdminAPI.prototype.getAllVisits = function() {
+    var self = this;
+    
+    visit.getAllVisits().then( function(result) {
+      self.visits = result;
+    }, function(error) {
+      self.visits = error;
+    });
+  };
+  
+  AdminAPI.prototype.monthStart = '';
+  AdminAPI.prototype.displayMonth = function(date) {
+    var monthTmp = $filter('date')(date, 'd MMMM'),
+        self = this;
+    
+    if (self.monthStart != monthTmp) {
+      self.monthStart = monthTmp;
+      return true;
+    } else {
+      return false;
     }
   };
   

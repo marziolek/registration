@@ -11,6 +11,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-flash-alert/dist/angular-flash.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -28,6 +29,8 @@
       <div ui-view></div>
     </div>
 
+    <flash-message duration="5000" show-close="true" on-dismiss="myCallback(flash)" ></flash-message>
+    
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -47,6 +50,7 @@
     <script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
     <script src="bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="bower_components/angular-ui-sortable/sortable.js"></script>
+    <script src="bower_components/angular-flash-alert/dist/angular-flash.js"></script>
     <!-- endbower -->
     <script src='bower_components/fullcalendar/dist/lang/pl.js'></script>
     <!-- endbuild -->
@@ -79,6 +83,8 @@
     <script src="scripts/services/settings.js"></script>
     <script src="scripts/services/service.js"></script>
     <script src="scripts/services/day.js"></script>
+    <script src="scripts/services/visit.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.0/angular-locale_pl-pl.min.js"></script>
     <!-- endbuild -->
   </body>
 </html>
