@@ -21,12 +21,14 @@ angular.module('registrationApp')
     });
   };
 
+  MainAPI.prototype.modal;
   MainAPI.prototype.takeEvent = function(element) {
-    var cssClass = element.className[0];
+    var cssClass = element.className[0],
+        self = this;
 
     if (cssClass) {
       if (cssClass === 'free') {
-        popup.show('book.visit.tpl.html', 'BookVisitCtrl', element);
+        self.modal = popup.show('book.visit.tpl.html', 'BookVisitCtrl', element);
       }
     }
   };

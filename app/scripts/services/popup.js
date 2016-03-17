@@ -8,7 +8,7 @@
  * Service in the registrationApp.
  */
 angular.module('registrationApp')
-  .service('popup', function ($uibModal) {
+  .service('popup', function (modal) {
 
   return {
     show: function(templateName, popupController, element) {
@@ -23,30 +23,21 @@ angular.module('registrationApp')
       if (popupController) {
         templateCtrl = popupController;
       }
-      
-      var open = function(size) {
-        var modalInstance = $uibModal.open({
-          animation: true,
-          templateUrl: templateUrl,
-          controller: popupController,
-          size: size ? size : 'lg',
-          resolve: {
-            element: function() {
-              return element;
-            }
-          }
-        });
 
-        /*
-        modalInstance.result.then( function(selectedItem) {
-          $log.debug(selectedItem);
-        }, function() {
-          $log.info('Modal dismissed');
-        });
-        */
-      };
-      open();
+      var modalInstance = modal.open(null, templateUrl, templateCtrl, null, element);
+
+      /*modalInstance.result.then( function(selectedItem) {
+        console.debug(selectedItem);
+      }, function() {
+        console.info('Modal dismissed');
+      });*/
+      return modalInstance;
+    },
+    
+    cancel: function() {
+      modal.cancel();
     }
   };
+
 
 });

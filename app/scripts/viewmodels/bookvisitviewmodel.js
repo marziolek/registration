@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('bookVisitViewModel', function (user, service, visit, Flash) {
+  .factory('bookVisitViewModel', function (user, service, visit, Flash, popup) {
 
   var BookVisitAPI = function() {};
 
@@ -46,7 +46,11 @@ angular.module('registrationApp')
           flashClass = 'danger';
       var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
     });
-  }
+  };
+
+  BookVisitAPI.prototype.closePopup = function() {
+    popup.cancel();
+  };
 
   return new BookVisitAPI();
 
