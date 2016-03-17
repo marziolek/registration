@@ -279,11 +279,13 @@ angular.module('registrationApp')
   };
 
   AdminAPI.prototype.visits = [];
+  AdminAPI.prototype.isMoreToLoad = true;
   AdminAPI.prototype.getAllVisits = function(from) {
     var self = this;
 
     visit.getAllVisits(from).then( function(result) {
-      self.visits = result;
+      self.visits = result[0];
+      self.isMoreToLoad = result[1];
     }, function(error) {
       self.visits = error;
     });

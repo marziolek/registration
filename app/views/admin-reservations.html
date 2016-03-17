@@ -2,7 +2,8 @@
   <h1>Panel administratora</h1>
   <h2>Kalendarz wizyt</h2>
   <a ui-sref="admin" class="btn btn-primary">Panel administratora</a>
-  <button type="button" class="btn btn-primary" ng-click="vm.prevWeekVisits(vm.countWeeksBack = vm.countWeeksBack + 1)">Pokaż poprzedni tydzień</button>
+  <button type="button" class="btn btn-primary" ng-click="vm.prevWeekVisits(vm.countWeeksBack = vm.countWeeksBack + 1)" ng-disabled="!vm.isMoreToLoad">Pokaż poprzedni tydzień</button>
+  <span ng-if="!vm.isMoreToLoad">Nie ma starszych wizyt</span>
   <div>
     <p ng-ig="vm.displayWeekFrom">Wizyty od dnia {{vm.displayWeekFrom}}</p>
     <a href="" ng-click="vm.goToAnchor('dzisiaj')" class="btn btn-primary">Wizyty od dzisiaj</a>
