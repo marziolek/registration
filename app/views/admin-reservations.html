@@ -2,9 +2,14 @@
   <h1>Panel administratora</h1>
   <h2>Kalendarz wizyt</h2>
   <a ui-sref="admin" class="btn btn-primary">Panel administratora</a>
+  <button type="button" class="btn btn-primary" ng-click="vm.prevWeekVisits(vm.countWeeksBack = vm.countWeeksBack + 1)">Pokaż poprzedni tydzień</button>
+  <div>
+    <p ng-ig="vm.displayWeekFrom">Wizyty od dnia {{vm.displayWeekFrom}}</p>
+    <a href="" ng-click="vm.goToAnchor('dzisiaj')" class="btn btn-primary">Wizyty od dzisiaj</a>
+  </div>
   <table class="table table-bordered table-hover visits-table">
     <tbody>
-      <tr ng-repeat="visit in vm.visits" data-id="{{visit.id}}" ng-class="{canceled: visit.attributes.isCanceled}">
+      <tr ng-repeat="visit in vm.visits" data-item-id="{{visit.id}}" ng-class="{canceled: visit.attributes.isCanceled, anchor: vm.isVisitToday(visit.attributes.date)}" ng-attr-id="{{vm.isVisitToday(visit.attributes.date)}}">
         <td><span ng-if="vm.displayMonth(visit.attributes.date)">{{visit.attributes.date | date: 'd MMMM'}}</span></td>
         <td>{{visit.attributes.date | date: 'HH:mm'}}</td>
         <td data-user="{{visit.attributes.user.id}}">{{visit.attributes.user.attributes.firstName}} {{visit.attributes.user.attributes.lastName}}</td>

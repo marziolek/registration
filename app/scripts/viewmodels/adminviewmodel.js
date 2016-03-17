@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit) {
+  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit, $anchorScroll, $location) {
 
   var AdminAPI = function() {};
 
@@ -226,7 +226,7 @@ angular.module('registrationApp')
       self.eventSources = [self.events];
 
       // add fake events on empty days TODO
-      
+
       calendar.getMinMaxWorkHours(self.dailySchedule).then( function(result) {
         angular.forEach(result, function(val, key) {
           self.minMaxHours.push(val);
@@ -277,31 +277,66 @@ angular.module('registrationApp')
       element.find('.fc-content').append('<span class="edit-event glyphicon glyphicon-plus"></span>');
     }
   };
-  
+
   AdminAPI.prototype.visits = [];
-  AdminAPI.prototype.getAllVisits = function() {
+  AdminAPI.prototype.getAllVisits = function(from) {
     var self = this;
-    
-    visit.getAllVisits().then( function(result) {
+
+    visit.getAllVisits(from).then( function(result) {
       self.visits = result;
     }, function(error) {
       self.visits = error;
     });
   };
-  
+
+  AdminAPI.prototype.countWeeksBack = 0;
+  AdminAPI.prototype.displayWeekFrom = moment().format('DD.MM.YYYY')
+  AdminAPI.prototype.prevWeekCount = 7;
+  AdminAPI.prototype.prevWeekVisits = function(counter) {
+    var self = this,
+        from = moment().subtract(self.prevWeekCount * counter, 'days');
+
+    self.displayWeekFrom = from.format('DD.MM.YYYY');
+    this.getAllVisits(from);
+  };
+
   AdminAPI.prototype.monthStart = '';
   AdminAPI.prototype.displayMonth = function(date) {
     var monthTmp = $filter('date')(date, 'd MMMM'),
         self = this;
-    
+
     if (self.monthStart != monthTmp) {
       self.monthStart = monthTmp;
+
       return true;
     } else {
       return false;
     }
   };
-  
+
+  AdminAPI.prototype.isVisitToday = function(date) {
+    var now = moment().toDate(),
+        nowFormatted = now.getDate() + '.' + now.getMonth() + '.' + now.getFullYear(),
+        dateFormatted = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+
+    if (nowFormatted === dateFormatted) {
+      return 'dzisiaj';
+    }
+  };
+
+  AdminAPI.prototype.goToAnchor = function(hash) {
+    if ($location.hash() !== hash) {
+      $location.hash(hash);
+    } else {
+      $anchorScroll();
+    };
+    
+    angular.element('#' + hash).addClass('anchor-highlight');
+    setTimeout( function() {
+      angular.element('#' + hash).removeClass('anchor-highlight');
+    }, 2000);
+  };
+
   return new AdminAPI();
 
 });
