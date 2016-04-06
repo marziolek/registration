@@ -1,0 +1,6 @@
+<div class="modal-confirmation">
+  <p>Czy na pewno chcesz zarezerwować ten termin?</p>
+  <button type="button" class="btn btn-success" ng-click="vm.bookVisit(vm.confirmationBookVisitData)">Rezerwuj</button>
+  <button type="button" class="btn btn-danger" ng-click="vm.closePopup()">Anuluj</button>
+  <strong ng-if="vm.errorMessage">{{vm.errorMessage}}</strong>
+</div>

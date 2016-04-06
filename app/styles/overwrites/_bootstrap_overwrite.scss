@@ -7,6 +7,20 @@
   border: none;
 }
 
+.modal.in,
+.modal.fade {
+  .modal-sm {
+    @include transform(translate3d(0,-50%,0));
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 360px;
+    margin-left: -180px;
+    text-align: center;
+  }
+}
+
 @media (min-width: $sm) {
   .navbar {
     border-radius: 0;

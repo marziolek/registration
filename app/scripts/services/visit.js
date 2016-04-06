@@ -29,15 +29,27 @@ angular.module('registrationApp')
       if (startDate) {
         from = new Date(startDate);
       };
-      
+
       Parse.Cloud.run('getAllVisits', {from : from}).then( function(result) {
         q.resolve(result);
-        console.log(result);
       }, function(error) {
         q.reject(error);   
       });
 
       return q.promise;
-    }
+    },
+
+    getAllBooked: function() {
+      var q = $q.defer(),
+          from = moment().startOf('day').toDate();
+
+      Parse.Cloud.run('getAllBooked', {from : from}).then( function(result) {
+        q.resolve(result);
+      }, function(error) {
+        q.reject(error);   
+      });
+
+      return q.promise;
+    },
   }
 });

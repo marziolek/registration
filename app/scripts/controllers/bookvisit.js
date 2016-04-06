@@ -13,12 +13,12 @@ angular.module('registrationApp')
   $scope.vm = bookVisitViewModel;
   $scope.vm.getAllServices();
   
-  var data = element;
+  $scope.vm.popupData = element;
 
-  $scope.time = data.start.format('HH:mm');
-  $scope.dayName = data.start.format('dddd');
-  $scope.dateRaw = new Date(data.start);
-  $scope.date = data.start.format('D MMMM YYYY');
+  $scope.vm.popupDataTime = $scope.vm.popupData.start.format('HH:mm');
+  $scope.vm.popupDataDayName = $scope.vm.popupData.start.format('dddd');
+  $scope.vm.popupDataDateRaw = new Date($scope.vm.popupData.start);
+  $scope.vm.popupDataDate = $scope.vm.popupData.start.format('D MMMM YYYY');
 
   // init dropdowns - formstone
   $('.demo_basic').dropdown();

@@ -11,7 +11,7 @@ angular.module('registrationApp')
   .service('popup', function (modal) {
 
   return {
-    show: function(templateName, popupController, element) {
+    show: function(size, templateName, popupController, element) {
 
       var templateUrl = 'views/templates/book.visit.tpl.html';
       var templateCtrl = 'MainCtrl';
@@ -24,7 +24,7 @@ angular.module('registrationApp')
         templateCtrl = popupController;
       }
 
-      var modalInstance = modal.open(null, templateUrl, templateCtrl, null, element);
+      var modalInstance = modal.open(size, templateUrl, templateCtrl, null, element);
 
       /*modalInstance.result.then( function(selectedItem) {
         console.debug(selectedItem);

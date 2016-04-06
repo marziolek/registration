@@ -28,7 +28,7 @@ angular.module('registrationApp')
 
     if (cssClass) {
       if (cssClass === 'free') {
-        self.modal = popup.show('book.visit.tpl.html', 'BookVisitCtrl', element);
+        self.modal = popup.show('lg', 'book.visit.tpl.html', 'BookVisitCtrl', element);
       }
     }
   };
@@ -37,12 +37,19 @@ angular.module('registrationApp')
   MainAPI.prototype.minMaxHours = [];
   MainAPI.prototype.visitDuration;
   MainAPI.prototype.createCalendar = function() {
-    var self = this;
+    var self = this,
+        booked;
 
     calendar.getSchedule().then( function(result) {
       self.dailySchedule = result;
       self.events = self.eventsFromSchedule(self.dailySchedule);
-      self.eventSources = [self.events];
+      booked = self.getAllBooked(self.events);
+
+      //self.eventSources = [self.events, [{className: 'taken', start: new Date(2016,3,6,15,0,0), end: new Date(2016,3,6,15,0,0) }]];
+      
+      //self.eventSources = [self.events, booked];
+      //self.eventSources = [self.events];
+      
 
       calendar.getMinMaxWorkHours(self.dailySchedule).then( function(result) {
         angular.forEach(result, function(val, key) {
@@ -82,7 +89,6 @@ angular.module('registrationApp')
           $log.debug(element);
         },*/
         eventClick: function(view, element) {
-          console.log(view);
           self.takeEvent(view);
         }
       }
@@ -105,34 +111,22 @@ angular.module('registrationApp')
 
         if (val.attributes.isSet) {
           for (var i = 0; i < visitsAvailable; i++) {
-            
+
             var event = {
-              //_id: key,
               start: self.prepareEvents(val.attributes.workHours.from, visitDuration, i, false),
               end: self.prepareEvents(val.attributes.workHours.from, visitDuration, i, true),
               dow: [val.attributes.number],
               className: 'free',
-              //isSet: val.attributes.isSet
             }
             events.push(event); 
           }
-        } else {
-          var event = {
-            _id: key,
-            start: val.attributes.workHours.from,
-            end: val.attributes.workHours.to,
-            dow: [val.attributes.number],
-            className: 'availability free-event',
-            isSet: val.attributes.isSet
-          }
-          events.push(event); 
         }
       });
     });
 
     return events;
   };
-  
+
   MainAPI.prototype.goToWeek = function(direction) {
     uiCalendarConfig.calendars.clientCalendar.fullCalendar(direction);
   };
@@ -141,10 +135,23 @@ angular.module('registrationApp')
     var base = moment(dayHoursFrom, "HH:mm:ss"),
         duration = moment.duration(visitDuration, "m"),
         display = base.add(duration * i);
-    
+
     return calendar.padTwoDigits(display.hour()) + ":" + calendar.padTwoDigits(display.minutes()) + ":00";
   };
-  
+
+  MainAPI.prototype.getAllBooked = function(freeEvents) {
+    var self = this;
+
+    visit.getAllBooked().then( function(result) {
+      self.eventSources = [freeEvents, result]
+      console.log(result);
+    }, function(error) {
+      self.bookedVisits = error;
+    });
+    
+    return self.bookedVisits;
+  };
+
   return new MainAPI();
 
 });

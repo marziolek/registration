@@ -7,11 +7,11 @@
   <div ng-if="vm.isLoggedIn()">
     <h1>Umów wizytę</h1>
     <p>
-      <span>Twój termin: </span><span>{{time}}, </span><span>{{date}}, </span><span>{{dayName}}</span>
+      <span>Twój termin: </span><span>{{vm.popupDataTime}}, </span><span>{{vm.popupDataDate}}, </span><span>{{vm.popupDataDayName}}</span>
     </p>
-    <form name="bookvisitform" novalidate ng-submit="vm.bookVisit(bookVisit)"> 
+    <form name="bookvisitform" novalidate ng-submit="vm.confirmationBookVisit(bookVisit)"> 
       <input type="hidden" name="user" ng-model="bookVisit.user" ng-init="bookVisit.user = vm.currentUser()" >
-      <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = dateRaw" >
+      <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = vm.popupDataDateRaw" >
       <fieldset>
         <select ng-model="bookVisit.service">
           <option value="">Wybierz usługę</option>

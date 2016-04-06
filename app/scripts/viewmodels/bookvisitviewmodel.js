@@ -12,6 +12,12 @@ angular.module('registrationApp')
 
   var BookVisitAPI = function() {};
 
+  BookVisitAPI.prototype.popupData;
+  BookVisitAPI.prototype.popupDataTime;
+  BookVisitAPI.prototype.popupDataDayName;
+  BookVisitAPI.prototype.popupDataDateRaw;
+  BookVisitAPI.prototype.popupDataDate;
+  
   BookVisitAPI.prototype.isLoggedIn = function() {
     return user.isLoggedIn();
   };
@@ -31,7 +37,9 @@ angular.module('registrationApp')
 
   BookVisitAPI.prototype.bookVisit = function(data) {
     var self = this;
-
+    
+    console.log(data);
+    
     visit.bookVisit(data).then( function(result) {
       if (result) {
         var message = 'Wizyta została umówiona.',
@@ -41,11 +49,21 @@ angular.module('registrationApp')
             flashClass = 'danger';
       }
       var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      self.closePopup();
     }, function(error) {
       var message = 'Wystąpił błąd.',
           flashClass = 'danger';
       var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      self.closePopup();
     });
+  };
+  
+  BookVisitAPI.prototype.confirmationBookVisitData;
+  BookVisitAPI.prototype.confirmationBookVisit = function(data) {
+    var self = this;
+    
+    self.confirmationBookVisitData = data;
+    popup.show('sm', 'book.visit.confirmation.tpl.html', 'BookVisitCtrl', self.popupData);
   };
 
   BookVisitAPI.prototype.closePopup = function() {
