@@ -15,10 +15,10 @@ angular.module('registrationApp')
   
   $scope.vm.popupData = element;
 
-  $scope.vm.popupDataTime = $scope.vm.popupData.start.format('HH:mm');
-  $scope.vm.popupDataDayName = $scope.vm.popupData.start.format('dddd');
-  $scope.vm.popupDataDateRaw = new Date($scope.vm.popupData.start);
-  $scope.vm.popupDataDate = $scope.vm.popupData.start.format('D MMMM YYYY');
+  $scope.vm.popupDataTime = $scope.vm.popupData.start.local().format('HH:mm');
+  $scope.vm.popupDataDayName = $scope.vm.popupData.start.local().format('dddd');
+  $scope.vm.popupDataDateRaw = $scope.vm.popupData.start.local().toDate();
+  $scope.vm.popupDataDate = $scope.vm.popupData.start.local().format('D MMMM YYYY');
 
   // init dropdowns - formstone
   $('.demo_basic').dropdown();

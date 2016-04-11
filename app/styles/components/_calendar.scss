@@ -12,10 +12,6 @@
   text-align: center;
 }
 
-.taken {
-  opacity: .3;
-}
-
 .free {
   cursor: pointer;
 }
@@ -47,9 +43,17 @@
       }
     }
   }
-  
+
   &.free {
     border-bottom: 1px solid white;
+  }
+
+  &.taken {
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    z-index: 3 !important;
+    background-color: lighten($c-violet-dark, 20%);
   }
 }
 

@@ -143,8 +143,7 @@ angular.module('registrationApp')
     var self = this;
 
     visit.getAllBooked().then( function(result) {
-      self.eventSources = [freeEvents, result]
-      console.log(result);
+      self.eventSources = [freeEvents, result];
     }, function(error) {
       self.bookedVisits = error;
     });
