@@ -13,12 +13,6 @@
       <input type="hidden" name="user" ng-model="bookVisit.user" ng-init="bookVisit.user = vm.currentUser()" >
       <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = vm.popupDataDateRaw" >
       <fieldset>
-        <select ng-model="bookVisit.service">
-          <option value="">Wybierz usługę</option>
-          <option ng-repeat="service in vm.services" value="{{service.id}}">{{service.name}}</option>
-        </select>
-      </fieldset>
-      <fieldset>
         <div class="form-group">
           <label for="comment">Dodatkowe informacje dla lekarza:</label>
           <textarea type="text" 

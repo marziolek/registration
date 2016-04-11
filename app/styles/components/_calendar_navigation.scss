@@ -6,6 +6,6 @@ calendar-navigation,
 .calendar-navigation {
   display: block;
   position: absolute;
-  top: 0;
+  top: $space * 1.25;
   right: 0;
 }

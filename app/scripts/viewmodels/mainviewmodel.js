@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('mainViewModel', function (settings, popup, calendar, visit) {
+  .factory('mainViewModel', function (settings, popup, calendar, visit, service, $rootScope) {
 
   var MainAPI = function() {};
 
@@ -44,12 +44,6 @@ angular.module('registrationApp')
       self.dailySchedule = result;
       self.events = self.eventsFromSchedule(self.dailySchedule);
       booked = self.getAllBooked(self.events);
-
-      //self.eventSources = [self.events, [{className: 'taken', start: new Date(2016,3,6,15,0,0), end: new Date(2016,3,6,15,0,0) }]];
-      
-      //self.eventSources = [self.events, booked];
-      //self.eventSources = [self.events];
-      
 
       calendar.getMinMaxWorkHours(self.dailySchedule).then( function(result) {
         angular.forEach(result, function(val, key) {
@@ -144,11 +138,21 @@ angular.module('registrationApp')
 
     visit.getAllBooked().then( function(result) {
       self.eventSources = [freeEvents, result];
+      $rootScope.events = self.eventSources;
     }, function(error) {
       self.bookedVisits = error;
     });
     
     return self.bookedVisits;
+  };
+  
+  MainAPI.prototype.services = [];
+  MainAPI.prototype.getAllServices = function() {
+    var self = this;
+
+    service.getAllServices().then( function(result) {
+      self.services = result;
+    })
   };
 
   return new MainAPI();

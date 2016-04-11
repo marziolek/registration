@@ -1,0 +1,16 @@
+
+// Components - Service list
+//------------------------------------------------------------------------------
+
+.service-list {
+  padding: 0;
+
+  &--item {
+    padding: ($space / 2) 0;
+    list-style: none;
+    
+    &:nth-child(odd) {
+      background-color: $c-gray-xlight;
+    }
+  }
+}

@@ -6,4 +6,16 @@
        ng-model="vm.eventSources" 
        calendar="clientCalendar" 
        class="calendar"></div>
+
+  <h2>Usługi</h2>
+  <ul class="service-list">
+    <li ng-repeat="service in vm.services" class="clearfix service-list--item" ng-if="service.isActive">
+      <div class="col-xs-8 col-sm-10">
+        <span>{{service.name}}</span>
+      </div>
+      <div class="col-xs-4 col-sm-2">
+        <span ng-if="service.priceFrom">Od {{service.priceFrom}} zł</span>
+      </div>
+    </li>
+  </ul>
 </div>
