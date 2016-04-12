@@ -1,0 +1,43 @@
+.book-visit {
+  h1 {
+    margin-top: 0;
+  }
+  
+  &-without-login {
+    label, input {
+      display: block;
+      height: $space * 1.5;
+      margin: ($space / 2) 0;
+      line-height: $space * 1.5;
+    }
+    
+    label {
+      padding-right: $space;
+    }
+    
+    input {
+      width: 100%;
+    }
+    
+    div:last-of-type {
+      width: 100%;
+    }
+  }
+  
+  &-login-register {
+    text-align: center;
+
+    &--item {
+      padding: $space 0;
+      background-color: $c-gray-xlight;
+      
+      &:first-of-type {
+        padding-bottom: $space / 2;
+      }
+      
+      &:last-of-type {
+        padding-top: $space / 2;
+      }
+    }
+  }
+}

@@ -1,16 +1,61 @@
-<div class="row">
-  <div ng-if="!vm.isLoggedIn()">
-    <a ui-sref="login" class="btn">Zaloguj się</a>
-    <p>lub</p>
-    <a ui-sref="register" class="btn">Załóż konto</a>
-  </div>
-  <div ng-if="vm.isLoggedIn()">
+<div class="row flex flex-center book-visit">
+  <section ng-if="!vm.isLoggedIn()" class="col-xs-12 col-sm-6 book-visit-without-login">
     <h1>Umów wizytę</h1>
     <p>
       <span>Twój termin: </span><span>{{vm.popupDataTime}}, </span><span>{{vm.popupDataDate}}, </span><span>{{vm.popupDataDayName}}</span>
     </p>
     <form name="bookvisitform" novalidate ng-submit="vm.confirmationBookVisit(bookVisit)"> 
-      <input type="hidden" name="user" ng-model="bookVisit.user" ng-init="bookVisit.user = vm.currentUser()" >
+      <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = vm.popupDataDateRaw">
+      <div class="flex">
+        <div>
+          <label for="name">Imię:</label>
+          <label for="lastname">Nazwisko:</label>
+          <label for="email">Email:</label>
+          <label for="phone">Telefon:</label>
+        </div>
+        <div>
+          <input type="text" name="name" id="name" ng-model="bookVisit.name" class="form-control">
+          <input type="text" name="lastname" id="lastname" ng-model="bookVisit.lastname" class="form-control">
+          <input type="text" name="email" id="email" ng-model="bookVisit.email" class="form-control">
+          <input type="tel" name="phone" id="phone" ng-model="bookVisit.phone" class="form-control">
+        </div>
+      </div>
+      <fieldset>
+        <div class="form-group">
+          <label for="comment">Dodatkowe informacje dla lekarza:</label>
+          <textarea type="text" 
+                    name="additionalInformation" 
+                    id="additionalInformation" 
+                    class="form-control" 
+                    ng-model="bookVisit.additionalInformation"></textarea>
+        </div>
+      </fieldset>
+      <button type="submit" class="btn btn-success">Umów wizytę</button>
+      <button type="button" class="btn btn-danger" ng-click="vm.closePopup()">Zamknij</button>
+    </form>
+    <strong ng-if="vm.errorMessage">{{vm.errorMessage}}</strong>
+  </section>
+  <!-- / book-visit-without-login -->
+
+  <section ng-if="!vm.isLoggedIn()" class="col-xs-12 col-sm-6 book-visit-login-register">
+    <div class="book-visit-login-register--item">
+      <p><strong>Jeśli posiadasz już konto</strong></p>
+      <a ui-sref="login" class="btn btn-primary">Zaloguj się</a>
+    </div>
+    <div class="book-visit-login-register--item">
+      <p><strong>Jeśli chcesz szybko rejestrować swoje wizyty</strong></p>
+      <a ui-sref="register" class="btn btn-primary">Załóż konto</a>
+    </div>
+  </section>
+  <!-- book-visit-login-register -->
+
+  <section ng-if="vm.isLoggedIn()" class="col-xs-12">
+    <h1>Umów wizytę</h1>
+    <p>
+      <span>Twój termin: </span><span>{{vm.popupDataTime}}, </span><span>{{vm.popupDataDate}}, </span><span>{{vm.popupDataDayName}}</span>
+    </p>
+    <form name="bookvisitform" novalidate ng-submit="vm.confirmationBookVisit(bookVisit)"> 
+      <input type="hidden" name="user" ng-model="bookVisit.user" ng-init="bookVisit.user = vm.currentUser()">
       <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = vm.popupDataDateRaw" >
       <fieldset>
         <div class="form-group">
@@ -26,5 +71,5 @@
       <button type="button" class="btn btn-danger" ng-click="vm.closePopup()">Zamknij</button>
     </form>
     <strong ng-if="vm.errorMessage">{{vm.errorMessage}}</strong>
-  </div>
+  </section>
 </div>

@@ -51,5 +51,29 @@ angular.module('registrationApp')
 
       return q.promise;
     },
+    
+    cancelVisit: function(id) {
+      var q = $q.defer();
+
+      Parse.Cloud.run('cancelVisit', {id : id}).then( function(result) {
+        q.resolve(result);
+      }, function(error) {
+        q.reject(error);   
+      });
+
+      return q.promise;
+    },
+    
+    enableVisit: function(id) {
+      var q = $q.defer();
+
+      Parse.Cloud.run('enableVisit', {id : id}).then( function(result) {
+        q.resolve(result);
+      }, function(error) {
+        q.reject(error);   
+      });
+
+      return q.promise;
+    },
   }
 });

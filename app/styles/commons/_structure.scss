@@ -6,3 +6,11 @@
   padding-top: $space;
   padding-bottom: $space;
 }
+
+.flex {
+  display: flex;
+  
+  &-center {
+    align-items: center;
+  }
+}

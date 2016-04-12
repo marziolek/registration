@@ -4,7 +4,7 @@
   <a ui-sref="admin" class="btn btn-primary">Panel administratora</a>
   <button type="button" class="btn btn-primary" ng-click="vm.prevWeekVisits(vm.countWeeksBack = vm.countWeeksBack + 1)" ng-disabled="!vm.isMoreToLoad">Pokaż poprzedni tydzień</button>
   <span ng-if="!vm.isMoreToLoad">Nie ma starszych wizyt</span>
-  <div>
+  <div class="row-space">
     <a href="" ng-click="vm.goToAnchor('dzisiaj')" class="btn btn-primary">Wizyty od dzisiaj</a>
   </div>
   <p ng-ig="vm.displayWeekFrom">Wizyty od dnia {{vm.displayWeekFrom}}</p>
@@ -19,6 +19,18 @@
         <td>{{visit.attributes.user.attributes.phone}}</td>
         <td class="visits-table-description">
           <div>{{visit.attributes.additionalInformation}}</div>
+        </td>
+        <td class="admin-panel--cancel-visit">
+          <button type="button" 
+                  ng-if="!visit.attributes.isCanceled"
+                  ng-click="vm.cancelVisit(visit.id)" 
+                  title="Odwołaj wizytę"
+                  class="glyphicon glyphicon-trash"></button>
+          <button type="button" 
+                  ng-if="visit.attributes.isCanceled"
+                  ng-click="vm.enableVisit(visit.id)" 
+                  title="Przywróć wizytę"
+                  class="glyphicon glyphicon-repeat"></button>
         </td>
       </tr>
     </tbody>

@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------
 
 .btn {
+  text-transform: uppercase;
+
   &-hidden-text {
     position: absolute;
     visibility: hidden;

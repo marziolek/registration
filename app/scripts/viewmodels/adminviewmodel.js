@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit, $anchorScroll, $location) {
+  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit, $anchorScroll, $location, Flash) {
 
   var AdminAPI = function() {};
 
@@ -35,13 +35,39 @@ angular.module('registrationApp')
 
   AdminAPI.prototype.updateWeeksAvailable = function(value) {
     settings.updateWeeksAvailable(value).then( function(result) {
-      console.log(result);
+      if (result.code) {
+        var message = 'Wystąpił błąd.',
+            flashClass = 'danger';
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        if (result) {
+          var message = 'Ustawienia zapisane.',
+              flashClass = 'success';
+        } else {
+          var message = 'Wystąpił błąd.',
+              flashClass = 'danger';
+        }
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
     });
   };
 
   AdminAPI.prototype.updateVisitDuration = function(value) {
     settings.updateVisitDuration(value).then( function(result) {
-      console.log(result);
+      if (result.code) {
+        var message = 'Wystąpił błąd.',
+            flashClass = 'danger';
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        if (result) {
+          var message = 'Ustawienia zapisane.',
+              flashClass = 'success';
+        } else {
+          var message = 'Wystąpił błąd.',
+              flashClass = 'danger';
+        }
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
     });
   };
 
@@ -98,10 +124,21 @@ angular.module('registrationApp')
     var self = this;
 
     service.updateAllServices(servicesModel).then( function(result) {
-      if (result) {
-        self.getAllServices();
+      if (result.code) {
+        var message = 'Wystąpił błąd.',
+            flashClass = 'danger';
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
-        console.log('error');
+        if (result) {
+          var message = 'Ustawienia zapisane.',
+              flashClass = 'success';
+
+          self.getAllServices();
+        } else {
+          var message = 'Wystąpił błąd.',
+              flashClass = 'danger';
+        }
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       }
     })
   };
@@ -124,7 +161,7 @@ angular.module('registrationApp')
             return;
           }
         })
-      })
+      });
     }
   };
 
@@ -151,11 +188,14 @@ angular.module('registrationApp')
 
     date.dow = angular.copy(event.dow[0]);
     date.weekDay = event.start.format('dddd');
-    date.start = angular.copy(event.start);
-    date.start.set('hour', date.start.hour() - 1);
+    date.start = angular.copy(event.start.local());
+
+    console.log(date.start);
+
+    date.start.set('hour', date.start.hour());
     date.start = new Date(date.start);
-    date.end = angular.copy(event.end);
-    date.end.set('hour', date.end.hour() - 1);
+    date.end = angular.copy(event.end.local());
+    date.end.set('hour', date.end.hour());
     date.end = new Date(date.end);
     date.isSet = event.isSet;
 
@@ -191,6 +231,23 @@ angular.module('registrationApp')
     /* / prepare data */
 
     day.updateAllWH(model).then( function(result) {
+      if (result.code) {
+        var message = 'Wystąpił błąd.',
+            flashClass = 'danger';
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        if (result) {
+          var message = 'Ustawienia zapisane.',
+              flashClass = 'success';
+
+          self.getAllServices();
+        } else {
+          var message = 'Wystąpił błąd.',
+              flashClass = 'danger';
+        }
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      };
+
       angular.forEach(self.events, function(val, key) {
         if (val.dow[0] === result.attributes.number) {
           var newElement = angular.copy(val);
@@ -332,11 +389,53 @@ angular.module('registrationApp')
     } else {
       $anchorScroll();
     };
-    
+
     angular.element('#' + hash).addClass('anchor-highlight');
     setTimeout( function() {
       angular.element('#' + hash).removeClass('anchor-highlight');
     }, 2000);
+  };
+
+  AdminAPI.prototype.cancelVisit = function(id) {
+    visit.cancelVisit(id).then( function(result) {
+      if (result.code) {
+        var message = 'Wystąpił błąd.',
+            flashClass = 'danger';
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        if (result) {
+          var message = 'Wizyta została odwołana.',
+              flashClass = 'success';
+          
+          angular.element('[data-item-id="' + id + '"]').addClass('canceled');
+        } else {
+          var message = 'Wystąpił błąd.',
+              flashClass = 'danger';
+        }
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      };
+    });
+  };
+  
+  AdminAPI.prototype.enableVisit = function(id) {
+    visit.enableVisit(id).then( function(result) {
+      if (result.code) {
+        var message = 'Wystąpił błąd.',
+            flashClass = 'danger';
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        if (result) {
+          var message = 'Wizyta została przywrócona.',
+              flashClass = 'success';
+          
+          angular.element('[data-item-id="' + id + '"]').removeClass('canceled');
+        } else {
+          var message = 'Wystąpił błąd.',
+              flashClass = 'danger';
+        }
+        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      };
+    });
   };
 
   return new AdminAPI();
