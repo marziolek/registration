@@ -9,3 +9,9 @@ form {
     margin: 0;
   }
 }
+
+.has-error {
+  .error {
+    color: $c-red;
+  }
+}

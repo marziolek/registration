@@ -384,11 +384,9 @@ angular.module('registrationApp')
   };
 
   AdminAPI.prototype.goToAnchor = function(hash) {
-    if ($location.hash() !== hash) {
-      $location.hash(hash);
-    } else {
-      $anchorScroll();
-    };
+    $location.hash(hash);
+    $anchorScroll.yOffset = 60;
+    $anchorScroll();
 
     angular.element('#' + hash).addClass('anchor-highlight');
     setTimeout( function() {
@@ -406,7 +404,7 @@ angular.module('registrationApp')
         if (result) {
           var message = 'Wizyta została odwołana.',
               flashClass = 'success';
-          
+
           angular.element('[data-item-id="' + id + '"]').addClass('canceled');
         } else {
           var message = 'Wystąpił błąd.',
@@ -416,7 +414,7 @@ angular.module('registrationApp')
       };
     });
   };
-  
+
   AdminAPI.prototype.enableVisit = function(id) {
     visit.enableVisit(id).then( function(result) {
       if (result.code) {
@@ -427,7 +425,7 @@ angular.module('registrationApp')
         if (result) {
           var message = 'Wizyta została przywrócona.',
               flashClass = 'success';
-          
+
           angular.element('[data-item-id="' + id + '"]').removeClass('canceled');
         } else {
           var message = 'Wystąpił błąd.',

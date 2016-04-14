@@ -47,6 +47,11 @@
   &.free {
     margin: 0 !important;
     border-bottom: 1px solid white;
+    
+    &.old {
+      cursor: default;
+      background-color: lighten($c-violet-dark, 20%);
+    }
   }
 
   &.taken {

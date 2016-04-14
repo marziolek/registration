@@ -3,9 +3,10 @@
                        max="{{vm.weeksAvailable}}" 
                        class="calendar-navigation"></calendar-navigation>
   <div ui-calendar="vm.config.calendar" 
-       ng-model="vm.eventSources" 
+       ng-model="allEvents" 
        calendar="clientCalendar" 
-       class="calendar"></div>
+       class="calendar"
+       ng-init="allEvents = []"></div>
 
   <h2>Usługi</h2>
   <ul class="service-list">

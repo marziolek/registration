@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('mainViewModel', function (settings, popup, calendar, visit, service, $rootScope) {
+  .factory('mainViewModel', function (settings, popup, calendar, visit, service, $rootScope, $timeout) {
 
   var MainAPI = function() {};
 
@@ -22,13 +22,16 @@ angular.module('registrationApp')
   };
 
   MainAPI.prototype.modal;
-  MainAPI.prototype.takeEvent = function(element) {
-    var cssClass = element.className[0],
+  MainAPI.prototype.takeEvent = function(view, element) {
+    var cssClass = view.className[0],
+        parent = angular.element(element.target).closest('a'),
         self = this;
 
-    if (cssClass) {
-      if (cssClass === 'free') {
-        self.modal = popup.show('lg', 'book.visit.tpl.html', 'BookVisitCtrl', element);
+    if (!parent.hasClass('old')) {
+      if (cssClass) {
+        if (cssClass === 'free') {
+          self.modal = popup.show('lg', 'book.visit.tpl.html', 'BookVisitCtrl', view);
+        }
       }
     }
   };
@@ -78,12 +81,13 @@ angular.module('registrationApp')
           right: ''
         },
         eventRender: self.eventRender,
-        /*
         viewRender: function(view, element) {
-          $log.debug(element);
-        },*/
+          $timeout( function() {
+            self.markOldEvents(element);
+          });
+        },
         eventClick: function(view, element) {
-          self.takeEvent(view);
+          self.takeEvent(view, element);
         }
       }
     };  
@@ -137,15 +141,14 @@ angular.module('registrationApp')
     var self = this;
 
     visit.getAllBooked().then( function(result) {
-      self.eventSources = [freeEvents, result];
-      $rootScope.events = self.eventSources;
+      $rootScope.allEvents = [freeEvents, result];
     }, function(error) {
       self.bookedVisits = error;
     });
-    
+ 
     return self.bookedVisits;
   };
-  
+
   MainAPI.prototype.services = [];
   MainAPI.prototype.getAllServices = function() {
     var self = this;
@@ -153,6 +156,24 @@ angular.module('registrationApp')
     service.getAllServices().then( function(result) {
       self.services = result;
     })
+  };
+
+  MainAPI.prototype.markOldEvents = function(el) {
+    var today = moment().local().format('YYYY-MM-DD');
+
+    if (el) {
+      var index = el.find('[data-date="'+ today +'"]').index(),
+          content = angular.element('.fc-content-skeleton'),
+          columns = angular.element(content[1]).find('td');
+
+      $.each(columns, function(key, column) {
+        var colIndex = angular.element(column).index();
+
+        if ((colIndex > 0) && (colIndex < index)) {
+          angular.element(column).find('a').addClass('old');
+        };
+      })
+    }
   };
 
   return new MainAPI();

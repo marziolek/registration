@@ -50,7 +50,7 @@ angular.module('registrationApp')
               flashClass = 'success';
           
           // add event to calendar
-          $rootScope.events.push([{className: "taken", start: result.attributes.date, end: result.attributes.date }]);
+          $rootScope.allEvents.push([{className: "taken", start: result.attributes.date, end: result.attributes.date }]);
         } else {
           var message = 'Ten termin jest już zajęty. Proszę wybrać inny.',
               flashClass = 'danger';

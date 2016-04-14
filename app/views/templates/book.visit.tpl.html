@@ -4,22 +4,43 @@
     <p>
       <span>Twój termin: </span><span>{{vm.popupDataTime}}, </span><span>{{vm.popupDataDate}}, </span><span>{{vm.popupDataDayName}}</span>
     </p>
-    <form name="bookvisitform" novalidate ng-submit="vm.confirmationBookVisit(bookVisit)"> 
+    <form name="bookvisitform" 
+          novalidate 
+          ng-submit="bookvisitform.$valid && vm.confirmationBookVisit(bookVisit)">
       <input type="hidden" name="date" ng-model="bookVisit.date" ng-init="bookVisit.date = vm.popupDataDateRaw">
       <div class="flex">
         <div>
           <label for="name">Imię:</label>
+          <p class="error" ng-show="bookvisitform.name.$error.required && bookvisitform.$submitted">&nbsp;</p>
           <label for="lastname">Nazwisko:</label>
+          <p class="error" ng-show="bookvisitform.lastname.$error.required && bookvisitform.$submitted">&nbsp;</p>
           <label for="email">Email:</label>
+          <p class="error" ng-show="bookvisitform.email.$error.required && bookvisitform.$submitted">&nbsp;</p>
+          <p class="error" ng-show="bookvisitform.email.$error.email && bookvisitform.$submitted">&nbsp;</p>
           <label for="phone">Telefon:</label>
+          <p class="error" ng-show="bookvisitform.phone.$error.required && bookvisitform.$submitted">&nbsp;</p>
         </div>
         <div>
-          <input type="text" name="name" id="name" ng-model="bookVisit.name" class="form-control">
-          <input type="text" name="lastname" id="lastname" ng-model="bookVisit.lastname" class="form-control">
-          <input type="text" name="email" id="email" ng-model="bookVisit.email" class="form-control">
-          <input type="tel" name="phone" id="phone" ng-model="bookVisit.phone" class="form-control">
+          <div ng-class="{'has-error' : !bookvisitform.name.$valid && bookvisitform.$submitted}">
+            <input type="text" name="name" id="name" ng-model="bookVisit.userOneTime.name" class="form-control" required>
+            <p class="error" ng-show="bookvisitform.name.$error.required && bookvisitform.$submitted">Musisz wypełnić to pole</p>
+          </div>
+          <div ng-class="{'has-error' : !bookvisitform.lastname.$valid && bookvisitform.$submitted}">
+            <input type="text" name="lastname" id="lastname" ng-model="bookVisit.userOneTime.lastname" class="form-control" required>
+            <p class="error" ng-show="bookvisitform.lastname.$error.required && bookvisitform.$submitted">Musisz wypełnić to pole</p>
+          </div>
+          <div ng-class="{'has-error' : !bookvisitform.email.$valid && bookvisitform.$submitted}">
+            <input type="email" name="email" id="email" ng-model="bookVisit.userOneTime.email" class="form-control" required>
+            <p class="error" ng-show="bookvisitform.email.$error.required && bookvisitform.$submitted">Musisz wypełnić to pole</p>
+            <p class="error" ng-show="bookvisitform.email.$error.email && bookvisitform.$submitted">To nie jest poprawny email</p>
+          </div>
+          <div ng-class="{'has-error' : !bookvisitform.phone.$valid && bookvisitform.$submitted}">
+            <input type="tel" name="phone" id="phone" ng-model="bookVisit.userOneTime.phone" class="form-control" required>
+            <p class="error" ng-show="bookvisitform.phone.$error.required && bookvisitform.$submitted">Musisz wypełnić to pole</p>
+          </div>
         </div>
       </div>
+      <p class="book-visit--required">* Wszystkie powyższe pola są wymagane.</p>
       <fieldset>
         <div class="form-group">
           <label for="comment">Dodatkowe informacje dla lekarza:</label>

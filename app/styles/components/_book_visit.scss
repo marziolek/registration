@@ -40,4 +40,14 @@
       }
     }
   }
+  
+  &--required {
+    margin: 0;
+    color: $c-blue;
+  }
+  
+  .error {
+    margin-top: -($space / 4);
+    margin-bottom: 0;
+  }
 }

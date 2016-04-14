@@ -38,7 +38,7 @@
         <p class="error" 
            ng-show="registerform.registerEmail.$error.required && registerform.$submitted">Musisz wypełnić to pole</p>
         <p class="error" 
-           ng-show="registerform.email.$error.email && registerform.$submitted">To nie jest poprawny adres email.</p>
+           ng-show="registerform.registerEmail.$error.email && registerform.$submitted">To nie jest poprawny adres email.</p>
       </div>
       <div class="form-group" 
            ng-class="{'has-error' : !registerform.registerPassword.$valid && registerform.$submitted}">

@@ -8,6 +8,7 @@
   tr {
     &.canceled {
       td {
+        opacity: .5;
         text-decoration: line-through;
         
         &:first-of-type {
