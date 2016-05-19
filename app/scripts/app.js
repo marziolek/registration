@@ -9,7 +9,8 @@
  * Main module of the application.
  */
 
-Parse.initialize('e6AmDrs60orYS7vIW2oLHUp3GALstVH840srHFY8', 'HXFcOsfFQHN2m6ya9U1KRgRcv1xzpJumvh15Vllb');
+Parse.initialize('12345', '12345');
+Parse.serverURL = 'http://localhost:1337/parse';
 
 angular
   .module('registrationApp', [
