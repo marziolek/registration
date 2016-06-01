@@ -1,0 +1,22 @@
+<div class="login-form" ng-controller="ResendVerificationEmailCtrl">
+  <p><strong>Wyślij ponownie link potwierdzający email</strong></p>
+  <form name="resendVerificationEmailForm" novalidate ng-submit="resendVerificationEmailForm.$valid && vm.resendVerificationEmail(email)"> 
+    <fieldset>
+      <div class="form-group" 
+           ng-class="{'has-error' : !resendVerificationEmailForm.email.$valid && resendVerificationEmailForm.$submitted}">
+        <label for="email">Twój email</label>
+        <input type="email" 
+               name="email" 
+               id="email" 
+               class="form-control" 
+               ng-model="email"
+               required>
+        <p class="error" 
+           ng-show="resendVerificationEmailForm.email.$error.required && resendVerificationEmailForm.$submitted">Musisz wypełnić to pole</p>
+        <p class="error" 
+           ng-show="resendVerificationEmailForm.email.$error.email && resendVerificationEmailForm.$submitted">To nie jest poprawny adres email.</p>
+      </div>
+    </fieldset>
+    <button type="submit" class="btn btn-info">Wyślij</button>
+  </form>
+</div>

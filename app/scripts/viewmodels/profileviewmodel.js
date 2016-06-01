@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('profileViewModel', function (user) {
+  .factory('profileViewModel', function (user, Mailing) {
 
   var ProfileAPI = function() {};
 
@@ -30,6 +30,12 @@ angular.module('registrationApp')
   
   ProfileAPI.prototype.smsStatus = function() {
     console.log(user.userIsTextMessages());
+  };
+  
+  ProfileAPI.prototype.sendEmail = function(mailData) {
+    Mailing.sendEmail(mailData).then(function(result) {
+      console.log(result);
+    });
   };
 
   ProfileAPI.prototype.updateTextMessages = function(textMessages) {

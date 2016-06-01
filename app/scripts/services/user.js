@@ -75,7 +75,7 @@ angular.module('registrationApp')
     },
     sendResetEmail: function(email) {     
       var q = $q.defer();
-      
+
       Parse.User.requestPasswordReset(email).then(function(result) {
         q.resolve(result);
       }, function(error) {
@@ -100,24 +100,10 @@ angular.module('registrationApp')
     signUp: function(form) {
       if (form.email !== '' && form.email !== null && form.name !== '' && form.name !== null && form.lastname !== '' && form.lastname !== null && form.password !== '' && form.password !== null ) {
 
-        var q = $q.defer(),
-            user = new Parse.User();
+        var q = $q.defer();
         
-        user.set('email', form.email);
-        user.set('username', form.email);
-        user.set('firstName', form.name);
-        user.set('lastName', form.lastname);
-        user.set('password', form.password);
-        user.set('phone', form.phone);
-        user.set('textMessages', form.textMessages);
-
-        user.signUp(null, {
-          success: function(user) {
-            q.resolve(user);
-          },
-          error: function(user, error) {
-            q.reject(error);
-          }
+        Parse.Cloud.run('newAccount', {form: form}).then(function(result){
+          q.resolve(result);
         });
 
         return q.promise;
@@ -126,7 +112,7 @@ angular.module('registrationApp')
     resendVerificationEmail: function(username) {
       var q = $q.defer();
 
-      Parse.Cloud.run('resendVerificationEmail', {'username':username}).then(function(result){
+      Parse.Cloud.run('resendVerificationEmail', {'username': username}).then(function(result){
         q.resolve(result);
       });
 
@@ -161,6 +147,15 @@ angular.module('registrationApp')
           alert("Error: " + error.code + " " + error.message);
         }
       });
+    },
+    token: function() {
+      var q = $q.defer();
+
+      Parse.Cloud.run('verifyEmail', {token: '9561rembyydxtj4ii7xxxnmpdhzadcxr'}).then( function(result) {
+        q.resolve(result);
+      });
+
+      return q.promise;
     }
     /*
     getAlertFreeSpotFlag : function() {

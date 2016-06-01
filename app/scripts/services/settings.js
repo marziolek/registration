@@ -12,7 +12,7 @@ angular.module('registrationApp')
 
   return {
     weeksAvailable: function() {
-      var q = $q.defer(), settings = Parse.Object.extend('settings'), query = new Parse.Query(settings);
+      var q = $q.defer();
 
       Parse.Cloud.run('getDefaultWeeksAvailable').then( function(result) {
         q.resolve(result);
@@ -22,14 +22,13 @@ angular.module('registrationApp')
     },
 
     updateWeeksAvailable: function(value) {
-      var q = $q.defer(), settings = Parse.Object.extend('settings'), query = new Parse.Query(settings);
+      var q = $q.defer(), query = new Parse.Query('Settings');
 
       query.equalTo('name', 'weeksAvailable');
       query.first({
         success: function(weeksAvailable) {
           weeksAvailable.save({duration: value}, {
             success: function(result) {
-              console.log(value);
               q.resolve(result);
             },
             error: function(error) {
@@ -56,14 +55,13 @@ angular.module('registrationApp')
     },
 
     updateVisitDuration: function(value) {
-      var q = $q.defer(), settings = Parse.Object.extend('settings'), query = new Parse.Query(settings);
+      var q = $q.defer(), query = new Parse.Query('Settings');
 
       query.equalTo('name', 'visitDuration');
       query.first({
         success: function(visitDuration) {
           visitDuration.save({duration: value}, {
             success: function(result) {
-              console.log(value);
               q.resolve(result);
             },
             error: function(error) {

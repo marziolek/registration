@@ -15,7 +15,7 @@ angular.module('registrationApp')
   LoginAPI.prototype.logIn = function(form) {
     var self = this;
     user.isVerified(form.email).then(function(result) {
-      if (result) {
+      if (result.verified) {
         user.logIn(form.email, form.password).then(function(result) {
           self.errorMessage = false;
           user.userData();
@@ -27,18 +27,24 @@ angular.module('registrationApp')
       } else {
         self.errorMessage = false;
         self.toggleVerified = true;
+        self.toggleVerifiedMsg = result.msg;
       }
     }, function(error) {
-      console.log(error);
-      self.errorMessage = 'No such user';
+      self.errorMessage = 'Nie ma takiego użytkownika.';
       self.toggleVerified = false;
     });
   };
-  
+
   LoginAPI.prototype.isLoggedIn = user.isLoggedIn();
 
   LoginAPI.prototype.goToCalendar = function() {
     $state.go('home');
+  };
+
+  LoginAPI.prototype.token = function() {
+    user.token().then( function(result) {
+      console.log(result);
+    });
   };
 
   return new LoginAPI();

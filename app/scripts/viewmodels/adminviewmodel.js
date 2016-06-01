@@ -135,6 +135,7 @@ angular.module('registrationApp')
 
           self.getAllServices();
         } else {
+        console.log(result);
           var message = 'Wystąpił błąd.',
               flashClass = 'danger';
         }

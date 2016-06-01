@@ -10,7 +10,8 @@
  */
 
 Parse.initialize('12345', '12345');
-Parse.serverURL = 'http://localhost:1337/parse';
+//Parse.serverURL = 'http://localhost:1337/parse';
+Parse.serverURL = 'http://marcin-ziolek.usermd.net/parse';
 
 angular
   .module('registrationApp', [
@@ -43,6 +44,12 @@ angular
     templateUrl: 'views/login.html',
     controller: 'LoginCtrl',
     controllerAs: 'login'
+  })
+    .state('resendVerificationEmail', {
+    url: "/resend-verification-email",
+    templateUrl: 'views/resend-verification-email.html',
+    controller: 'ResendVerificationEmailCtrl',
+    controllerAs: 'resendVerificationEmail'
   })
     .state('register', {
     url: "/register",

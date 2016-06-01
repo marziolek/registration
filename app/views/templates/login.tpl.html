@@ -29,7 +29,11 @@
            ng-show="loginform.password.$error.required && loginform.$submitted">Musisz wypełnić to pole</p>
       </div>
     </fieldset>
-    <button type="submit" class="btn">Zaloguj</button>
+    <button type="submit" class="btn btn-info">Zaloguj</button>
   </form>
   <strong ng-if="vm.errorMessage">{{vm.errorMessage}}</strong>
+  <div ng-if="vm.toggleVerified">
+    <p><strong>{{vm.toggleVerifiedMsg}}</strong></p>
+    <p><a ui-sref="resendVerificationEmail" class="btn btn-default">Nie dostałem emaila</a></p>
+  </div>
 </div>

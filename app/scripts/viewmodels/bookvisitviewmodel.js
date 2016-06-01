@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('bookVisitViewModel', function (user, service, visit, Flash, popup, $rootScope) {
+  .factory('bookVisitViewModel', function (user, service, visit, Flash, popup, $rootScope, Mailing, MailingText) {
 
   var BookVisitAPI = function() {};
 
@@ -36,9 +36,15 @@ angular.module('registrationApp')
   };
 
   BookVisitAPI.prototype.bookVisit = function(data) {
-    var self = this;
+    var self = this,
+        msgDate = moment(data.date).format('LLLL'),
+        msgBody = MailingText.body(msgDate).newVisitDate + MailingText.body().footer;
+    
+    Mailing.sendEmail({subject: MailingText.subject().newVisit, body: msgBody}).then(function(result) {
+      console.log(result);
+    });
 
-    visit.bookVisit(data).then( function(result) {
+    /*visit.bookVisit(data).then( function(result) {
       if (result.code) {
         var message = 'Wystąpił błąd.',
             flashClass = 'danger';
@@ -48,9 +54,11 @@ angular.module('registrationApp')
         if (result) {
           var message = 'Wizyta została umówiona.',
               flashClass = 'success';
-          
+
           // add event to calendar
           $rootScope.allEvents.push([{className: "taken", start: result.attributes.date, end: result.attributes.date }]);
+
+
         } else {
           var message = 'Ten termin jest już zajęty. Proszę wybrać inny.',
               flashClass = 'danger';
@@ -63,7 +71,7 @@ angular.module('registrationApp')
           flashClass = 'danger';
       var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       self.closePopup();
-    });
+    });*/
   };
 
   BookVisitAPI.prototype.confirmationBookVisitData;

@@ -32,7 +32,7 @@ angular.module('registrationApp')
             self.formError = error.message.substring(8); 
             break;
           default: 
-            self.formError = 'Error occured. Please try again.';
+            self.formError = 'Wystąpił błąd. Spróbuj jeszcze raz.';
             break;
         }
       });
