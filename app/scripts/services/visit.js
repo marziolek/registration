@@ -11,10 +11,10 @@ angular.module('registrationApp')
   .service('visit', function ($q) {
 
   return {
-    bookVisit: function(data) {
+    bookVisit: function(data, email) {
       var q = $q.defer();
 
-      Parse.Cloud.run('bookVisit', data).then( function(result) {
+      Parse.Cloud.run('bookVisit', {data: data, email: email}).then( function(result) {
         q.resolve(result);
       }, function(error) {
         q.reject(error);   

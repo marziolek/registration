@@ -45,6 +45,12 @@ angular
     controller: 'LoginCtrl',
     controllerAs: 'login'
   })
+    .state('forgotPassword', {
+    url: "/forgot-password",
+    templateUrl: 'views/forgot-password.html',
+    controller: 'LoginCtrl',
+    controllerAs: 'login'
+  })
     .state('resendVerificationEmail', {
     url: "/resend-verification-email",
     templateUrl: 'views/resend-verification-email.html',

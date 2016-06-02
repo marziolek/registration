@@ -1,6 +1,6 @@
-<div class="login-form" ng-controller="ResendVerificationEmailCtrl">
-  <p><strong>Wyślij ponownie link potwierdzający email</strong></p>
-  <form name="resendVerificationEmailForm" novalidate ng-submit="resendVerificationEmailForm.$valid && vm.resendVerificationEmail(email)"> 
+<div class="row resend-verification-form" ng-controller="ResendVerificationEmailCtrl">
+  <h3 class="col-xs-12">Wyślij ponownie link potwierdzający email</h3>
+  <form name="resendVerificationEmailForm" novalidate ng-submit="resendVerificationEmailForm.$valid && vm.resendVerificationEmail(email)" class="col-xs-12 col-sm-6"> 
     <fieldset>
       <div class="form-group" 
            ng-class="{'has-error' : !resendVerificationEmailForm.email.$valid && resendVerificationEmailForm.$submitted}">
@@ -17,6 +17,9 @@
            ng-show="resendVerificationEmailForm.email.$error.email && resendVerificationEmailForm.$submitted">To nie jest poprawny adres email.</p>
       </div>
     </fieldset>
+    <div class="alert alert-{{vm.response.status}}" ng-if="vm.response.status">
+      <p>{{vm.response.msg}}</p>
+    </div>
     <button type="submit" class="btn btn-info">Wyślij</button>
   </form>
 </div>

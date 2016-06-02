@@ -65,7 +65,7 @@ angular.module('registrationApp')
     isVerified: function(email) {
       var q = $q.defer();
 
-      Parse.Cloud.run('isVerified', {'email':email}).then(function(result){
+      Parse.Cloud.run('isVerified', {email: email}).then(function(result){
         q.resolve(result);
       }, function(error) {
         q.reject(error);
@@ -109,10 +109,10 @@ angular.module('registrationApp')
         return q.promise;
       }
     },
-    resendVerificationEmail: function(username) {
+    resendVerificationEmail: function(email) {
       var q = $q.defer();
 
-      Parse.Cloud.run('resendVerificationEmail', {'username': username}).then(function(result){
+      Parse.Cloud.run('resendVerificationEmail', {email: email}).then(function(result){
         q.resolve(result);
       });
 
@@ -148,62 +148,15 @@ angular.module('registrationApp')
         }
       });
     },
-    token: function() {
+    resetPasswordEmail: function(email) {
       var q = $q.defer();
 
-      Parse.Cloud.run('verifyEmail', {token: '9561rembyydxtj4ii7xxxnmpdhzadcxr'}).then( function(result) {
+      Parse.Cloud.run('resetPasswordEmail', {email: email}).then( function(result) {
         q.resolve(result);
       });
 
       return q.promise;
     }
-    /*
-    getAlertFreeSpotFlag : function() {
-      return currUser.get('f_alertFreeSpot');
-    },
-
-    getAlertDrawReminderFlag : function() {
-      return currUser.get('f_alertDrawReminder');
-    },
-
-    getActiveInDrawFlag : function() {
-      return currUser.get('f_activeInDraw');
-    },
-
-    getAllUsersForDraw : function() {
-      var q = $q.defer();
-
-      var User = Parse.Object.extend("User");
-      var query = new Parse.Query(User);
-
-      query.equalTo("f_activeInDraw", true);
-
-      query.find({
-        success: function(results) {
-          q.resolve(results);
-        },
-        error: function(error) {
-          alert("Error: " + error.code + " " + error.message);
-        }
-      });
-      return q.promise;
-    },
-
-    // setting flags        
-    setAlertFreeSpotFlag : function(status) {
-      currUser.set("f_alertFreeSpot", status);
-      this.saveUserData();
-    },
-
-    setAlertDrowReminderFlag : function(status) {
-      currUser.set("f_alertDrawReminder", status);
-      return this.saveUserData();
-    },
-
-    setActiveInDrawFlag : function(status) {
-      console.log(status);
-      currUser.set("f_activeInDraw", status);
-      return this.saveUserData();
-    }*/
+    
   };
 });

@@ -21,8 +21,11 @@ angular.module('registrationApp')
           user.userData();
           self.goToCalendar();
         }, function(error) {
-          var errorFirstLetterUppercase = error.substr(0, 1).toUpperCase() + error.substr(1);
-          self.errorMessage = errorFirstLetterUppercase;
+          if (error === 'Invalid username/password.') {
+            self.errorMessage = 'Zły email lub hasło';
+          } else {
+            self.errorMessage = 'Błąd. Spróbuj ponownie.';
+          }
         });
       } else {
         self.errorMessage = false;
@@ -41,9 +44,21 @@ angular.module('registrationApp')
     $state.go('home');
   };
 
-  LoginAPI.prototype.token = function() {
-    user.token().then( function(result) {
-      console.log(result);
+  LoginAPI.prototype.response = {status: '', msg: ''};
+  LoginAPI.prototype.forgotPasswordEmail = function(email) {
+    var self = this;
+
+    user.resetPasswordEmail(email).then( function(result) {
+      if (result.accepted.length > 0) {
+        self.response.status = 'success';
+        self.response.msg = 'Proszę sprawdzić skrzynkę pocztową adresu: ' + email;
+      } else if (result.rejected.length > 0) {
+        self.response.status = 'error';
+        self.response.msg = 'Email NIE został dostarczony!';
+      } else {
+        self.response.status = 'warning';
+        self.response.msg = 'Coś poszło nie tak... Spróbuj ponownie.';
+      }
     });
   };
 

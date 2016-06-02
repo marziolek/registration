@@ -37,14 +37,12 @@ angular.module('registrationApp')
 
   BookVisitAPI.prototype.bookVisit = function(data) {
     var self = this,
+        msgSubject = MailingText.subject().newVisit,
         msgDate = moment(data.date).format('LLLL'),
-        msgBody = MailingText.body(msgDate).newVisitDate + MailingText.body().footer;
-    
-    Mailing.sendEmail({subject: MailingText.subject().newVisit, body: msgBody}).then(function(result) {
-      console.log(result);
-    });
+        msgBody = MailingText.body(msgDate).newVisitDate + MailingText.body().footer,
+        msgEmail = Parse.User.current().get('email');
 
-    /*visit.bookVisit(data).then( function(result) {
+    visit.bookVisit(data, {email: msgEmail, subject: msgSubject, body: msgBody}).then( function(result) {
       if (result.code) {
         var message = 'Wystąpił błąd.',
             flashClass = 'danger';
@@ -58,7 +56,6 @@ angular.module('registrationApp')
           // add event to calendar
           $rootScope.allEvents.push([{className: "taken", start: result.attributes.date, end: result.attributes.date }]);
 
-
         } else {
           var message = 'Ten termin jest już zajęty. Proszę wybrać inny.',
               flashClass = 'danger';
@@ -71,7 +68,7 @@ angular.module('registrationApp')
           flashClass = 'danger';
       var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       self.closePopup();
-    });*/
+    });
   };
 
   BookVisitAPI.prototype.confirmationBookVisitData;
