@@ -1,0 +1,30 @@
+<div ng-if="vm.isLoggedIn">
+  <h1>Moje wizyty</h1>
+  <button type="button" class="btn btn-primary" ng-click="vm.prevWeekVisits(vm.countWeeksBack = vm.countWeeksBack + 1)" ng-disabled="!vm.isMoreToLoad">Pokaż poprzedni tydzień</button>
+  <span ng-if="!vm.isMoreToLoad">Nie ma starszych wizyt</span>
+  <p ng-ig="vm.displayWeekFrom">Wizyty od dnia {{vm.displayWeekFrom}}</p>
+  <p ng-if="vm.visits.length === 0">Brak nowych wizyt</p>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 profile-visit-block" ng-repeat="visit in vm.visits" data-item-id="{{visit.id}}" ng-class="{canceled: visit.isCanceled, anchor: vm.isVisitToday(visit.date)}" ng-attr-id="{{vm.isVisitToday(visit.date)}}">
+      <div class="thumbnail">
+        <div class="caption text-center">
+          <h3>{{visit.date | date: 'd MMMM'}}</h3>
+          <h4>{{visit.date | date: 'HH:mm'}}</h4>
+          <p>{{visit.additionalInformation}}</p>
+          <p>
+            <button type="button" 
+                    ng-if="!visit.isCanceled"
+                    ng-click="vm.cancelVisit(visit.id)" 
+                    title="Odwołaj wizytę"
+                    class="glyphicon glyphicon-trash btn btn-warning"></button>
+            <button type="button" 
+                    ng-if="visit.isCanceled"
+                    ng-click="vm.enableVisit(visit.id)" 
+                    title="Przywróć wizytę"
+                    class="glyphicon glyphicon-repeat btn btn-success"></button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

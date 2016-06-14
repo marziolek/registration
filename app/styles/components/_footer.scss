@@ -1,0 +1,32 @@
+// footer
+footer-main,
+footer,
+.footer {
+  display: block;
+}
+
+.footer {
+  margin-top: $space * 2;
+  padding: $space * 1.5 0;
+  background-color: $c-violet-dark;
+  color: $c-gray;
+  
+  &-link {
+    color: white;
+    
+    &:hover {
+      color: white;
+    }
+  }
+  
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  ul {
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

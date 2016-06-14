@@ -1,0 +1,30 @@
+// loader
+.loader {
+  display: none;
+  width: 100%;
+  height: $space / 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(270deg, #4fc1e9, #ac92ec, #ec87c0);
+  background-size: 600% 600%;
+  z-index: 99;
+
+  animation: LoaderAnimation 2.5s ease infinite;
+}
+
+.loading {  
+  .loader {
+    display: block;
+  }
+
+  header-main {
+    top: $space / 2;
+  }
+}
+
+@keyframes LoaderAnimation { 
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}

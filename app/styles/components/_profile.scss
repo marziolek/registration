@@ -1,0 +1,17 @@
+// user profile styles
+.profile {
+  &-visit-block {
+    &.canceled {
+      opacity: .5;
+      transition: all .3s ease;
+
+      .thumbnail {
+        background-color: $c-gray-light;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
