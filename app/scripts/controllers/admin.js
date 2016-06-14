@@ -8,7 +8,7 @@
  * Controller of the registrationApp
  */
 angular.module('registrationApp')
-  .controller('AdminCtrl', function ($scope, adminViewModel, calendar, settings, $compile, uiCalendarConfig) {
+  .controller('AdminCtrl', function ($scope, adminViewModel) {
 
   $scope.vm = adminViewModel;
   $scope.vm.checkIfAdmin();
@@ -27,7 +27,7 @@ angular.module('registrationApp')
 
   $scope.sortOptions = {
     handle: '.sort-handle',
-    stop: function(e, ui) {
+    stop: function() {
       $scope.vm.setServicesNewOrder();
     }
   };

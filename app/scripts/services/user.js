@@ -32,6 +32,8 @@ angular.module('registrationApp')
       var q = $q.defer();
 
       Parse.User.logOut().then( function(result) {
+        $rootScope.isLoading = true;
+        
         currUser = null;
         q.resolve(result);
       });
@@ -140,11 +142,8 @@ angular.module('registrationApp')
       var self = this;
 
       currUser.save(null, {
-        success: function(user) {
+        success: function() {
           self.userData();
-        },
-        error: function(user, error) {
-          alert("Error: " + error.code + " " + error.message);
         }
       });
     },

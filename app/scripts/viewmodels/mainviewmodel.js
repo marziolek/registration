@@ -8,20 +8,22 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('mainViewModel', function (settings, popup, calendar, visit, service, $rootScope, $timeout) {
+  .factory('mainViewModel', function (settings, popup, calendar, visit, service, $rootScope, $timeout, loading, uiCalendarConfig) {
 
   var MainAPI = function() {};
 
-  MainAPI.prototype.weeksAvailable;
+  MainAPI.prototype.weeksAvailable = '';
   MainAPI.prototype.getWeeksAvailable = function() {
     var self = this;
 
+    loading.set();
     settings.weeksAvailable().then( function(result) {
+      loading.unset();
       self.weeksAvailable = result.attributes.duration;
     });
   };
 
-  MainAPI.prototype.modal;
+  MainAPI.prototype.modal = '';
   MainAPI.prototype.takeEvent = function(view, element) {
     var cssClass = view.className[0],
         parent = angular.element(element.target).closest('a'),
@@ -38,18 +40,20 @@ angular.module('registrationApp')
 
   //calendar init in view
   MainAPI.prototype.minMaxHours = [];
-  MainAPI.prototype.visitDuration;
+  MainAPI.prototype.visitDuration = '';
   MainAPI.prototype.createCalendar = function() {
     var self = this,
         booked;
 
+    loading.set();
     calendar.getSchedule().then( function(result) {
+      loading.unset();
       self.dailySchedule = result;
       self.events = self.eventsFromSchedule(self.dailySchedule);
       booked = self.getAllBooked(self.events);
 
       calendar.getMinMaxWorkHours(self.dailySchedule).then( function(result) {
-        angular.forEach(result, function(val, key) {
+        angular.forEach(result, function(val) {
           self.minMaxHours.push(val);
         });
       });
@@ -90,7 +94,7 @@ angular.module('registrationApp')
           self.takeEvent(view, element);
         }
       }
-    };  
+    };
   };
 
   MainAPI.prototype.eventsFromSchedule = function(schedule) {
@@ -98,12 +102,13 @@ angular.module('registrationApp')
         visitDuration,
         self = this;
 
+    loading.set();
     settings.visitDuration().then( function(result) {
       visitDuration = result.attributes.duration;
 
-      angular.forEach(schedule, function(val, key) {
-        var hours = moment(moment(val.attributes.workHours.to, "HH:mm:ss") - moment(val.attributes.workHours.from, "HH:mm:ss")).hours() - 1,
-            minutes = moment(moment(val.attributes.workHours.to, "HH:mm:ss") - moment(val.attributes.workHours.from, "HH:mm:ss")).minutes(),
+      angular.forEach(schedule, function(val) {
+        var hours = moment(moment(val.attributes.workHours.to, 'HH:mm:ss') - moment(val.attributes.workHours.from, 'HH:mm:ss')).hours() - 1,
+            minutes = moment(moment(val.attributes.workHours.to, 'HH:mm:ss') - moment(val.attributes.workHours.from, 'HH:mm:ss')).minutes(),
             time = hours * 60 + minutes,
             visitsAvailable = time / visitDuration;
 
@@ -115,11 +120,13 @@ angular.module('registrationApp')
               end: self.prepareEvents(val.attributes.workHours.from, visitDuration, i, true),
               dow: [val.attributes.number],
               className: 'free',
-            }
+            };
             events.push(event); 
           }
         }
       });
+      
+      loading.unset();
     });
 
     return events;
@@ -129,20 +136,23 @@ angular.module('registrationApp')
     uiCalendarConfig.calendars.clientCalendar.fullCalendar(direction);
   };
 
-  MainAPI.prototype.prepareEvents = function(dayHoursFrom, visitDuration, i, isEnd) {
-    var base = moment(dayHoursFrom, "HH:mm:ss"),
-        duration = moment.duration(visitDuration, "m"),
+  MainAPI.prototype.prepareEvents = function(dayHoursFrom, visitDuration, i) {
+    var base = moment(dayHoursFrom, 'HH:mm:ss'),
+        duration = moment.duration(visitDuration, 'm'),
         display = base.add(duration * i);
 
-    return calendar.padTwoDigits(display.hour()) + ":" + calendar.padTwoDigits(display.minutes()) + ":00";
+    return calendar.padTwoDigits(display.hour()) + ':' + calendar.padTwoDigits(display.minutes()) + ':00';
   };
 
   MainAPI.prototype.getAllBooked = function(freeEvents) {
     var self = this;
 
+    loading.set();
     visit.getAllBooked().then( function(result) {
+      loading.unset();
       $rootScope.allEvents = [freeEvents, result];
     }, function(error) {
+      loading.unset();
       self.bookedVisits = error;
     });
  
@@ -153,9 +163,11 @@ angular.module('registrationApp')
   MainAPI.prototype.getAllServices = function() {
     var self = this;
 
+    loading.set();
     service.getAllServices().then( function(result) {
+      loading.unset();
       self.services = result;
-    })
+    });
   };
 
   MainAPI.prototype.markOldEvents = function(el) {
@@ -166,13 +178,13 @@ angular.module('registrationApp')
           content = angular.element('.fc-content-skeleton'),
           columns = angular.element(content[1]).find('td');
 
-      $.each(columns, function(key, column) {
+      angular.forEach(columns, function(column) {
         var colIndex = angular.element(column).index();
 
         if ((colIndex > 0) && (colIndex < index)) {
           angular.element(column).find('a').addClass('old');
-        };
-      })
+        }
+      });
     }
   };
 

@@ -46,5 +46,5 @@ angular.module('registrationApp')
 
       return q.promise;
     }
-  }
+  };
 });

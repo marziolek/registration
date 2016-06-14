@@ -30,14 +30,8 @@ angular.module('registrationApp')
           weeksAvailable.save({duration: value}, {
             success: function(result) {
               q.resolve(result);
-            },
-            error: function(error) {
-              alert("Error: " + error.code + " " + error.message);    
             }
           });
-        },
-        error: function(error) {
-          alert("Error: " + error.code + " " + error.message);    
         }
       });
 
@@ -63,14 +57,8 @@ angular.module('registrationApp')
           visitDuration.save({duration: value}, {
             success: function(result) {
               q.resolve(result);
-            },
-            error: function(error) {
-              alert("Error: " + error.code + " " + error.message);    
             }
           });
-        },
-        error: function(error) {
-          alert("Error: " + error.code + " " + error.message);    
         }
       });
 

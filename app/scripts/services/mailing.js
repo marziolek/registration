@@ -14,9 +14,9 @@ angular.module('registrationApp')
     sendEmail : function(mailData) {
       var q = $q.defer();
       
-      if (!mailData.email || mailData.email.length == 0) {
+      if (!mailData.email || mailData.email.length === 0) {
         mailData.email = user.userEmail();
-      };
+      }
 
       Parse.Cloud.run('sendEmail', {mailData: mailData}).then(function(result){
         q.resolve(result);
@@ -26,5 +26,5 @@ angular.module('registrationApp')
 
       return q.promise;
     }
-  }
+  };
 });

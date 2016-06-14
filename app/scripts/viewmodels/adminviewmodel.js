@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit, $anchorScroll, $location, Flash) {
+  .factory('adminViewModel', function (user, calendar, settings, uiCalendarConfig, service, $filter, day, visit, $anchorScroll, $location, Flash, loading) {
 
   var AdminAPI = function() {};
 
@@ -16,7 +16,9 @@ angular.module('registrationApp')
   AdminAPI.prototype.checkIfAdmin = function() {
     var self = this;
 
+    loading.set();
     user.isAdmin().then( function(result) {
+      loading.unset();
       self.isAdmin = result;
     });
   };
@@ -24,49 +26,61 @@ angular.module('registrationApp')
   AdminAPI.prototype.events = [];
   AdminAPI.prototype.eventSources = [];
 
-  AdminAPI.prototype.weeksAvailable;
+  AdminAPI.prototype.weeksAvailable = '';
   AdminAPI.prototype.getWeeksAvailable = function() {
     var self = this;
 
+    loading.set();
     settings.weeksAvailable().then( function(result) {
+      loading.unset();
       self.weeksAvailable = result.attributes.duration;
     });
   };
 
   AdminAPI.prototype.updateWeeksAvailable = function(value) {
+    loading.set();
+
     settings.updateWeeksAvailable(value).then( function(result) {
+      loading.unset();
+
+      var message, flashClass;
       if (result.code) {
-        var message = 'Wystąpił błąd.',
-            flashClass = 'danger';
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        message = 'Wystąpił błąd.';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
         if (result) {
-          var message = 'Ustawienia zapisane.',
-              flashClass = 'success';
+          message = 'Ustawienia zapisane.';
+          flashClass = 'success';
         } else {
-          var message = 'Wystąpił błąd.',
-              flashClass = 'danger';
+          message = 'Wystąpił błąd.';
+          flashClass = 'danger';
         }
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       }
     });
   };
 
   AdminAPI.prototype.updateVisitDuration = function(value) {
+    loading.set();
+
     settings.updateVisitDuration(value).then( function(result) {
+      loading.unset();
+
+      var message, flashClass;
       if (result.code) {
-        var message = 'Wystąpił błąd.',
-            flashClass = 'danger';
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        message = 'Wystąpił błąd.';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
         if (result) {
-          var message = 'Ustawienia zapisane.',
-              flashClass = 'success';
+          message = 'Ustawienia zapisane.';
+          flashClass = 'success';
         } else {
-          var message = 'Wystąpił błąd.',
-              flashClass = 'danger';
+          message = 'Wystąpił błąd.';
+          flashClass = 'danger';
         }
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       }
     });
   };
@@ -74,25 +88,26 @@ angular.module('registrationApp')
   AdminAPI.prototype.eventsFromSchedule = function(schedule) {
     var events = [];
     angular.forEach(schedule, function(val, key) {
+      var event;
       if (val.attributes.isSet) {
-        var event = {
+        event = {
           _id: key,
           start: val.attributes.workHours.from,
           end: val.attributes.workHours.to,
           dow: [val.attributes.number],
           className: 'availability',
           isSet: val.attributes.isSet
-        }
+        };
         events.push(event); 
       } else {
-        var event = {
+        event = {
           _id: key,
           start: val.attributes.workHours.from,
           end: val.attributes.workHours.to,
           dow: [val.attributes.number],
           className: 'availability free-event',
           isSet: val.attributes.isSet
-        }
+        };
         events.push(event); 
       }
     });
@@ -108,9 +123,11 @@ angular.module('registrationApp')
   AdminAPI.prototype.getAllServices = function() {
     var self = this;
 
+    loading.set();
     service.getAllServices().then( function(result) {
+      loading.unset();
       self.services = result;
-    })
+    });
   };
 
   AdminAPI.prototype.newServiceInputCount = 0;
@@ -123,25 +140,28 @@ angular.module('registrationApp')
   AdminAPI.prototype.saveServicesChanges = function(servicesModel) {
     var self = this;
 
+    loading.set();
     service.updateAllServices(servicesModel).then( function(result) {
+      loading.unset();
+
+      var message, flashClass;
       if (result.code) {
-        var message = 'Wystąpił błąd.',
-            flashClass = 'danger';
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        message = 'Wystąpił błąd.';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
         if (result) {
-          var message = 'Ustawienia zapisane.',
-              flashClass = 'success';
+          message = 'Ustawienia zapisane.';
+          flashClass = 'success';
 
           self.getAllServices();
         } else {
-        console.log(result);
-          var message = 'Wystąpił błąd.',
-              flashClass = 'danger';
+          message = 'Wystąpił błąd.';
+          flashClass = 'danger';
         }
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       }
-    })
+    });
   };
 
   AdminAPI.prototype.removeService = function(id, tempId, servicesModel) {
@@ -152,16 +172,34 @@ angular.module('registrationApp')
 
           return;
         }
-      })
+      });
     } else {
+      loading.set();
       service.removeService(id).then( function(result) {
+        loading.unset();
         angular.forEach(servicesModel, function(obj, index) {
           if (obj.id === id) {
             servicesModel.splice(index, 1);
 
             return;
           }
-        })
+        });
+
+        var message, flashClass;
+        if (result.code) {
+          message = 'Wystąpił błąd.';
+          flashClass = 'danger';
+          Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        } else {
+          if (result) {
+            message = 'Usługa usunięta.';
+            flashClass = 'success';
+          } else {
+            message = 'Wystąpił błąd.';
+            flashClass = 'danger';
+          }
+          Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        }
       });
     }
   };
@@ -174,7 +212,7 @@ angular.module('registrationApp')
     });
   };
 
-  AdminAPI.prototype.editWH;
+  AdminAPI.prototype.editWH = '';
   AdminAPI.prototype.showEditWorkHours = function(event) {
     var self = this,
         date = {
@@ -191,8 +229,6 @@ angular.module('registrationApp')
     date.weekDay = event.start.format('dddd');
     date.start = angular.copy(event.start.local());
 
-    console.log(date.start);
-
     date.start.set('hour', date.start.hour());
     date.start = new Date(date.start);
     date.end = angular.copy(event.end.local());
@@ -206,9 +242,9 @@ angular.module('registrationApp')
   AdminAPI.prototype.hstep = 1;
   AdminAPI.prototype.mstep = 15;
   AdminAPI.prototype.isCalendarVisible = false;
-  AdminAPI.prototype.visitDurationFormatted;
+  AdminAPI.prototype.visitDurationFormatted = '';
   AdminAPI.prototype.minMaxHours = [];
-  AdminAPI.prototype.eventRender;
+  AdminAPI.prototype.eventRender = '';
 
   AdminAPI.prototype.saveEditWH = function(editWH) {
     /* prepare data */
@@ -231,25 +267,31 @@ angular.module('registrationApp')
     model.isSet = editWH.isSet;
     /* / prepare data */
 
+    loading.set();
     day.updateAllWH(model).then( function(result) {
+      loading.unset();
+
+      var message, flashClass;
       if (result.code) {
-        var message = 'Wystąpił błąd.',
-            flashClass = 'danger';
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        message = 'Wystąpił błąd.';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
         if (result) {
-          var message = 'Ustawienia zapisane.',
-              flashClass = 'success';
+          message = 'Ustawienia zapisane.';
+          flashClass = 'success';
 
           self.getAllServices();
         } else {
-          var message = 'Wystąpił błąd.',
-              flashClass = 'danger';
+          message = 'Wystąpił błąd.';
+          flashClass = 'danger';
         }
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
-      };
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
 
+      console.log(result);
       angular.forEach(self.events, function(val, key) {
+
         if (val.dow[0] === result.attributes.number) {
           var newElement = angular.copy(val);
           newElement._id = Math.floor((Math.random() * (99999 - 20)) + 20);
@@ -261,7 +303,7 @@ angular.module('registrationApp')
           self.events.push(newElement);
         }
       });
-    })
+    });
   };
 
   AdminAPI.prototype.formatDateToDayName = function(date) {
@@ -269,7 +311,6 @@ angular.module('registrationApp')
   };
 
   AdminAPI.prototype.closeEditWH = function() {
-    var self = this;
     this.editWH = false;
   };
 
@@ -277,7 +318,10 @@ angular.module('registrationApp')
   AdminAPI.prototype.createCalendar = function() {
     var self = this;
 
+    loading.set();
     calendar.getSchedule().then( function(result) {
+      loading.unset();
+
       self.dailySchedule = result;
       self.events = self.eventsFromSchedule(self.dailySchedule);
 
@@ -286,7 +330,7 @@ angular.module('registrationApp')
       // add fake events on empty days TODO
 
       calendar.getMinMaxWorkHours(self.dailySchedule).then( function(result) {
-        angular.forEach(result, function(val, key) {
+        angular.forEach(result, function(val) {
           self.minMaxHours.push(val);
         });
       });
@@ -321,7 +365,7 @@ angular.module('registrationApp')
         viewRender: function(view, element) {
           $log.debug(element);
         },*/
-        eventClick: function(view, element) {
+        eventClick: function(view) {
           self.showEditWorkHours(view);
         }
       }
@@ -341,7 +385,9 @@ angular.module('registrationApp')
   AdminAPI.prototype.getAllVisits = function(from) {
     var self = this;
 
+    loading.set();
     visit.getAllVisits(from).then( function(result) {
+      loading.unset();
       self.visits = result[0];
       self.isMoreToLoad = result[1];
     }, function(error) {
@@ -350,7 +396,7 @@ angular.module('registrationApp')
   };
 
   AdminAPI.prototype.countWeeksBack = 0;
-  AdminAPI.prototype.displayWeekFrom = moment().format('DD.MM.YYYY')
+  AdminAPI.prototype.displayWeekFrom = moment().format('DD.MM.YYYY');
   AdminAPI.prototype.prevWeekCount = 7;
   AdminAPI.prototype.prevWeekVisits = function(counter) {
     var self = this,
@@ -365,7 +411,7 @@ angular.module('registrationApp')
     var monthTmp = $filter('date')(date, 'd MMMM'),
         self = this;
 
-    if (self.monthStart != monthTmp) {
+    if (self.monthStart !== monthTmp) {
       self.monthStart = monthTmp;
 
       return true;
@@ -396,44 +442,53 @@ angular.module('registrationApp')
   };
 
   AdminAPI.prototype.cancelVisit = function(id) {
+    loading.set();
+
     visit.cancelVisit(id).then( function(result) {
+      loading.unset();
+
+      var message, flashClass;
       if (result.code) {
-        var message = 'Wystąpił błąd.',
-            flashClass = 'danger';
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        message = 'Wystąpił błąd.';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
         if (result) {
-          var message = 'Wizyta została odwołana.',
-              flashClass = 'success';
+          message = 'Wizyta została odwołana.';
+          flashClass = 'success';
 
           angular.element('[data-item-id="' + id + '"]').addClass('canceled');
         } else {
-          var message = 'Wystąpił błąd.',
-              flashClass = 'danger';
+          message = 'Wystąpił błąd.';
+          flashClass = 'danger';
         }
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
-      };
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
     });
   };
 
   AdminAPI.prototype.enableVisit = function(id) {
+    loading.set();
     visit.enableVisit(id).then( function(result) {
+      loading.unset();
+
+      var message, flashClass;
       if (result.code) {
-        var message = 'Wystąpił błąd.',
-            flashClass = 'danger';
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+        message = 'Wystąpił błąd.';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       } else {
-        if (result) {
-          var message = 'Wizyta została przywrócona.',
-              flashClass = 'success';
+        if (result.id) {
+          message = 'Wizyta została przywrócona.';
+          flashClass = 'success';
 
           angular.element('[data-item-id="' + id + '"]').removeClass('canceled');
         } else {
-          var message = 'Wystąpił błąd.',
-              flashClass = 'danger';
+          message = result;
+          flashClass = 'danger';
         }
-        var id = Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
-      };
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
     });
   };
 

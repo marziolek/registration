@@ -12,14 +12,13 @@
     <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
     <link rel="stylesheet" href="bower_components/angular-flash-alert/dist/angular-flash.css" />
-    <link rel="stylesheet" href="styles/plugins/bootflat/main.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="registrationApp">
+  <body ng-app="registrationApp" loader>
     <!--[if lte IE 8]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -29,8 +28,12 @@
     <div class="container">
       <div ui-view></div>
     </div>
+    
+    <footer-main></footer-main>
 
     <flash-message duration="5000" show-close="true" on-dismiss="myCallback(flash)" ></flash-message>
+    
+    <div class="loader"></div>
     
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -69,7 +72,10 @@
     <script src="scripts/controllers/bookvisit.js"></script>
     <script src="scripts/controllers/profile.js"></script>
     <script src="scripts/controllers/admin.js"></script>
+    <script src="scripts/controllers/resendverificationemail.js"></script>
     <script src="scripts/directives/header.js"></script>
+    <script src="scripts/directives/footer.js"></script>
+    <script src="scripts/directives/loader.js"></script>
     <script src="scripts/directives/login-directive.js"></script>
     <script src="scripts/directives/register-directive.js"></script>
     <script src="scripts/directives/calendar-navigation.js"></script>
@@ -90,7 +96,8 @@
     <script src="scripts/services/modal.js"></script>
     <script src="scripts/services/mailing.js"></script>
     <script src="scripts/services/mailingtext.js"></script>
-    <script src="scripts/controllers/resendverificationemail.js"></script>
+    <script src="scripts/services/sms.js"></script>
+    <script src="scripts/services/loading.js"></script>
     <!-- endbuild -->
   </body>
 </html>

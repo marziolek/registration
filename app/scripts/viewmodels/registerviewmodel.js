@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('registerViewModel', function ($state, user) {
+  .factory('registerViewModel', function ($state, user, loading) {
 
   var RegisterAPI = function() {};
   
@@ -18,9 +18,12 @@ angular.module('registrationApp')
     var self = this;
     
     if (form) {
-      user.signUp(form).then(function(user) {
+      loading.set();
+      user.signUp(form).then(function() {
+        loading.unset();
         self.goToLoginPage();
       }, function(error) {
+        loading.unset();
         switch(error.code) {
           case 142:
             self.formError = error.message;

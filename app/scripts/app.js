@@ -10,7 +10,6 @@
  */
 
 Parse.initialize('12345', '12345');
-//Parse.serverURL = 'http://localhost:1337/parse';
 Parse.serverURL = 'http://marcin-ziolek.usermd.net/parse';
 
 angular
@@ -30,41 +29,41 @@ angular
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
     .state('home', {
-    url: "/",
-    templateUrl: "views/main.html",
+    url: '/',
+    templateUrl: 'views/main.html',
     controller: 'MainCtrl',
     controllerAs: 'main'
   })
     .state('login', {
-    url: "/login",
+    url: '/login',
     templateUrl: 'views/login.html',
     controller: 'LoginCtrl',
     controllerAs: 'login'
   })
     .state('forgotPassword', {
-    url: "/forgot-password",
+    url: '/forgot-password',
     templateUrl: 'views/forgot-password.html',
     controller: 'LoginCtrl',
     controllerAs: 'login'
   })
     .state('resendVerificationEmail', {
-    url: "/resend-verification-email",
+    url: '/resend-verification-email',
     templateUrl: 'views/resend-verification-email.html',
     controller: 'ResendVerificationEmailCtrl',
     controllerAs: 'resendVerificationEmail'
   })
     .state('register', {
-    url: "/register",
+    url: '/register',
     templateUrl: 'views/register.html',
     controller: 'RegisterCtrl',
     controllerAs: 'register'
   })
     .state('profile', {
-    url: "/profile",
+    url: '/profile',
     templateUrl: 'views/profile.html',
     controller: 'ProfileCtrl',
     controllerAs: 'profile',
@@ -72,8 +71,17 @@ angular
       acl: true
     }
   })
+    .state('profileVisits', {
+    url: '/profile/visits',
+    templateUrl: 'views/profile-visits.html',
+    controller: 'ProfileCtrl',
+    controllerAs: 'profile',
+    params: {
+      acl: true
+    }
+  })
     .state('admin', {
-    url: "/admin",
+    url: '/admin',
     templateUrl: 'views/admin.html',
     controller: 'AdminCtrl',
     controllerAs: 'admin',
@@ -83,7 +91,7 @@ angular
     }
   })
     .state('reservations', {
-    url: "/admin/reservations",
+    url: '/admin/reservations',
     templateUrl: 'views/admin-reservations.html',
     controller: 'AdminCtrl',
     controllerAs: 'admin',
@@ -95,7 +103,8 @@ angular
 })
   .run( function($rootScope, user, $state) {
 
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+
     if (!user.isLoggedIn()) {
       if (toParams.acl) {
         event.preventDefault();

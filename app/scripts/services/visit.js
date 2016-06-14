@@ -28,9 +28,26 @@ angular.module('registrationApp')
 
       if (startDate) {
         from = new Date(startDate);
-      };
+      }
 
       Parse.Cloud.run('getAllVisits', {from : from}).then( function(result) {
+        q.resolve(result);
+      }, function(error) {
+        q.reject(error);   
+      });
+
+      return q.promise;
+    },
+
+    getMyVisits: function(startDate) {
+      var q = $q.defer(),
+          from = moment().startOf('day').toDate();
+
+      if (startDate) {
+        from = new Date(startDate);
+      }
+
+      Parse.Cloud.run('getMyVisits', {from : from}).then( function(result) {
         q.resolve(result);
       }, function(error) {
         q.reject(error);   
@@ -51,7 +68,7 @@ angular.module('registrationApp')
 
       return q.promise;
     },
-    
+
     cancelVisit: function(id) {
       var q = $q.defer();
 
@@ -63,7 +80,7 @@ angular.module('registrationApp')
 
       return q.promise;
     },
-    
+
     enableVisit: function(id) {
       var q = $q.defer();
 
@@ -75,5 +92,5 @@ angular.module('registrationApp')
 
       return q.promise;
     },
-  }
+  };
 });

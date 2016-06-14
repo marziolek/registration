@@ -12,4 +12,5 @@ angular.module('registrationApp')
 
   $scope.vm = profileViewModel;
   
+  $scope.vm.getMyVisits();
 });

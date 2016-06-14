@@ -12,7 +12,7 @@ angular.module('registrationApp')
 
   return {
     getSchedule: function() {
-      var q = $q.defer(), self = this;
+      var q = $q.defer();
 
       Parse.Cloud.run('getSchedule').then( function(result) {
         q.resolve(result);
@@ -35,13 +35,15 @@ angular.module('registrationApp')
       var from = [], to = [], workHours = [], minFrom, maxTo, self = this;
 
       angular.forEach(days, function(day) {
+        var number;
+        
         if (day.attributes.workHours.from) {
-          var number = day.attributes.workHours.from;
+          number = day.attributes.workHours.from;
           number = number.replace(/:/g,'');
           from.push(parseInt(number));
         }
         if (day.attributes.workHours.to) {
-          var number = day.attributes.workHours.to;
+          number = day.attributes.workHours.to;
           number = number.replace(/:/g,'');
           to.push(parseInt(number));
         }
@@ -79,7 +81,7 @@ angular.module('registrationApp')
         default: 
           formatted = '00:30:00';
           break;
-      };
+      }
 
       return formatted;
     },

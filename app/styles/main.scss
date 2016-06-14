@@ -10,11 +10,13 @@
 
 // components
 @import 'components/navbar';
+@import 'components/loader';
+@import 'components/footer';
 @import 'components/buttons';
 @import 'components/calendar';
 @import 'components/calendar_navigation';
 @import 'components/form';
-
+@import 'components/profile';
 
 @import 'components/admin';
 @import 'components/timepicker';

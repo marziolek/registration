@@ -8,15 +8,18 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('loginViewModel', function ($state, user) {
+  .factory('loginViewModel', function ($state, user, loading) {
 
   var LoginAPI = function() {};
 
   LoginAPI.prototype.logIn = function(form) {
     var self = this;
+
+    loading.set();
     user.isVerified(form.email).then(function(result) {
+      loading.unset();
       if (result.verified) {
-        user.logIn(form.email, form.password).then(function(result) {
+        user.logIn(form.email, form.password).then(function() {
           self.errorMessage = false;
           user.userData();
           self.goToCalendar();
@@ -32,7 +35,8 @@ angular.module('registrationApp')
         self.toggleVerified = true;
         self.toggleVerifiedMsg = result.msg;
       }
-    }, function(error) {
+    }, function() {
+      loading.unset();
       self.errorMessage = 'Nie ma takiego użytkownika.';
       self.toggleVerified = false;
     });
@@ -48,7 +52,9 @@ angular.module('registrationApp')
   LoginAPI.prototype.forgotPasswordEmail = function(email) {
     var self = this;
 
+    loading.set();
     user.resetPasswordEmail(email).then( function(result) {
+      loading.unset();
       if (result.accepted.length > 0) {
         self.response.status = 'success';
         self.response.msg = 'Proszę sprawdzić skrzynkę pocztową adresu: ' + email;

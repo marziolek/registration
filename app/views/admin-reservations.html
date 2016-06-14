@@ -11,26 +11,26 @@
   <p ng-if="vm.visits.length === 0">Brak nowych wizyt</p>
   <table class="table table-bordered table-hover visits-table">
     <tbody>
-      <tr ng-repeat="visit in vm.visits" data-item-id="{{visit.id}}" ng-class="{canceled: visit.attributes.isCanceled, anchor: vm.isVisitToday(visit.attributes.date)}" ng-attr-id="{{vm.isVisitToday(visit.attributes.date)}}">
-        <td><span ng-if="vm.displayMonth(visit.attributes.date)">{{visit.attributes.date | date: 'd MMMM'}}</span></td>
-        <td>{{visit.attributes.date | date: 'HH:mm'}}</td>
-        <td data-user="{{visit.attributes.user.id}}">
-          {{visit.attributes.user.attributes.firstName}} {{visit.attributes.user.attributes.lastName}}
-          {{visit.attributes.userOneTime.name}} {{visit.attributes.userOneTime.lastname}}
+      <tr ng-repeat="visit in vm.visits" data-item-id="{{visit.id}}" ng-class="{canceled: visit.isCanceled, anchor: vm.isVisitToday(visit.date)}" ng-attr-id="{{vm.isVisitToday(visit.date)}}">
+        <td><span ng-if="vm.displayMonth(visit.date)">{{visit.date | date: 'd MMMM'}}</span></td>
+        <td>{{visit.date | date: 'HH:mm'}}</td>
+        <td data-user="{{visit.user.id}}">
+          {{visit.user.attributes.firstName}} {{visit.user.attributes.lastName}}
+          {{visit.userOneTime.name}} {{visit.userOneTime.lastname}}
         </td>
-        <td>{{visit.attributes.user.attributes.email}}{{visit.attributes.userOneTime.email}}</td>
-        <td>{{visit.attributes.user.attributes.phone}}{{visit.attributes.userOneTime.phone}}</td>
+        <td>{{visit.user.attributes.email}}{{visit.userOneTime.email}}</td>
+        <td>{{visit.user.attributes.phone}}{{visit.userOneTime.phone}}</td>
         <td class="visits-table-description">
-          <div>{{visit.attributes.additionalInformation}}</div>
+          <div>{{visit.additionalInformation}}</div>
         </td>
         <td class="admin-panel--cancel-visit">
           <button type="button" 
-                  ng-if="!visit.attributes.isCanceled"
+                  ng-if="!visit.isCanceled"
                   ng-click="vm.cancelVisit(visit.id)" 
                   title="Odwołaj wizytę"
                   class="glyphicon glyphicon-trash"></button>
           <button type="button" 
-                  ng-if="visit.attributes.isCanceled"
+                  ng-if="visit.isCanceled"
                   ng-click="vm.enableVisit(visit.id)" 
                   title="Przywróć wizytę"
                   class="glyphicon glyphicon-repeat"></button>

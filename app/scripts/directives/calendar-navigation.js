@@ -17,9 +17,7 @@ angular.module('registrationApp')
       scope.disableBtnNext = false;
 
       scope.goTo = function(direction) {
-        var calendarName = attrs.calendar;
-
-        angular.forEach(uiCalendarConfig.calendars, function(val, key) {
+        angular.forEach(uiCalendarConfig.calendars, function(val) {
           val.fullCalendar(direction);
         });
 
@@ -32,21 +30,23 @@ angular.module('registrationApp')
             break;
           case 'today':
             clicks = 1;
-          default:
             break;
-        };
+          default:
+            clicks = 1;
+            break;
+        }
 
         if (clicks >= maxClicks) {
           scope.disableBtnNext = true;
         } else {
           scope.disableBtnNext = false;
-        };
+        }
 
         if (clicks > 1) {
           scope.disableBtnPrev = false;
         } else {
           scope.disableBtnPrev = true;
-        };
+        }
       };
     }
   };

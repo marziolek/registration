@@ -414,7 +414,9 @@ module.exports = function (grunt) {
             '*.html',
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*',
-            'views/templates/*.*'
+            'views/templates/*.*',
+            'scripts/parse-1.6.14.min.js',
+            'fonts/*.*'
           ]
         }, {
           expand: true,

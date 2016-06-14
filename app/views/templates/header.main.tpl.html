@@ -2,7 +2,7 @@
   <div class="navbar" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">registration</a>
+        <a class="navbar-brand" href="/">Rejestracja</a>
       </div>
 
       <div class="navbar-right">
@@ -12,6 +12,7 @@
           <a ui-sref="profile">{{vm.name()}}</a>
         </span>
         <a ui-sref="admin" ng-if="vm.isLoggedIn() && vm.isAdmin" class="btn btn-primary">Panel administratora</a>
+        <a ui-sref="profileVisits" ng-if="vm.isLoggedIn() && !vm.isAdmin" class="btn btn-primary">Moje wizyty</a>
         <button type="button" ng-click="vm.logOut()" ng-if="vm.isLoggedIn()" class="btn btn-primary">Wyloguj</button>
         <a ui-sref="register" ng-if="!vm.isLoggedIn()" class="btn btn-primary">Załóż konto</a>
       </div>

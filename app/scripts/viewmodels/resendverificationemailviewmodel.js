@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('resendVerificationEmailViewModel', function (user) {
+  .factory('resendVerificationEmailViewModel', function (user, loading) {
 
   var ResendVerificationEmailAPI = function() {};
 
@@ -16,7 +16,9 @@ angular.module('registrationApp')
   ResendVerificationEmailAPI.prototype.resendVerificationEmail = function(email) {
     var self = this;
 
+    loading.set();
     user.resendVerificationEmail({email: email}).then( function(result) {
+      loading.unset();
       if (result.accepted.length > 0) {
         self.response.status = 'success';
         self.response.msg = 'Proszę sprawdzić skrzynkę pocztową adresu: ' + email;
@@ -27,7 +29,7 @@ angular.module('registrationApp')
         self.response.status = 'warning';
         self.response.msg = 'Coś poszło nie tak... Spróbuj ponownie.';
       }
-    })
+    });
   };
 
   return new ResendVerificationEmailAPI();

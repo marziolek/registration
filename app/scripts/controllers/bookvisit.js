@@ -18,14 +18,5 @@ angular.module('registrationApp')
   $scope.vm.popupDataTime = $scope.vm.popupData.start.local().format('HH:mm');
   $scope.vm.popupDataDayName = $scope.vm.popupData.start.local().format('dddd');
   $scope.vm.popupDataDateRaw = $scope.vm.popupData.start.local().toDate();
-  $scope.vm.popupDataDate = $scope.vm.popupData.start.local().format('D MMMM YYYY');
-
-  // init dropdowns - formstone
-  $('.demo_basic').dropdown();
-
-  $('.demo_basic').on("change", function() {
-    var value = $(this).val();
-    console.log(value);
-  });
-  
+  $scope.vm.popupDataDate = $scope.vm.popupData.start.local().format('D MMMM YYYY');  
 });
