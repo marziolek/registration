@@ -1,0 +1,22 @@
+<h1>Pacjentki</h1>
+<label>
+  <input type="text" ng-model="search.attributes.lastName" placeholder="Wyszukaj po nazwisku..." class="form-control">
+</label>
+<ul class="flex flex-between flex-stretch admin-patients">
+  <li ng-repeat="patient in vm.allPatients | filter:search" class="admin-patients-item">
+    <div class="admin-patients-item-content">
+      <p class="admin-patients-item-name"><strong>{{ patient.attributes.firstName }} {{ patient.attributes.lastName }}</strong></p>
+      <ul>
+        <li>{{ patient.attributes.email }}</li>
+        <li ng-if="patient.attributes.phone">tel: {{ patient.attributes.phone }}</li>
+        <li ng-if="patient.attributes.emailVerified">Zweryfikowany</li>
+        <li ng-if="!patient.attributes.emailVerified">Nie zweryfikowany</li>
+        <li>Utworzono: {{ patient.attributes.createdAt | date: 'dd-MM-yyyy o HH:mm' }}</li>
+      </ul>
+    </div>
+  </li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>

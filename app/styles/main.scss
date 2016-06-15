@@ -21,10 +21,16 @@
 @import 'components/admin';
 @import 'components/timepicker';
 @import 'components/admin_visits';
+@import 'components/admin_patients';
 @import 'components/flash_message';
 @import 'components/scrolling';
 @import 'components/service_list';
 @import 'components/book_visit';
+
+@import 'components/errors';
+@import 'components/checkbox';
+
+@import 'components/login-form';
 
 // overwrites
 @import 'overwrites/calendar_overwrite';

@@ -1,6 +1,6 @@
 <div class="row resend-verification-form" ng-controller="ResendVerificationEmailCtrl">
   <h3 class="col-xs-12">Wyślij ponownie link potwierdzający email</h3>
-  <form name="resendVerificationEmailForm" novalidate ng-submit="resendVerificationEmailForm.$valid && vm.resendVerificationEmail(email)" class="col-xs-12 col-sm-6"> 
+  <form name="resendVerificationEmailForm" novalidate ng-submit="resendVerificationEmailForm.$valid && vm.resendVerificationEmail(email)" class="col-xs-12 col-sm-5"> 
     <fieldset>
       <div class="form-group" 
            ng-class="{'has-error' : !resendVerificationEmailForm.email.$valid && resendVerificationEmailForm.$submitted}">

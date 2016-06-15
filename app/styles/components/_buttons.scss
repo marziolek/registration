@@ -4,7 +4,12 @@
 
 .btn {
   text-transform: uppercase;
+  outline: none;
 
+  &:focus, &:active {
+    outline: none;
+  }
+  
   &-hidden-text {
     position: absolute;
     visibility: hidden;

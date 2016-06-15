@@ -155,6 +155,15 @@ angular.module('registrationApp')
       });
 
       return q.promise;
+    },
+    getAllPatients: function() {
+      var q = $q.defer();
+
+      Parse.Cloud.run('getAllPatients').then( function(result) {
+        q.resolve(result);
+      });
+
+      return q.promise;
     }
     
   };

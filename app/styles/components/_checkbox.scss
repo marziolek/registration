@@ -1,0 +1,25 @@
+// checkbox
+.checkbox {
+  visibility: hidden;
+
+  &-wrapper {
+    position: relative;
+    width: $space * 1.5;
+    height: $space * 1.5;
+    border: 1px solid $c-gray;
+  }
+
+  + span {
+    position: absolute;
+    left: -9999px;
+  }
+
+  &:checked {
+    + span {
+      left: 7px;
+      top: 7px;
+      color: $c-blue-dark;
+      font-size: 15px;
+    }
+  }
+}

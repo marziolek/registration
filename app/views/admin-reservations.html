@@ -1,7 +1,6 @@
 <div ng-if="vm.isAdmin" class="admin-panel clearfix">
   <h1>Panel administratora</h1>
   <h2>Kalendarz wizyt</h2>
-  <a ui-sref="admin" class="btn btn-primary">Panel administratora</a>
   <button type="button" class="btn btn-primary" ng-click="vm.prevWeekVisits(vm.countWeeksBack = vm.countWeeksBack + 1)" ng-disabled="!vm.isMoreToLoad">Pokaż poprzedni tydzień</button>
   <span ng-if="!vm.isMoreToLoad">Nie ma starszych wizyt</span>
   <div class="row-space">
@@ -11,7 +10,7 @@
   <p ng-if="vm.visits.length === 0">Brak nowych wizyt</p>
   <table class="table table-bordered table-hover visits-table">
     <tbody>
-      <tr ng-repeat="visit in vm.visits" data-item-id="{{visit.id}}" ng-class="{canceled: visit.isCanceled, anchor: vm.isVisitToday(visit.date)}" ng-attr-id="{{vm.isVisitToday(visit.date)}}">
+      <tr ng-repeat="visit in vm.visits | orderBy: 'date'" data-item-id="{{visit.id}}" ng-class="{canceled: visit.isCanceled, anchor: vm.isVisitToday(visit.date)}" ng-attr-id="{{vm.isVisitToday(visit.date)}}">
         <td><span ng-if="vm.displayMonth(visit.date)">{{visit.date | date: 'd MMMM'}}</span></td>
         <td>{{visit.date | date: 'HH:mm'}}</td>
         <td data-user="{{visit.user.id}}">

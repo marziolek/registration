@@ -1,0 +1,22 @@
+// login form 
+.login-form {
+  padding-top: $space;
+  
+  .error {
+    margin-top: $space / 2;
+  }
+  
+  .forgot-password {
+    margin-left: $space;
+  }
+  
+  &-new-account {
+    margin-top: $space * 3.5;
+    padding-left: $space;
+  }
+  
+  &-wrapper {
+    flex: 300px 0 0;
+    max-width: 100%;
+  }
+}

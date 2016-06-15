@@ -7,10 +7,30 @@
   padding-bottom: $space;
 }
 
+// flex grid
 .flex {
   display: flex;
-  
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
   &-center {
     align-items: center;
+  }
+  
+  &-stretch {
+    align-items: stretch;
+  }
+  
+  &-between {
+    justify-content: space-between;
+  }
+  
+  &-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  &-left {
+    justify-content: flex-start;
   }
 }

@@ -99,12 +99,21 @@ angular
       acl: true,
       admin: true
     }
+  })
+    .state('patients', {
+    url: '/admin/patients',
+    templateUrl: 'views/admin-patients.html',
+    controller: 'AdminPatientsCtrl',
+    controllerAs: 'adminPatients',
+    params: {
+      acl: true,
+      admin: true
+    }
   });
 })
-  .run( function($rootScope, user, $state) {
+  .run( function($rootScope, user, $state, popup) {
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
-
     if (!user.isLoggedIn()) {
       if (toParams.acl) {
         event.preventDefault();
@@ -120,5 +129,7 @@ angular
         });
       }
     }
+    
+    popup.cancel();
   });
 });

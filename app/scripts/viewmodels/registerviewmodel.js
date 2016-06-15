@@ -19,9 +19,13 @@ angular.module('registrationApp')
     
     if (form) {
       loading.set();
-      user.signUp(form).then(function() {
+      user.signUp(form).then(function(res) {
         loading.unset();
-        self.goToLoginPage();
+        if (res) {
+          self.goToLoginPage();
+        } else {
+          self.formError = 'Ten email jest już zajęty';
+        }
       }, function(error) {
         loading.unset();
         switch(error.code) {

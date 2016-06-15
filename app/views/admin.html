@@ -1,6 +1,7 @@
 <div ng-if="vm.isAdmin" class="admin-panel clearfix">
   <h1>Panel administratora</h1>
   <a ui-sref="reservations" class="btn btn-primary">Kalendarz wizyt</a>
+  <a ui-sref="patients" class="btn btn-primary">Pacjentki</a>
   <div class="calendar-wrapper row-space">
     <calendar-navigation calendar="vm.adminCalendar" 
                          max="{{vm.weeksAvailable}}"
@@ -65,7 +66,7 @@
                  name="weeks" 
                  id="weeks" 
                  class="form-control"
-                 value="{{vm.weeksAvailable}}"
+                 ng-value="vm.weeksAvailable"
                  ng-model="weeks"
                  ng-change="enableSubmitWeeks = true">
         </div>
@@ -82,7 +83,7 @@
                  name="visitDuration" 
                  id="visitDuration" 
                  class="form-control"
-                 value="{{vm.visitDuration}}"
+                 ng-value="vm.visitDuration"
                  ng-model="visitDuration"
                  ng-change="enableSubmitVisit = true">
         </div>
@@ -119,14 +120,15 @@
                      placeholder="Do">
             </div>
             <div class="form-group col-xs-6 col-sm-1">
-              <label for="isActiveCheckbox{{$index}}" class="toggle">
+              <label for="isActiveCheckbox{{$index}}" class="toggle checkbox-wrapper">
                 <input type="checkbox" 
                        name="isActiveCheckbox{{$index}}"
                        id="isActiveCheckbox{{$index}}"
                        ng-click="vm.updateTextMessages(false)"
                        ng-model="service.isActive"
+                       class="checkbox"
                        checked>
-                <span class="handle"></span>
+                <span class="glyphicon glyphicon-ok"></span>
               </label>
             </div>
             <div class="form-group col-xs-6 col-sm-1">

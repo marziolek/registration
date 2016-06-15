@@ -1,0 +1,44 @@
+// admin patients
+.admin-patients {
+  margin-top: $space / 2;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    display: block;
+    max-width: 100%;
+    margin: $space / 2 0;
+    background-color: $c-gray-light;
+    border-radius: 4px;
+
+    &-content {
+      padding: $space * 1.5;
+    }
+
+    ul {
+      padding-left: $space;
+    }
+
+    &-name {
+      font-size: 20px;
+      line-height: 1;
+      margin-bottom: $space / 4;
+    }
+    
+    @media (min-width: $lg) {
+      flex: 23% 0 0;
+    }
+    
+    @media (min-width: $md) and (max-width: $lg - 1) {
+      flex: 32% 0 0;
+    }
+    
+    @media (min-width: $lg / 2) and (max-width: $md - 1) {
+      flex: 48% 0 0;
+    }
+    
+    @media (max-width: $lg / 2 - 1) {
+      flex: 100% 0 0;
+    }
+  }
+}
