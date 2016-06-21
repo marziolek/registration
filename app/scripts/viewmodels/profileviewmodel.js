@@ -16,7 +16,9 @@ angular.module('registrationApp')
 
   ProfileAPI.prototype.lastName = user.userLastName();
 
-  ProfileAPI.prototype.phone = user.userPhone();
+  ProfileAPI.prototype.phone = function() {
+    return user.userPhone();
+  };
 
   ProfileAPI.prototype.email = user.userEmail();
 
@@ -24,6 +26,7 @@ angular.module('registrationApp')
     return user.isLoggedIn();
   };
 
+  //ProfileAPI.prototype.textMessagesStatus = user.userIsTextMessages();
   ProfileAPI.prototype.textMessages = function() {
     return user.userIsTextMessages();
   };
@@ -35,26 +38,103 @@ angular.module('registrationApp')
   ProfileAPI.prototype.sendSMS = function() {
     var self = this,
         data = {
-          from: 'Informacja',
-          to: self.phone,
+          from: 'Eco',
+          to: self.profileData.phone,
           msg: 'Wiadomość testowa'
-        };
+        },
+        message, flashClass;
 
+    loading.set();
     SMS.sendSMS(data).then( function(result) {
-      console.log(result);
+      loading.unset();
+
+      if (result.list[0].error) {
+        message = result.list[0].error;
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else if (result.list[0].id) {
+        message = 'Wiadomość SMS została wysłana.';
+        flashClass = 'success';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        message = 'Wystąpił problem...';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
+    });
+  };
+
+  ProfileAPI.prototype.isAdmin = false;
+  ProfileAPI.prototype.checkIfAdmin = function() {
+    var self = this;
+
+    loading.set();
+    user.isAdmin().then( function(result) {
+      loading.unset();
+      self.isAdmin = result;
     });
   };
 
   ProfileAPI.prototype.sendEmail = function(mailData) {
+    var message, flashClass;
+
     loading.set();
     Mailing.sendEmail(mailData).then(function(result) {
       loading.unset();
+
       console.log(result);
+      if (result.accepted[0]) {
+        message = 'Wiadomość email została wysłana.';
+        flashClass = 'success';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else if (result.rejected[0]) {
+        message = result.rejected[0];
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        message = 'Wystąpił problem...';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
     });
   };
 
   ProfileAPI.prototype.updateTextMessages = function(textMessages) {
     return user.setTextMessages(textMessages);
+  };
+
+  ProfileAPI.prototype.profileData = {
+    phone: user.userPhone(),
+    textMessages: user.userIsTextMessages()
+  };
+
+  ProfileAPI.prototype.updateProfile = function(profileData) {
+    var message, flashClass, self = this;
+
+    loading.set();
+    user.updateProfile(profileData).then( function(result) {
+      loading.unset();
+
+      user.userDataRefresh().then( function(user) {
+        self.profileData.phone = user.get('phone');
+        self.profileData.textMessages = user.get('textMessages');
+      });
+      if (result.id) {
+        message = 'Ustawienia zapisane';
+        flashClass = 'success';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+
+        user.userData();
+      } else if (result.error) {
+        message = result.error;
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      } else {
+        message = 'Wystąpił problem...';
+        flashClass = 'danger';
+        Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
+      }
+    });
   };
 
   ProfileAPI.prototype.visits = [];
@@ -155,6 +235,15 @@ angular.module('registrationApp')
   ProfileAPI.prototype.jobTest = function() {
     loading.set();
     Parse.Cloud.run('JOBnotifyUpcomingVisit').then( function(result) {
+      loading.unset();
+      console.log(result);
+    });
+  };
+  
+  ProfileAPI.prototype.addUserAdmin = function() {
+    loading.set();
+    
+    user.addUserAdmin().then( function(result) {
       loading.unset();
       console.log(result);
     });

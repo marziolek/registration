@@ -13,6 +13,7 @@ header-main {
 
 .navbar {
   background-color: $c-violet-dark;
+  box-shadow: 0 1px 14px rgba(black, .4);
 
   &-right {
     height: $space * 2.5;

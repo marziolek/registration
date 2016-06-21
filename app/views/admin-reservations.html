@@ -13,8 +13,8 @@
       <tr ng-repeat="visit in vm.visits | orderBy: 'date'" data-item-id="{{visit.id}}" ng-class="{canceled: visit.isCanceled, anchor: vm.isVisitToday(visit.date)}" ng-attr-id="{{vm.isVisitToday(visit.date)}}">
         <td><span ng-if="vm.displayMonth(visit.date)">{{visit.date | date: 'd MMMM'}}</span></td>
         <td>{{visit.date | date: 'HH:mm'}}</td>
-        <td data-user="{{visit.user.id}}">
-          {{visit.user.attributes.firstName}} {{visit.user.attributes.lastName}}
+        <td data-user="{{visit.user}}">
+          <span ng-if="visit.user">{{visit.user.attributes.firstName}} {{visit.user.attributes.lastName}}</span>
           {{visit.userOneTime.name}} {{visit.userOneTime.lastname}}
         </td>
         <td>{{visit.user.attributes.email}}{{visit.userOneTime.email}}</td>

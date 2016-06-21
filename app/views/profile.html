@@ -1,42 +1,38 @@
-<div ng-if="vm.isLoggedIn">
-  <p>
-    <span>{{vm.firstName}} </span><span>{{vm.lastName}}</span>
-  </p>
-  <p>
-    <span class="label label-primary">E-mail</span>
-    <span>{{vm.email}}</span>
-  </p>
-  <p>
-    <span class="label label-primary">Telephone</span>
-    <span>{{vm.phone}}</span>
-  </p>
+<div ng-if="vm.isLoggedIn" class="profile profile-main">
+  <h1>{{vm.firstName}} {{vm.lastName}}</h1>
   <form name="textMessageUpdateform" novalidate> 
     <fieldset>
-      <div ng-if="vm.textMessages()">
-        <span>Czy chcesz otrzymywać powiadomienia SMS checked</span>
-        <label for="textMessageUpdate" class="toggle">
-          <input type="checkbox" 
-                 name="textMessageUpdate" 
-                 id="textMessageUpdate" 
-                 ng-click="vm.updateTextMessages(false)"
-                 checked>
-          <span class="handle"></span>
-        </label>
+      <div>
+        <span class="label label-primary">E-mail</span>
+        <span>{{vm.email}}</span>
       </div>
-      <div ng-if="!vm.textMessages()">
-        <span>Czy chcesz otrzymywać powiadomienia SMS</span>
-        <label for="textMessageUpdate" class="toggle">
+      <div>
+        <label for="profilePhone">
+          <span class="label label-primary">Telefon</span>
+        </label>
+        <input type="text" 
+               name="profilePhone" 
+               id="profilePhone" 
+               ng-model="vm.profileData.phone"
+               class="form-control">
+      </div>
+      <div class="profile-vertical-middle">
+        <label for="textMessageUpdate">Czy chcesz otrzymywać powiadomienia SMS</label>
+        <label for="textMessageUpdate" class="checkbox-wrapper">
           <input type="checkbox" 
                  name="textMessageUpdate" 
                  id="textMessageUpdate" 
-                 ng-click="vm.updateTextMessages(true)">
-          <span class="handle"></span>
+                 ng-model="vm.profileData.textMessages"
+                 checked
+                 class="checkbox">
+          <span class="glyphicon glyphicon-ok"></span>
         </label>
       </div>
     </fieldset>
+    <button type="button" class="btn btn-primary" ng-click="vm.updateProfile(vm.profileData)">Zapisz</button>
   </form>
-  <button ng-click="vm.jobTest()">Job test</button>
-  <button ng-click="vm.sendSMS()">Wyślij testowy SMS</button>
-  <button ng-click="vm.smsStatus()">sms status</button>
-  <button ng-click="vm.sendEmail({email: 'mar.ziolek@gmail.com', subject: 'testowy temat', body: 'body testowe'})">test email</button>
+  <div ng-if="vm.isAdmin">
+    <button type="button" class="btn btn-primary push-top" ng-click="vm.sendSMS()">Wyślij testowy SMS</button>
+    <button type="button" class="btn btn-primary push-top push-left" ng-click="vm.sendEmail({email: vm.email, subject: 'Testowy email', body: '<p>Treść testowa w emailu.</p>'})">Wyślij testowy email</button>
+  </div>
 </div>

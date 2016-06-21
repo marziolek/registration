@@ -23,5 +23,6 @@ angular.module('registrationApp')
 
   $scope.vm.createCalendar();
   
+  $scope.vm.getAllDaysOff();
   $scope.vm.markOldEvents();
 });

@@ -10,7 +10,7 @@
       td {
         opacity: .5;
         text-decoration: line-through;
-        
+
         &:first-of-type {
           text-decoration: none;  
         }
@@ -20,5 +20,16 @@
 
   &-description {
     width: 30%; // temp
+  }
+}
+
+.day-off-taken {
+  .btn {
+    background-color: $c-red !important;
+    color: white !important;
+  }
+
+  .text-info {
+    color: white; 
   }
 }

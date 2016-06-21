@@ -17,9 +17,10 @@ angular.module('registrationApp')
       };
     },
 
-    body: function(param) {
+    body: function(param, info) {
       return {
         newVisitDate: '<p>Data wizyty: ' + param + '</p>',
+        newVisitInfo: '<p>Dodatkowe informacje: ' + info + '</p>',
         footer: '<br><p>__________</p><p>Specjalistyczna Praktyka Lekarska, Jarosław Downar-Zapolski</p><p>Bolesławiec, ul. Zgorzelecka 12, III piętro</p>'
       };
     }

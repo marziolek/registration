@@ -109,6 +109,16 @@ angular
       acl: true,
       admin: true
     }
+  })
+    .state('days-off', {
+    url: '/admin/days-off',
+    templateUrl: 'views/admin-days-off.html',
+    controller: 'AdminDaysOffCtrl',
+    controllerAs: 'adminDaysOff',
+    params: {
+      acl: true,
+      admin: true
+    }
   });
 })
   .run( function($rootScope, user, $state, popup) {

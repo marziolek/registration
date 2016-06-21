@@ -125,7 +125,7 @@ angular.module('registrationApp')
           }
         }
       });
-      
+
       loading.unset();
     });
 
@@ -155,7 +155,7 @@ angular.module('registrationApp')
       loading.unset();
       self.bookedVisits = error;
     });
- 
+
     return self.bookedVisits;
   };
 
@@ -171,7 +171,8 @@ angular.module('registrationApp')
   };
 
   MainAPI.prototype.markOldEvents = function(el) {
-    var today = moment().local().format('YYYY-MM-DD');
+    var today = moment().local().format('YYYY-MM-DD'),
+        self = this;
 
     if (el) {
       var index = el.find('[data-date="'+ today +'"]').index(),
@@ -185,7 +186,32 @@ angular.module('registrationApp')
           angular.element(column).find('a').addClass('old');
         }
       });
+
+      angular.forEach(self.daysOff, function(dayOff) {
+        var index = el.find('[data-date="'+ moment(dayOff.attributes.date).local().format('YYYY-MM-DD') +'"]').index(),
+            content = angular.element('.fc-content-skeleton'),
+            columns = angular.element(content[1]).find('td');
+
+        angular.forEach(columns, function(column) {
+          var colIndex = angular.element(column).index();
+
+          if (index === colIndex) {
+            angular.element(column).find('a').addClass('old');
+          }
+        });
+      });
     }
+  };
+
+  MainAPI.prototype.daysOff = [];
+  MainAPI.prototype.getAllDaysOff = function() {
+    var self = this;
+
+    loading.set();
+    service.getAllDaysOff().then( function(result) {
+      loading.unset();
+      self.daysOff = result;
+    });
   };
 
   return new MainAPI();

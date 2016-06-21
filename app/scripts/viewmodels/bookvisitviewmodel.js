@@ -22,6 +22,15 @@ angular.module('registrationApp')
     return user.isLoggedIn();
   };
 
+  BookVisitAPI.prototype.isAdmin = false;
+  BookVisitAPI.prototype.isAdminCheck = function() {
+    var self = this;
+
+    user.isAdmin().then( function(result) {
+      self.isAdmin = result;
+    });
+  };
+
   BookVisitAPI.prototype.services = [];
   BookVisitAPI.prototype.getAllServices = function() {
     var self = this;
@@ -41,13 +50,22 @@ angular.module('registrationApp')
     var self = this,
         msgSubject = MailingText.subject().newVisit,
         msgDate = moment(data.date).format('LLLL'),
-        msgBody = MailingText.body(msgDate).newVisitDate + MailingText.body().footer,
+        msgBody = MailingText.body(msgDate).newVisitDate,
         msgEmail = '';
 
-    if (Parse.User.current()) {
-      msgEmail = Parse.User.current().get('email');
+    if (data.additionalInformation) {
+      msgBody += MailingText.body(null, data.additionalInformation).newVisitInfo;
+    }
+
+    msgBody += MailingText.body().footer;
+
+    if (!self.isAdmin) {
+      if (Parse.User.current()) {
+        msgEmail = Parse.User.current().get('email');
+      } else {
+        msgEmail = data.userOneTime.email;
+      }
     } else {
-      console.log(data);
       msgEmail = data.userOneTime.email;
     }
 

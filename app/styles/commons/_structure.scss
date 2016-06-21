@@ -7,6 +7,34 @@
   padding-bottom: $space;
 }
 
+.vertical-middle {
+  margin-left: - $space;
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: $space;
+  }
+}
+
+.push {
+  &-top {
+    margin-top: $space;
+  }
+
+  &-bottom {
+    margin-bottom: $space;
+  }
+
+  &-left {
+    margin-left: $space;
+  }
+  
+  &-right {
+    margin-right: $space;
+  }
+}
+
 // flex grid
 .flex {
   display: flex;
@@ -17,15 +45,15 @@
   &-center {
     align-items: center;
   }
-  
+
   &-stretch {
     align-items: stretch;
   }
-  
+
   &-between {
     justify-content: space-between;
   }
-  
+
   &-nowrap {
     flex-wrap: nowrap;
   }

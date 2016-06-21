@@ -1,6 +1,6 @@
 <div class="registration-form" ng-controller="RegisterCtrl">
   <p><strong>Zarejestruj się</strong></p>
-  <form name="registerform" novalidate ng-submit="registerform.$valid && vm.signUp(registerData)"> 
+  <form name="registerform" novalidate ng-submit="registerform.$valid && vm.signUp(registerData)" class="col-xs-12 col-sm-8 col-md-6"> 
     <fieldset>
       <div class="form-group" 
            ng-class="{'has-error' : !registerform.registerName.$valid && registerform.$submitted}">
@@ -73,15 +73,20 @@
                class="form-control" 
                ng-model="registerData.phone">
         <p>Potrzebny do szybkiego kontakt oraz wysyłania powiadomień SMS</p>
-        
+
       </div>
-      <div>
+      <div class="vertical-middle">
         <label for="registerTextMessages">Czy chcesz otrzymywać powiadomienia SMS</label>
-        <input type="checkbox" 
-               name="registerTextMessages" 
-               id="registerTextMessages" 
-               checked="checked" 
-               ng-model="registerData.textMessages">
+        <label for="registerTextMessages" class="checkbox-wrapper">
+          <input type="checkbox" 
+                 name="registerTextMessages" 
+                 id="registerTextMessages" 
+                 ng-model="registerData.textMessages"
+                 ng-init="registerData.textMessages = true"
+                 class="checkbox"
+                 checked>
+          <span class="glyphicon glyphicon-ok"></span>
+        </label>
       </div>
     </fieldset>
     <button type="submit" class="btn btn-success">Załóż konto</button>

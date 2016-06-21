@@ -93,12 +93,20 @@
 
     &--cancel-visit {
       width: $space * 1.5;
-      
+
       button {
         background: none;
         outline: none;
         border: none;
       }
+    }
+  }
+
+  &-days-off {
+    &-well {
+      width: 305px;
+      max-width: 100%;
+      overflow: auto;
     }
   }
 }

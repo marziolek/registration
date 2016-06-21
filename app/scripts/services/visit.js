@@ -38,7 +38,17 @@ angular.module('registrationApp')
 
       return q.promise;
     },
+    getUserFullname: function(userId) {
+      var q = $q.defer();
 
+      Parse.Cloud.run('getAllVisitsUserData', {userId : userId}).then( function(result) {
+        q.resolve(result);
+      }, function(error) {
+        q.reject(error);   
+      });
+      
+      return q.promise;
+    },
     getMyVisits: function(startDate) {
       var q = $q.defer(),
           from = moment().startOf('day').toDate();

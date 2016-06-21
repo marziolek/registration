@@ -33,7 +33,7 @@ angular.module('registrationApp')
 
       Parse.User.logOut().then( function(result) {
         $rootScope.isLoading = true;
-        
+
         currUser = null;
         q.resolve(result);
       });
@@ -47,13 +47,34 @@ angular.module('registrationApp')
       return currUser.get('lastName');
     },
     userPhone: function() {
-      return currUser.get('phone');
+      var phone = currUser.get('phone');
+
+      if (!phone) {
+        phone = '';
+      }
+
+      return phone;
     },
     userEmail: function() {
       return currUser.get('email');
     },
     userIsTextMessages: function() {
-      return currUser.get('textMessages');
+      var textMessages = currUser.get('textMessages');
+
+      if (!textMessages) {
+        textMessages = false;
+      }
+
+      return textMessages;
+    },
+    userDataRefresh: function () {
+      var q = $q.defer();
+
+      Parse.User.current().fetch().then( function(user) {
+        q.resolve(user);        
+      });
+
+      return q.promise;
     },
     isAdmin: function() {
       var q = $q.defer();
@@ -103,7 +124,7 @@ angular.module('registrationApp')
       if (form.email !== '' && form.email !== null && form.name !== '' && form.name !== null && form.lastname !== '' && form.lastname !== null && form.password !== '' && form.password !== null ) {
 
         var q = $q.defer();
-        
+
         Parse.Cloud.run('newAccount', {form: form}).then(function(result){
           q.resolve(result);
         });
@@ -130,7 +151,7 @@ angular.module('registrationApp')
       });
 
       return q.promise;
-    },
+    },/*
     setTextMessages: function(set) {
       var self = this;
 
@@ -146,6 +167,15 @@ angular.module('registrationApp')
           self.userData();
         }
       });
+    },*/
+    updateProfile: function(profileData) {
+      var q = $q.defer();
+
+      Parse.Cloud.run('updateProfile', {userId: currUser.id, profileData: profileData}).then( function(result) {
+        q.resolve(result);
+      });
+
+      return q.promise;
     },
     resetPasswordEmail: function(email) {
       var q = $q.defer();
@@ -164,7 +194,16 @@ angular.module('registrationApp')
       });
 
       return q.promise;
+    },
+    addUserAdmin: function() {
+      var q = $q.defer();
+
+      Parse.Cloud.run('addUserAdmin').then( function(result) {
+        q.resolve(result);
+      });
+
+      return q.promise;
     }
-    
+
   };
 });

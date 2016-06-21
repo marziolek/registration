@@ -8,7 +8,7 @@
  * Factory in the registrationApp.
  */
 angular.module('registrationApp')
-  .factory('adminPatientsViewModel', function (user) {
+  .factory('adminPatientsViewModel', function (user, loading) {
 
   var AdminPatientsAPI = function() {};
 
@@ -16,7 +16,9 @@ angular.module('registrationApp')
   AdminPatientsAPI.prototype.getAllPacients = function() {
     var self = this;
     
+    loading.set();
     user.getAllPatients().then( function(result) {
+      loading.unset();
       self.allPatients = result;
     });
   };

@@ -1,0 +1,14 @@
+<h1>Dni wolne</h1>
+<div class="flex flex-left">
+  <div class="admin-days-off-well">
+    <uib-datepicker ng-model="vm.date" class="well well-sm" datepicker-options="options"></uib-datepicker>
+    <div class="flex flex-between">
+      <button type="button" class="btn btn-primary" ng-click="vm.today()">Dzisiaj</button>
+      <button type="button" class="btn btn-success" ng-click="vm.addDayOff(vm.date)" ng-if="!vm.removeBtnVisible">Dodaj</button>
+      <button type="button" class="btn btn-warning" ng-click="vm.removeDayOff(vm.date)" ng-if="vm.removeBtnVisible">Usuń</button>
+    </div>
+  </div>
+  <ul>
+    <li ng-repeat="dayOff in vm.daysOff | orderBy: 'attributes.date'">{{ dayOff.attributes.date | date: 'dd MMMM yyyy' }}</li>
+  </ul>
+</div>

@@ -12,7 +12,8 @@ angular.module('registrationApp')
 
   $scope.vm = bookVisitViewModel;
   $scope.vm.getAllServices();
-  
+
+  $scope.vm.isAdminCheck();
   $scope.vm.popupData = element;
 
   $scope.vm.popupDataTime = $scope.vm.popupData.start.local().format('HH:mm');
