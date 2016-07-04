@@ -290,7 +290,6 @@ angular.module('registrationApp')
       }
       
       angular.forEach(self.events, function(val, key) {
-
         if (val.dow[0] === result.attributes.number) {
           var newElement = angular.copy(val);
           newElement._id = Math.floor((Math.random() * (99999 - 20)) + 20);
