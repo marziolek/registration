@@ -14,7 +14,7 @@ angular.module('registrationApp')
   $scope.daysOff = $scope.vm.daysOff;
   $scope.vm.getAllDaysOff();
 
-  $scope.$watch('vm.daysOff', function(newVal, oldVal) {
+  $scope.$watch('vm.daysOff', function(newVal) {
     if (newVal) {
       $scope.daysOff = newVal;
       $scope.$broadcast('refreshDatepickers');

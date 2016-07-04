@@ -31,10 +31,6 @@ angular.module('registrationApp')
     return user.userIsTextMessages();
   };
 
-  ProfileAPI.prototype.smsStatus = function() {
-    console.log(user.userIsTextMessages());
-  };
-
   ProfileAPI.prototype.sendSMS = function() {
     var self = this,
         data = {
@@ -82,7 +78,6 @@ angular.module('registrationApp')
     Mailing.sendEmail(mailData).then(function(result) {
       loading.unset();
 
-      console.log(result);
       if (result.accepted[0]) {
         message = 'Wiadomość email została wysłana.';
         flashClass = 'success';
@@ -229,23 +224,6 @@ angular.module('registrationApp')
         }
         Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       }
-    });
-  };
-
-  ProfileAPI.prototype.jobTest = function() {
-    loading.set();
-    Parse.Cloud.run('JOBnotifyUpcomingVisit').then( function(result) {
-      loading.unset();
-      console.log(result);
-    });
-  };
-  
-  ProfileAPI.prototype.addUserAdmin = function() {
-    loading.set();
-    
-    user.addUserAdmin().then( function(result) {
-      loading.unset();
-      console.log(result);
     });
   };
 

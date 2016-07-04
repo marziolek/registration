@@ -51,7 +51,8 @@ angular.module('registrationApp')
         msgSubject = MailingText.subject().newVisit,
         msgDate = moment(data.date).format('LLLL'),
         msgBody = MailingText.body(msgDate).newVisitDate,
-        msgEmail = '';
+        msgEmail = '',
+        phone = '';
 
     if (data.additionalInformation) {
       msgBody += MailingText.body(null, data.additionalInformation).newVisitInfo;
@@ -62,15 +63,18 @@ angular.module('registrationApp')
     if (!self.isAdmin) {
       if (Parse.User.current()) {
         msgEmail = Parse.User.current().get('email');
+        phone = Parse.User.current().get('phone');
       } else {
         msgEmail = data.userOneTime.email;
+        phone = data.userOneTime.phone;
       }
     } else {
       msgEmail = data.userOneTime.email;
+      phone = data.userOneTime.phone;
     }
 
     loading.set();
-    visit.bookVisit(data, {email: msgEmail, subject: msgSubject, body: msgBody}).then( function(result) {
+    visit.bookVisit(data, {email: msgEmail, subject: msgSubject, body: msgBody, phone: phone}).then( function(result) {
       loading.unset();
 
       var message, flashClass;

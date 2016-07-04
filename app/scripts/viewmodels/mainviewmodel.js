@@ -25,14 +25,16 @@ angular.module('registrationApp')
 
   MainAPI.prototype.modal = '';
   MainAPI.prototype.takeEvent = function(view, element) {
-    var cssClass = view.className[0],
+    var cssClass = view.className,
         parent = angular.element(element.target).closest('a'),
         self = this;
 
     if (!parent.hasClass('old')) {
       if (cssClass) {
-        if (cssClass === 'free') {
+        if (cssClass.indexOf('free') !== -1) {
           self.modal = popup.show('lg', 'book.visit.tpl.html', 'BookVisitCtrl', view);
+        } else if (cssClass.indexOf('clickable') !== -1) {
+          self.modal = popup.show('lg', 'booked.visit.tpl.html', 'BookVisitCtrl', view);
         }
       }
     }

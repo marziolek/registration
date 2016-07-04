@@ -288,8 +288,7 @@ angular.module('registrationApp')
         }
         Flash.create(flashClass, message, 5000, {class: 'custom-class', id: 'custom-id'}, true);
       }
-
-      console.log(result);
+      
       angular.forEach(self.events, function(val, key) {
 
         if (val.dow[0] === result.attributes.number) {

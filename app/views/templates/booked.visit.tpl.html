@@ -1,0 +1,13 @@
+<section ng-if="vm.isLoggedIn()">
+  <h1>{{vm.popupDataTime}}, {{vm.popupDataDayName}}, {{vm.popupDataDate}}</h1>
+  <h2>{{vm.popupData.user.attributes.firstName}} {{vm.popupData.user.attributes.lastName}} {{vm.popupData.user.attributes.name}} {{vm.popupData.user.attributes.lastname}}</h2>
+  <p>
+    <span class="label label-primary">E-mail</span>
+    <span>{{vm.popupData.user.attributes.email}}</span>
+  </p>
+  <p>
+    <span class="label label-primary">Telefon</span>
+    <span>{{vm.popupData.user.attributes.phone}}</span>
+  </p>
+  <h3 ng-if="vm.popupData.additionalInformation">Dodatkowe informacje: {{vm.popupData.additionalInformation}}</h3>
+</section>
