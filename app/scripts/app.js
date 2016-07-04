@@ -25,7 +25,8 @@ angular
   'ui.calendar',
   'ui.bootstrap',
   'ui.sortable',
-  'ngFlash'
+  'ngFlash',
+  'vcRecaptcha'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
